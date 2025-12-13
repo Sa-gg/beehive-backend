@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -13,12 +7,92 @@ datasource db {
   provider = "postgresql"
 }
 
+model menu_items {
+  id           String        @id
+  name         String
+  category     category
+  price        Float
+  cost         Float?        @default(0)
+  image        String?
+  description  String?
+  available    Boolean       @default(true)
+  featured     Boolean       @default(false)
+  prepTime     Int?          @default(5)
+  nutrients    String?
+  moodBenefits String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime
+  order_items  order_items[]
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  @@index([available])
+  @@index([category])
+  @@index([featured])
+}
+
+model order_items {
+  id         String     @id
+  orderId    String
+  menuItemId String
+  quantity   Int
+  price      Float
+  subtotal   Float
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime
+  menu_items menu_items @relation(fields: [menuItemId], references: [id])
+  orders     orders     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([menuItemId])
+  @@index([orderId])
+}
+
+model orders {
+  id            String         @id
+  orderNumber   String         @unique
+  customerName  String?
+  tableNumber   String?
+  orderType     order_type     @default(DINE_IN)
+  status        order_status   @default(PENDING)
+  subtotal      Float
+  tax           Float
+  totalAmount   Float
+  paymentMethod String?
+  paymentStatus payment_status @default(UNPAID)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime
+  completedAt   DateTime?
+  order_items   order_items[]
+
+  @@index([createdAt])
+  @@index([status])
+}
+
+enum category {
+  PIZZA
+  APPETIZER
+  HOT_DRINKS
+  COLD_DRINKS
+  SMOOTHIE
+  PLATTER
+  SAVERS
+  VALUE_MEAL
+}
+
+enum order_type {
+  DINE_IN
+  TAKEOUT
+  DELIVERY
+}
+
+enum order_status {
+  PENDING
+  PREPARING
+  READY
+  COMPLETED
+  CANCELLED
+}
+
+enum payment_status {
+  UNPAID
+  PAID
+  REFUNDED
 }

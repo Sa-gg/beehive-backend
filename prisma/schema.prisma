@@ -7,22 +7,42 @@ datasource db {
   provider = "postgresql"
 }
 
+model users {
+  id            String     @id
+  email         String     @unique
+  password      String
+  name          String
+  role          user_role  @default(CUSTOMER)
+  phone         String?
+  loyaltyPoints Int        @default(0)
+  cardNumber    String?    @unique
+  isActive      Boolean    @default(true)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime
+  lastLoginAt   DateTime?
+
+  @@index([email])
+  @@index([role])
+  @@index([cardNumber])
+}
+
 model menu_items {
-  id           String        @id
-  name         String
-  category     category
-  price        Float
-  cost         Float?        @default(0)
-  image        String?
-  description  String?
-  available    Boolean       @default(true)
-  featured     Boolean       @default(false)
-  prepTime     Int?          @default(5)
-  nutrients    String?
-  moodBenefits String?
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime
-  order_items  order_items[]
+  id             String        @id
+  name           String
+  category       category
+  price          Float
+  cost           Float?        @default(0)
+  image          String?
+  description    String?
+  available      Boolean       @default(true)
+  featured       Boolean       @default(false)
+  prepTime       Int?          @default(5)
+  nutrients      String?
+  moodBenefits   String?
+  moodOrderStats String?       // JSON: { "happy": { "shown": 0, "ordered": 0 }, ... }
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime
+  order_items    order_items[]
 
   @@index([available])
   @@index([category])
@@ -57,12 +77,32 @@ model orders {
   totalAmount   Float
   paymentMethod String?
   paymentStatus payment_status @default(UNPAID)
+  moodContext   String?        // Stores mood when order was placed
   createdAt     DateTime       @default(now())
   updatedAt     DateTime
   completedAt   DateTime?
   order_items   order_items[]
 
   @@index([createdAt])
+  @@index([status])
+}
+
+model inventory_items {
+  id            String                @id
+  name          String
+  category      inventory_category
+  currentStock  Float
+  minStock      Float
+  maxStock      Float
+  unit          String
+  costPerUnit   Float
+  supplier      String
+  status        inventory_status      @default(IN_STOCK)
+  lastRestocked DateTime              @default(now())
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime
+
+  @@index([category])
   @@index([status])
 }
 
@@ -95,4 +135,56 @@ enum payment_status {
   UNPAID
   PAID
   REFUNDED
+}
+
+enum user_role {
+  CUSTOMER
+  CASHIER
+  COOK
+  MANAGER
+}
+
+enum inventory_category {
+  INGREDIENTS
+  BEVERAGES
+  PACKAGING
+  SUPPLIES
+}
+
+enum inventory_status {
+  IN_STOCK
+  LOW_STOCK
+  OUT_OF_STOCK
+}
+
+model expenses {
+  id          String            @id
+  category    expense_category
+  date        DateTime
+  amount      Float
+  description String
+  frequency   expense_frequency
+  attachment  String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime
+
+  @@index([date])
+  @@index([category])
+  @@index([frequency])
+}
+
+enum expense_category {
+  RENT_LEASE
+  UTILITIES
+  ADMINISTRATIVE_SALARIES
+  SOFTWARE_SUBSCRIPTIONS
+  MAINTENANCE
+  OTHER
+}
+
+enum expense_frequency {
+  ONE_TIME
+  MONTHLY
+  QUARTERLY
+  ANNUAL
 }

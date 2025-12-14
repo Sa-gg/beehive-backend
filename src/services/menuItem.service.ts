@@ -144,6 +144,11 @@ export class MenuItemService {
     };
   }
 
+  async trackMoodViews(itemIds: string[], mood: string): Promise<void> {
+    // Track that these items were shown for this mood
+    await this.repository.incrementMoodViews(itemIds, mood);
+  }
+
   private mapToResponse(item: any): MenuItemResponse {
     return {
       id: item.id,

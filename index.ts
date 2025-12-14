@@ -24,10 +24,40 @@ import { OrderService } from './src/services/order.service.js';
 import { OrderController } from './src/controllers/order.controller.js';
 import { createOrderRoutes } from './src/routes/order.routes.js';
 
+// Import Auth architecture layers
+import { AuthRepository } from './src/repositories/auth.repository.js';
+import { AuthService } from './src/services/auth.service.js';
+import { AuthController } from './src/controllers/auth.controller.js';
+import { createAuthRouter } from './src/routes/auth.routes.js';
+
+// Import Inventory architecture layers
+import { InventoryRepository } from './src/repositories/inventory.repository.js';
+import { InventoryService } from './src/services/inventory.service.js';
+import { InventoryController } from './src/controllers/inventory.controller.js';
+import { createInventoryRoutes } from './src/routes/inventory.routes.js';
+
+// Import Sales architecture layers
+import { SalesRepository } from './src/repositories/sales.repository.js';
+import { SalesService } from './src/services/sales.service.js';
+import { SalesController } from './src/controllers/sales.controller.js';
+import { createSalesRoutes } from './src/routes/sales.routes.js';
+
+// Import Expenses architecture layers
+import { ExpensesRepository } from './src/repositories/expenses.repository.js';
+import { ExpensesService } from './src/services/expenses.service.js';
+import { ExpensesController } from './src/controllers/expenses.controller.js';
+import { createExpensesRoutes } from './src/routes/expenses.routes.js';
+
+// Import Customers architecture layers
+import { CustomersRepository } from './src/repositories/customers.repository.js';
+import { CustomersService } from './src/services/customers.service.js';
+import { CustomersController } from './src/controllers/customers.controller.js';
+import { createCustomersRoutes } from './src/routes/customers.routes.js';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const { Pool } = pg;
+const { Pool } = pg; 
 
 // Create PostgreSQL connection pool
 const pool = new Pool({ 
@@ -53,6 +83,31 @@ const orderRepository = new OrderRepository(prisma);
 const orderService = new OrderService(orderRepository);
 const orderController = new OrderController(orderService);
 
+// Initialize Auth architecture layers
+const authRepository = new AuthRepository(prisma);
+const authService = new AuthService(authRepository);
+const authController = new AuthController(authService);
+
+// Initialize Inventory architecture layers
+const inventoryRepository = new InventoryRepository(prisma);
+const inventoryService = new InventoryService(inventoryRepository);
+const inventoryController = new InventoryController(inventoryService);
+
+// Initialize Sales architecture layers
+const salesRepository = new SalesRepository(prisma);
+const salesService = new SalesService(salesRepository);
+const salesController = new SalesController(salesService);
+
+// Initialize Expenses architecture layers
+const expensesRepository = new ExpensesRepository(prisma);
+const expensesService = new ExpensesService(expensesRepository);
+const expensesController = new ExpensesController(expensesService);
+
+// Initialize Customers architecture layers
+const customersRepository = new CustomersRepository(prisma);
+const customersService = new CustomersService(customersRepository);
+const customersController = new CustomersController(customersService);
+
 const app = express();
 
 // Middleware
@@ -63,7 +118,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
   if (req.method === 'OPTIONS') {
     return res.sendStatus(200);
   }
@@ -79,12 +134,20 @@ app.get('/', (req: Request, res: Response) => {
     message: 'Welcome to BEEHIVE API',
     version: '1.0.0',
     endpoints: {
+      auth: '/api/auth',
+      customers: '/api/customers',
+      expenses: '/api/expenses',
       menuItems: '/api/menu-items',
       upload: '/api/upload',
-      orders: '/api/orders'
+      orders: '/api/orders',
+      inventory: '/api/inventory',
+      sales: '/api/sales'
     }
   });
 });
+
+// Auth API Routes (using layered architecture)
+app.use('/api/auth', createAuthRouter(authController));
 
 // Menu Items API Routes (using layered architecture)
 app.use('/api/menu-items', createMenuItemRoutes(menuItemController));
@@ -95,6 +158,19 @@ app.use('/api/menu-items', createMenuItemRoutes(menuItemController));
 app.use('/api/orders', createOrderRoutes(orderController));
 app.use('/api/upload', createUploadRoutes(uploadController));
 
+// Inventory API Routes (using layered architecture)
+app.use('/api/inventory', createInventoryRoutes(inventoryController));
+
+// Sales API Routes (using layered architecture)
+app.use('/api/sales', createSalesRoutes(salesController));
+
+// Expenses API Routes (using layered architecture)
+app.use('/api/expenses', createExpensesRoutes(expensesController));
+
+// Customers API Routes (using layered architecture)
+app.use('/api/customers', createCustomersRoutes(customersController));
+
+// 
 // Start server
 const PORT = process.env.PORT || 3000;
 

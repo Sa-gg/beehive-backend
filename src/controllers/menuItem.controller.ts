@@ -344,4 +344,39 @@ export class MenuItemController {
       });
     }
   };
+
+  // POST /api/menu-items/track-views
+  trackMoodViews = async (req: Request, res: Response) => {
+    try {
+      const { itemIds, mood } = req.body;
+
+      if (!Array.isArray(itemIds) || itemIds.length === 0) {
+        return res.status(400).json({
+          success: false,
+          error: 'itemIds must be a non-empty array'
+        });
+      }
+
+      if (!mood || typeof mood !== 'string') {
+        return res.status(400).json({
+          success: false,
+          error: 'mood is required and must be a string'
+        });
+      }
+
+      await this.service.trackMoodViews(itemIds, mood);
+
+      res.status(200).json({
+        success: true,
+        message: 'Mood views tracked successfully'
+      });
+    } catch (error: any) {
+      console.error('Error tracking mood views:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to track mood views',
+        message: error.message
+      });
+    }
+  };
 }

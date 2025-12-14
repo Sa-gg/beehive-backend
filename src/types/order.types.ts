@@ -31,6 +31,7 @@ export interface CreateOrderDTO {
   customerName?: string;
   tableNumber?: string;
   orderType?: 'DINE_IN' | 'TAKEOUT' | 'DELIVERY';
+  moodContext?: string; // The mood when order was placed
   items: Array<{
     menuItemId: string;
     quantity: number;

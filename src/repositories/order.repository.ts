@@ -32,6 +32,17 @@ export class OrderRepository {
     const tax = subtotal * 0.12; // 12% VAT
     const totalAmount = subtotal + tax;
 
+    // Track mood-based orders if mood context is provided
+    if (data.moodContext) {
+      // Get all menu item IDs from the order
+      const menuItemIds = data.items.map(item => item.menuItemId);
+      
+      // Increment ordered count for these items with this mood
+      const menuItemRepository = require('./menuItem.repository.js');
+      const repo = new menuItemRepository.MenuItemRepository(this.prisma);
+      await repo.incrementMoodOrders(menuItemIds, data.moodContext);
+    }
+
     return this.prisma.orders.create({
       data: {
         id: `order_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
@@ -39,6 +50,7 @@ export class OrderRepository {
         customerName: data.customerName || null,
         tableNumber: data.tableNumber || null,
         orderType: data.orderType || 'DINE_IN',
+        moodContext: data.moodContext || null,
         subtotal,
         tax,
         totalAmount,

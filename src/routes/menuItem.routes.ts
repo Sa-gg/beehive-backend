@@ -7,6 +7,9 @@ export function createMenuItemRoutes(controller: MenuItemController): Router {
   // Stats endpoint - must be before :id routes
   router.get('/stats', controller.getMenuItemsStats);
 
+  // Track mood views endpoint - must be before :id routes
+  router.post('/track-views', controller.trackMoodViews);
+
   // Search endpoint - must be before :id routes
   router.get('/search', controller.searchMenuItems);
 

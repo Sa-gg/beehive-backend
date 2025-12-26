@@ -6,6 +6,7 @@ export function createInventoryRoutes(inventoryController: InventoryController):
 
   router.get('/', inventoryController.getAllItems);
   router.get('/stats', inventoryController.getStats);
+  router.get('/alerts', inventoryController.getAlerts);
   router.get('/:id', inventoryController.getItemById);
   router.post('/', inventoryController.createItem);
   router.put('/:id', inventoryController.updateItem);

@@ -21,6 +21,7 @@ export interface OrderDTO {
   totalAmount: number;
   paymentMethod: string | null;
   paymentStatus: 'UNPAID' | 'PAID' | 'REFUNDED';
+  linkedOrderId: string | null;
   createdAt: string;
   updatedAt: string;
   completedAt: string | null;
@@ -32,6 +33,7 @@ export interface CreateOrderDTO {
   tableNumber?: string;
   orderType?: 'DINE_IN' | 'TAKEOUT' | 'DELIVERY';
   moodContext?: string; // The mood when order was placed
+  linkedOrderId?: string; // Link to original order when reordering
   items: Array<{
     menuItemId: string;
     quantity: number;

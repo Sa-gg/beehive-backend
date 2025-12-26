@@ -58,7 +58,7 @@ export class InventoryRepository {
         maxStock: data.maxStock,
         unit: data.unit,
         costPerUnit: data.costPerUnit,
-        supplier: data.supplier,
+        supplier: data.supplier || 'N/A',
         status,
         updatedAt: new Date()
       }

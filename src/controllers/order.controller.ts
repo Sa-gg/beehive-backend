@@ -79,4 +79,42 @@ export class OrderController {
       res.status(400).json({ error: error.message });
     }
   }
+
+  async getLinkedOrders(req: Request, res: Response) {
+    try {
+      const orders = await this.orderService.getLinkedOrders(req.params.id);
+      res.json(orders);
+    } catch (error: any) {
+      res.status(404).json({ error: error.message });
+    }
+  }
+
+  async mergeOrders(req: Request, res: Response) {
+    try {
+      const { orderIds } = req.body;
+      if (!orderIds || !Array.isArray(orderIds)) {
+        return res.status(400).json({ error: 'orderIds array is required' });
+      }
+      const mergedData = await this.orderService.mergeOrders(orderIds);
+      res.json({ success: true, data: mergedData });
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+  async markMergedOrdersAsPaid(req: Request, res: Response) {
+    try {
+      const { orderIds, paymentMethod } = req.body;
+      if (!orderIds || !Array.isArray(orderIds)) {
+        return res.status(400).json({ error: 'orderIds array is required' });
+      }
+      if (!paymentMethod) {
+        return res.status(400).json({ error: 'paymentMethod is required' });
+      }
+      const orders = await this.orderService.markMergedOrdersAsPaid(orderIds, paymentMethod);
+      res.json({ success: true, data: orders });
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  }
 }

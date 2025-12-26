@@ -99,4 +99,39 @@ export class InventoryService {
   async getStats() {
     return this.inventoryRepository.getStats();
   }
+
+  /**
+   * Get inventory alerts (low stock and out of stock items)
+   */
+  async getAlerts(): Promise<{
+    lowStock: InventoryResponse[];
+    outOfStock: InventoryResponse[];
+    total: number;
+  }> {
+    const items = await this.inventoryRepository.findAll();
+
+    const lowStock = items
+      .filter(item => item.status === 'LOW_STOCK')
+      .map(item => ({
+        ...item,
+        createdAt: item.createdAt,
+        updatedAt: item.updatedAt,
+        lastRestocked: item.lastRestocked || null
+      }));
+
+    const outOfStock = items
+      .filter(item => item.status === 'OUT_OF_STOCK')
+      .map(item => ({
+        ...item,
+        createdAt: item.createdAt,
+        updatedAt: item.updatedAt,
+        lastRestocked: item.lastRestocked || null
+      }));
+
+    return {
+      lowStock,
+      outOfStock,
+      total: lowStock.length + outOfStock.length
+    };
+  }
 }

@@ -60,6 +60,18 @@ import { DashboardService } from './src/services/dashboard.service.js';
 import { DashboardController } from './src/controllers/dashboard.controller.js';
 import { createDashboardRoutes } from './src/routes/dashboard.routes.js';
 
+// Import Settings architecture layers
+import { SettingsRepository } from './src/repositories/settings.repository.js';
+import { SettingsService } from './src/services/settings.service.js';
+import { SettingsController } from './src/controllers/settings.controller.js';
+import { createSettingsRoutes } from './src/routes/settings.routes.js';
+
+// Import Stock Transaction routes
+import stockTransactionRoutes from './src/routes/stockTransaction.routes.js';
+
+// Import Recipe routes
+import recipeRoutes from './src/routes/recipe.routes.js';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -84,8 +96,36 @@ const fileStorageRepository = new FileStorageRepository();
 const uploadService = new UploadService(fileStorageRepository);
 const uploadController = new UploadController(uploadService);
 
+// Initialize Settings architecture layers (needs to be before Order)
+const settingsRepository = new SettingsRepository();
+const settingsService = new SettingsService(settingsRepository);
+const settingsController = new SettingsController(settingsService);
+
 // Initialize Order architecture layers
-const orderRepository = new OrderRepository(prisma);
+const orderRepository = new OrderRepository(
+  prisma,
+  () => {
+    // Check if force reset flag is set
+    if (settingsRepository.getForceResetFlag()) {
+      // Clear the flag and reset
+      settingsRepository.setForceResetFlag(false);
+      settingsRepository.setLastResetDate(new Date().toISOString().split('T')[0]);
+      return true; // Reset order numbers
+    }
+    
+    // Check if we should reset order numbers based on lastResetDate (daily reset)
+    const lastResetDate = settingsRepository.getLastResetDate();
+    const today = new Date().toISOString().split('T')[0];
+    
+    if (!lastResetDate || lastResetDate !== today) {
+      // Mark as reset for today
+      settingsRepository.setLastResetDate(today);
+      return true; // Reset order numbers
+    }
+    
+    return false; // Don't reset
+  }
+);
 const orderService = new OrderService(orderRepository);
 const orderController = new OrderController(orderService);
 
@@ -153,7 +193,10 @@ app.get('/', (req: Request, res: Response) => {
       upload: '/api/upload',
       orders: '/api/orders',
       inventory: '/api/inventory',
-      sales: '/api/sales'
+      sales: '/api/sales',
+      stockTransactions: '/api/stock-transactions',
+      recipes: '/api/recipes',
+      settings: '/api/settings'
     }
   });
 });
@@ -185,7 +228,15 @@ app.use('/api/customers', createCustomersRoutes(customersController));
 // Dashboard API Routes (using layered architecture)
 app.use('/api/dashboard', createDashboardRoutes(dashboardController));
 
-// 
+// Settings API Routes (using layered architecture)
+app.use('/api/settings', createSettingsRoutes(settingsController));
+
+// Stock Transaction API Routes
+app.use('/api/stock-transactions', stockTransactionRoutes);
+
+// Recipe API Routes
+app.use('/api/recipes', recipeRoutes);
+
 // Start server
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const HOST = '0.0.0.0'; // Listen on all network interfaces

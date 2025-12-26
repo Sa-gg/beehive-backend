@@ -22,7 +22,7 @@ export interface CreateInventoryItemDTO {
   maxStock: number;
   unit: string;
   costPerUnit: number;
-  supplier: string;
+  supplier?: string;
 }
 
 export interface UpdateInventoryItemDTO {

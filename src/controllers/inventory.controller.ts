@@ -100,4 +100,17 @@ export class InventoryController {
       res.status(500).json({ error: error.message });
     }
   };
+
+  /**
+   * Get low-stock and out-of-stock alerts
+   * GET /api/inventory/alerts
+   */
+  getAlerts = async (req: Request, res: Response) => {
+    try {
+      const alerts = await this.inventoryService.getAlerts();
+      res.json(alerts);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  };
 }

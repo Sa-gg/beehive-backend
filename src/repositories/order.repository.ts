@@ -2,12 +2,25 @@ import { PrismaClient } from '../../generated/prisma/client.js';
 import type { CreateOrderDTO, UpdateOrderDTO } from '../types/order.types.js';
 
 export class OrderRepository {
-  constructor(private prisma: PrismaClient) {}
+  constructor(
+    private prisma: PrismaClient,
+    private shouldResetOrderNumbers?: () => boolean
+  ) {}
 
   async findAll() {
     return this.prisma.orders.findMany({
       include: {
-        order_items: true
+        order_items: {
+          include: {
+            menu_items: {
+              select: {
+                name: true,
+                category: true,
+                image: true
+              }
+            }
+          }
+        }
       },
       orderBy: { createdAt: 'desc' }
     });
@@ -17,20 +30,56 @@ export class OrderRepository {
     return this.prisma.orders.findUnique({
       where: { id },
       include: {
-        order_items: true
+        order_items: {
+          include: {
+            menu_items: {
+              select: {
+                name: true,
+                category: true,
+                image: true
+              }
+            }
+          }
+        }
       }
     });
   }
 
   async create(data: CreateOrderDTO) {
-    // Generate order number
-    const orderCount = await this.prisma.orders.count();
-    const orderNumber = `ORD-${String(orderCount + 1).padStart(5, '0')}`;
+    // Check if we should reset order numbers (clears the flag but we still need to check DB)
+    const shouldReset = this.shouldResetOrderNumbers ? this.shouldResetOrderNumbers() : false;
+    
+    // Use date prefix to ensure uniqueness across days: ORD-YYYYMMDD-XXXXX
+    const today = new Date();
+    const datePrefix = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}`;
+    
+    let nextOrderNum = 1;
+    
+    // Always check for existing orders to avoid unique constraint violations
+    const lastOrder = await this.prisma.orders.findFirst({
+      where: {
+        orderNumber: {
+          startsWith: `ORD-${datePrefix}-`
+        }
+      },
+      orderBy: { orderNumber: 'desc' },
+      select: { orderNumber: true }
+    });
+    
+    if (lastOrder && lastOrder.orderNumber) {
+      // Extract number from "ORD-YYYYMMDD-00001" format
+      const match = lastOrder.orderNumber.match(/ORD-\d{8}-(\d+)/);
+      if (match) {
+        nextOrderNum = parseInt(match[1], 10) + 1;
+      }
+    }
+    
+    const orderNumber = `ORD-${datePrefix}-${String(nextOrderNum).padStart(5, '0')}`;
 
-    // Calculate totals
+    // Calculate totals - tax is already included in menu item prices
     const subtotal = data.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const tax = subtotal * 0.12; // 12% VAT
-    const totalAmount = subtotal + tax;
+    const tax = 0; // Tax is included in item prices
+    const totalAmount = subtotal;
 
     // Track mood-based orders if mood context is provided
     if (data.moodContext) {
@@ -51,6 +100,7 @@ export class OrderRepository {
         tableNumber: data.tableNumber || null,
         orderType: data.orderType || 'DINE_IN',
         moodContext: data.moodContext || null,
+        linkedOrderId: data.linkedOrderId || null,
         subtotal,
         tax,
         totalAmount,
@@ -112,6 +162,32 @@ export class OrderRepository {
         order_items: true
       },
       orderBy: { createdAt: 'desc' }
+    });
+  }
+
+  async findLinkedOrders(orderId: string) {
+    // Find the order to get its linkedOrderId
+    const order = await this.prisma.orders.findUnique({
+      where: { id: orderId }
+    });
+
+    if (!order) return [];
+
+    // If this order has a linkedOrderId, find all orders linked to that ID
+    // If not, find all orders that link to this order's ID
+    const linkedId = order.linkedOrderId || order.id;
+
+    return this.prisma.orders.findMany({
+      where: {
+        OR: [
+          { id: linkedId },
+          { linkedOrderId: linkedId }
+        ]
+      },
+      include: {
+        order_items: true
+      },
+      orderBy: { createdAt: 'asc' }
     });
   }
 }

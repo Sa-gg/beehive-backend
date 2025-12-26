@@ -54,6 +54,12 @@ import { CustomersService } from './src/services/customers.service.js';
 import { CustomersController } from './src/controllers/customers.controller.js';
 import { createCustomersRoutes } from './src/routes/customers.routes.js';
 
+// Import Dashboard architecture layers
+import { DashboardRepository } from './src/repositories/dashboard.repository.js';
+import { DashboardService } from './src/services/dashboard.service.js';
+import { DashboardController } from './src/controllers/dashboard.controller.js';
+import { createDashboardRoutes } from './src/routes/dashboard.routes.js';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -108,6 +114,11 @@ const customersRepository = new CustomersRepository(prisma);
 const customersService = new CustomersService(customersRepository);
 const customersController = new CustomersController(customersService);
 
+// Initialize Dashboard architecture layers
+const dashboardRepository = new DashboardRepository(prisma);
+const dashboardService = new DashboardService(dashboardRepository);
+const dashboardController = new DashboardController(dashboardService);
+
 const app = express();
 
 // Middleware
@@ -136,6 +147,7 @@ app.get('/', (req: Request, res: Response) => {
     endpoints: {
       auth: '/api/auth',
       customers: '/api/customers',
+      dashboard: '/api/dashboard',
       expenses: '/api/expenses',
       menuItems: '/api/menu-items',
       upload: '/api/upload',
@@ -170,11 +182,15 @@ app.use('/api/expenses', createExpensesRoutes(expensesController));
 // Customers API Routes (using layered architecture)
 app.use('/api/customers', createCustomersRoutes(customersController));
 
+// Dashboard API Routes (using layered architecture)
+app.use('/api/dashboard', createDashboardRoutes(dashboardController));
+
 // 
 // Start server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+const HOST = '0.0.0.0'; // Listen on all network interfaces
 
-app.listen(PORT, () => {
+app.listen(PORT, HOST, () => {
   console.log('🚀 Server is running on port ' + PORT);
   console.log('📍 API Documentation:');
   console.log('   GET    /api/menu-items              - Get all menu items (with filters)');

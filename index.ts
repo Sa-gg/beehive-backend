@@ -72,6 +72,9 @@ import stockTransactionRoutes from './src/routes/stockTransaction.routes.js';
 // Import Recipe routes
 import recipeRoutes from './src/routes/recipe.routes.js';
 
+// Import Mood Settings routes
+import moodSettingsRoutes from './src/routes/moodSettings.routes.js';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -196,7 +199,8 @@ app.get('/', (req: Request, res: Response) => {
       sales: '/api/sales',
       stockTransactions: '/api/stock-transactions',
       recipes: '/api/recipes',
-      settings: '/api/settings'
+      settings: '/api/settings',
+      moodSettings: '/api/mood-settings'
     }
   });
 });
@@ -236,6 +240,9 @@ app.use('/api/stock-transactions', stockTransactionRoutes);
 
 // Recipe API Routes
 app.use('/api/recipes', recipeRoutes);
+
+// Mood Settings API Routes
+app.use('/api/mood-settings', moodSettingsRoutes);
 
 // Start server
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;

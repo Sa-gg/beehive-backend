@@ -2,7 +2,7 @@ export interface RegisterDTO {
   email: string;
   password: string;
   name: string;
-  role?: 'CUSTOMER' | 'CASHIER' | 'COOK' | 'MANAGER';
+  role?: 'CUSTOMER' | 'CASHIER' | 'COOK' | 'MANAGER' | 'ADMIN';
   phone?: string;
 }
 
@@ -19,13 +19,14 @@ export interface UpdateUserDTO {
   loyaltyPoints?: number;
   cardNumber?: string;
   isActive?: boolean;
+  role?: 'CUSTOMER' | 'CASHIER' | 'COOK' | 'MANAGER' | 'ADMIN';
 }
 
 export interface UserDTO {
   id: string;
   email: string;
   name: string;
-  role: 'CUSTOMER' | 'CASHIER' | 'COOK' | 'MANAGER';
+  role: 'CUSTOMER' | 'CASHIER' | 'COOK' | 'MANAGER' | 'ADMIN';
   phone?: string;
   loyaltyPoints: number;
   cardNumber?: string;

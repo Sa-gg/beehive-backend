@@ -12,14 +12,14 @@ export function createAuthRouter(authController: AuthController): Router {
   // Protected routes
   router.get('/me', authenticate, authController.getMe.bind(authController));
   
-  // Manager only routes
-  router.get('/users', authenticate, authorize('MANAGER'), authController.getAllUsers.bind(authController));
-  router.get('/users/:id', authenticate, authorize('MANAGER'), authController.getUserById.bind(authController));
-  router.put('/users/:id', authenticate, authorize('MANAGER'), authController.updateUser.bind(authController));
-  router.delete('/users/:id', authenticate, authorize('MANAGER'), authController.deleteUser.bind(authController));
+  // Manager and Admin routes
+  router.get('/users', authenticate, authorize('MANAGER', 'ADMIN'), authController.getAllUsers.bind(authController));
+  router.get('/users/:id', authenticate, authorize('MANAGER', 'ADMIN'), authController.getUserById.bind(authController));
+  router.put('/users/:id', authenticate, authorize('MANAGER', 'ADMIN'), authController.updateUser.bind(authController));
+  router.delete('/users/:id', authenticate, authorize('MANAGER', 'ADMIN'), authController.deleteUser.bind(authController));
   
-  // Manager and Cashier can add loyalty points
-  router.post('/loyalty-points', authenticate, authorize('MANAGER', 'CASHIER'), authController.addLoyaltyPoints.bind(authController));
+  // Manager, Admin and Cashier can add loyalty points
+  router.post('/loyalty-points', authenticate, authorize('MANAGER', 'ADMIN', 'CASHIER'), authController.addLoyaltyPoints.bind(authController));
 
   return router;
 }

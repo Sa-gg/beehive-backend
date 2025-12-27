@@ -59,6 +59,7 @@ export class AuthRepository {
     if (data.loyaltyPoints !== undefined) updateData.loyaltyPoints = data.loyaltyPoints;
     if (data.cardNumber !== undefined) updateData.cardNumber = data.cardNumber;
     if (data.isActive !== undefined) updateData.isActive = data.isActive;
+    if (data.role !== undefined) updateData.role = data.role;
 
     return this.prisma.users.update({
       where: { id },

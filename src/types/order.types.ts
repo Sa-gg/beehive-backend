@@ -22,6 +22,7 @@ export interface OrderDTO {
   paymentMethod: string | null;
   paymentStatus: 'UNPAID' | 'PAID' | 'REFUNDED';
   linkedOrderId: string | null;
+  createdBy: string | null;
   createdAt: string;
   updatedAt: string;
   completedAt: string | null;
@@ -34,6 +35,7 @@ export interface CreateOrderDTO {
   orderType?: 'DINE_IN' | 'TAKEOUT' | 'DELIVERY';
   moodContext?: string; // The mood when order was placed
   linkedOrderId?: string; // Link to original order when reordering
+  createdBy?: string; // User ID who created the order
   items: Array<{
     menuItemId: string;
     quantity: number;

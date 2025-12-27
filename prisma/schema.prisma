@@ -80,6 +80,7 @@ model orders {
   paymentStatus payment_status @default(UNPAID)
   moodContext   String?        // Stores mood when order was placed
   linkedOrderId String?        // Links reordered/related orders
+  createdBy     String?        // User ID who created the order (cashier/manager)
   createdAt     DateTime       @default(now())
   updatedAt     DateTime
   completedAt   DateTime?
@@ -88,6 +89,7 @@ model orders {
   @@index([createdAt])
   @@index([status])
   @@index([linkedOrderId])
+  @@index([createdBy])
 }
 
 model inventory_items {
@@ -101,6 +103,7 @@ model inventory_items {
   costPerUnit           Float
   supplier              String
   status                inventory_status          @default(IN_STOCK)
+  restockFrequencyDays  Int?                      @default(7) // How often this item is typically restocked
   lastRestocked         DateTime                  @default(now())
   createdAt             DateTime                  @default(now())
   updatedAt             DateTime
@@ -147,6 +150,7 @@ enum user_role {
   CASHIER
   COOK
   MANAGER
+  ADMIN
 }
 
 enum inventory_category {
@@ -242,4 +246,81 @@ model menu_item_ingredients {
   @@unique([menuItemId, inventoryItemId])
   @@index([menuItemId])
   @@index([inventoryItemId])
+}
+
+// Mood types enum
+enum mood_type {
+  HAPPY
+  ENERGETIC
+  RELAXED
+  EXCITED
+  TIRED
+  STRESSED
+  ANXIOUS
+  SAD
+  DEPRESSED
+  ANGRY
+}
+
+// Mood Settings - Configurable by Admin/Manager
+model mood_settings {
+  id                     String    @id
+  mood                   mood_type @unique
+  emoji                  String
+  label                  String
+  color                  String
+  description            String
+  supportMessage         String?
+  scientificExplanation  String?
+  beneficialNutrients    String?   // JSON array of nutrients
+  preferredCategories    String?   // JSON array of category names
+  excludeCategories      String?   // JSON array of categories to exclude
+  isActive               Boolean   @default(true)
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime
+
+  @@index([mood])
+  @@index([isActive])
+}
+
+// Mood Feedback Configuration
+model mood_feedback_config {
+  id                        String   @id @default("default")
+  // Baseline settings
+  baselineThreshold         Int      @default(50)     // Orders needed before enabling feedback
+  feedbackEnabled           Boolean  @default(false)  // Master toggle for feedback collection
+  autoEnableFeedback        Boolean  @default(true)   // Auto-enable when baseline reached
+  // Scoring weights
+  orderRateWeight           Float    @default(0.6)    // 60% weight for order rate
+  feedbackRateWeight        Float    @default(0.4)    // 40% weight for feedback rate
+  // Recommendation algorithm weights
+  moodBenefitsWeight        Int      @default(20)     // Points for mood benefits match
+  preferredCategoryWeight   Int      @default(10)     // Points for preferred category
+  featuredItemWeight        Int      @default(5)      // Points for featured items
+  priceRangeWeight          Int      @default(5)      // Points for price range match
+  historicalDataWeight      Int      @default(15)     // Points for historical success
+  timeOfDayWeight           Int      @default(5)      // Points for time-based preference
+  // UI settings
+  showMoodReflection        Boolean  @default(true)   // Show mood reflection modal after order
+  reflectionDelayMinutes    Int      @default(15)     // Wait time before showing reflection
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime
+}
+
+// Mood Order Statistics (aggregated per mood, not per item)
+model mood_order_stats {
+  id             String    @id
+  mood           mood_type @unique
+  totalShown     Int       @default(0)   // Times recommendations shown for this mood
+  totalOrdered   Int       @default(0)   // Times items were ordered with this mood
+  feedbackCount  Int       @default(0)   // Times feedback was received
+  moodImproved   Int       @default(0)   // Times mood improved after order
+  moodSame       Int       @default(0)   // Times mood stayed same
+  moodWorse      Int       @default(0)   // Times mood got worse
+  baselineReached Boolean  @default(false) // Whether this mood has enough data
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime
+
+  @@index([mood])
+  @@index([baselineReached])
 }

@@ -101,6 +101,7 @@ export class OrderRepository {
         orderType: data.orderType || 'DINE_IN',
         moodContext: data.moodContext || null,
         linkedOrderId: data.linkedOrderId || null,
+        createdBy: data.createdBy || null,
         subtotal,
         tax,
         totalAmount,

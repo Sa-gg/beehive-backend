@@ -75,6 +75,7 @@ model orders {
   status             order_status   @default(PENDING)
   subtotal           Float
   tax                Float
+  discountAmount     Float          @default(0)   // For Comp/VIP/Promos
   totalAmount        Float
   paymentMethod      String?
   paymentStatus      payment_status @default(UNPAID)
@@ -84,9 +85,12 @@ model orders {
   createdBy          String?        // User ID who created the order (cashier/manager) or "CUSTOMER" for phone orders
   processedBy        String?        // Cashier who processed the order (set when status changes from PENDING)
   deviceId           String?        // Device ID for guest order tracking
+  notes              String?        // Reason for Void/Write-off/Comp
+  authorizedBy       String?        // Manager ID who approved a Void/Refund/Loss
   createdAt          DateTime       @default(now())
   updatedAt          DateTime
   completedAt        DateTime?
+  paidAt             DateTime?      // When the money was actually received
   order_items        order_items[]
 
   @@index([createdAt])
@@ -95,6 +99,7 @@ model orders {
   @@index([createdBy])
   @@index([deviceId])
   @@index([processedBy])
+  @@index([paymentStatus])
 }
 
 model inventory_items {
@@ -145,9 +150,12 @@ enum order_status {
 }
 
 enum payment_status {
-  UNPAID
-  PAID
-  REFUNDED
+  UNPAID          // Order served, awaiting payment
+  PAID            // Transaction finalized
+  REFUNDED        // Payment reversed after being PAID
+  COMPLIMENTARY   // Given for free (VIP/Marketing)
+  WRITTEN_OFF     // Loss (Walk-out/Refusal/No-show)
+  VOIDED          // Error (Cancelled & inventory restored)
 }
 
 enum user_role {

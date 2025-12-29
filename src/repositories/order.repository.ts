@@ -169,8 +169,18 @@ export class OrderRepository {
       }
     }
     if (data.paymentMethod !== undefined) updateData.paymentMethod = data.paymentMethod;
-    if (data.paymentStatus !== undefined) updateData.paymentStatus = data.paymentStatus;
+    if (data.paymentStatus !== undefined) {
+      updateData.paymentStatus = data.paymentStatus;
+      // Set paidAt timestamp when payment is marked as PAID
+      if (data.paymentStatus === 'PAID' && !data.paidAt) {
+        updateData.paidAt = new Date();
+      }
+    }
     if (data.processedBy !== undefined) updateData.processedBy = data.processedBy;
+    if (data.discountAmount !== undefined) updateData.discountAmount = data.discountAmount;
+    if (data.notes !== undefined) updateData.notes = data.notes;
+    if (data.authorizedBy !== undefined) updateData.authorizedBy = data.authorizedBy;
+    if (data.paidAt !== undefined) updateData.paidAt = data.paidAt ? new Date(data.paidAt) : null;
 
     return this.prisma.orders.update({
       where: { id },

@@ -161,4 +161,36 @@ export class AuthService {
       throw new Error('Invalid or expired token');
     }
   }
+
+  // Validate manager PIN for authorization
+  // PIN format: For simplicity, we use the last 4-6 digits of the manager's phone number
+  // or a specially set PIN field. Here we'll check against password as a PIN for demo.
+  // In production, you'd have a separate managerPin field in the users table.
+  async validateManagerPin(pin: string): Promise<{ valid: boolean; manager?: { id: string; name: string } }> {
+    // Find all managers/admins
+    const managers = await this.authRepository.findAll('MANAGER');
+    const admins = await this.authRepository.findAll('ADMIN');
+    const allManagers = [...managers, ...admins];
+
+    // For demo purposes: PIN is the phone number's last 4 digits or '1234' as default
+    for (const manager of allManagers) {
+      // Check if PIN matches:
+      // 1. Last 4 digits of phone number
+      // 2. Or compare against a default PIN pattern based on name (for demo)
+      const phoneLast4 = manager.phone?.replace(/\D/g, '').slice(-4) || '';
+      const defaultPin = '1234'; // Fallback default manager PIN for testing
+      
+      if (pin === phoneLast4 || pin === defaultPin) {
+        return {
+          valid: true,
+          manager: {
+            id: manager.id,
+            name: manager.name
+          }
+        };
+      }
+    }
+
+    throw new Error('Invalid manager PIN');
+  }
 }

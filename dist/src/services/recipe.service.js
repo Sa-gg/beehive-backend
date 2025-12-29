@@ -254,5 +254,252 @@ export class RecipeService {
         }, {});
         return Object.values(groupedByMenuItem);
     }
+    /**
+     * Calculate maximum servings for a single menu item based on ingredient stock
+     * Accounts for ingredients reserved by PREPARING orders (stock deducted on COMPLETED)
+     */
+    async calculateMaxServings(menuItemId) {
+        const ingredients = await prisma.menu_item_ingredients.findMany({
+            where: { menuItemId },
+            include: {
+                inventory_item: {
+                    select: {
+                        id: true,
+                        currentStock: true,
+                    },
+                },
+            },
+        });
+        // If no ingredients defined, return -1 (unlimited)
+        if (ingredients.length === 0) {
+            return -1;
+        }
+        // Get PREPARING orders to calculate reserved ingredients
+        // (PREPARING orders haven't had their stock deducted yet - that happens on COMPLETED)
+        const preparingOrders = await prisma.orders.findMany({
+            where: {
+                status: 'PREPARING',
+            },
+            include: {
+                order_items: {
+                    select: {
+                        menuItemId: true,
+                        quantity: true,
+                    },
+                },
+            },
+        });
+        // Calculate reserved ingredients from PREPARING orders
+        const reservedIngredients = new Map();
+        for (const order of preparingOrders) {
+            for (const item of order.order_items) {
+                // Get the recipe for this menu item
+                const itemIngredients = await prisma.menu_item_ingredients.findMany({
+                    where: { menuItemId: item.menuItemId },
+                });
+                for (const ing of itemIngredients) {
+                    const current = reservedIngredients.get(ing.inventoryItemId) || 0;
+                    reservedIngredients.set(ing.inventoryItemId, current + (ing.quantity * item.quantity));
+                }
+            }
+        }
+        // Calculate how many servings each ingredient can make (accounting for reserved)
+        let maxServings = Infinity;
+        for (const ingredient of ingredients) {
+            if (ingredient.quantity > 0) {
+                const reserved = reservedIngredients.get(ingredient.inventory_item.id) || 0;
+                const availableStock = Math.max(0, ingredient.inventory_item.currentStock - reserved);
+                const servingsFromIngredient = Math.floor(availableStock / ingredient.quantity);
+                maxServings = Math.min(maxServings, servingsFromIngredient);
+            }
+        }
+        return maxServings === Infinity ? -1 : maxServings;
+    }
+    /**
+     * Calculate maximum servings for ALL menu items (for POS display)
+     * Accounts for ingredients reserved by PREPARING orders (stock deducted on COMPLETED)
+     */
+    async calculateAllMenuItemServings() {
+        // Get all menu items with their ingredients
+        const allIngredients = await prisma.menu_item_ingredients.findMany({
+            include: {
+                inventory_item: {
+                    select: {
+                        id: true,
+                        currentStock: true,
+                    },
+                },
+                menu_item: {
+                    select: {
+                        id: true,
+                    },
+                },
+            },
+        });
+        // Get PREPARING orders to calculate reserved ingredients
+        // (PREPARING orders haven't had their stock deducted yet - that happens on COMPLETED)
+        const preparingOrders = await prisma.orders.findMany({
+            where: {
+                status: 'PREPARING',
+            },
+            include: {
+                order_items: {
+                    select: {
+                        menuItemId: true,
+                        quantity: true,
+                    },
+                },
+            },
+        });
+        // Calculate reserved ingredients from PREPARING orders
+        // Map: inventoryItemId -> reserved quantity
+        const reservedIngredients = new Map();
+        // First, get all unique menu item IDs from preparing orders
+        const preparingMenuItemQuantities = new Map();
+        for (const order of preparingOrders) {
+            for (const item of order.order_items) {
+                const current = preparingMenuItemQuantities.get(item.menuItemId) || 0;
+                preparingMenuItemQuantities.set(item.menuItemId, current + item.quantity);
+            }
+        }
+        // Then calculate how much of each inventory item is reserved
+        for (const ing of allIngredients) {
+            const menuItemId = ing.menuItemId;
+            const preparingQty = preparingMenuItemQuantities.get(menuItemId) || 0;
+            if (preparingQty > 0) {
+                const inventoryItemId = ing.inventory_item.id;
+                const reservedAmount = ing.quantity * preparingQty;
+                const current = reservedIngredients.get(inventoryItemId) || 0;
+                reservedIngredients.set(inventoryItemId, current + reservedAmount);
+            }
+        }
+        // Group ingredients by menu item, accounting for reserved stock
+        const menuItemIngredients = new Map();
+        for (const ing of allIngredients) {
+            const menuItemId = ing.menuItemId;
+            if (!menuItemIngredients.has(menuItemId)) {
+                menuItemIngredients.set(menuItemId, []);
+            }
+            // Calculate available stock (current stock minus reserved for preparing orders)
+            const reservedForIng = reservedIngredients.get(ing.inventory_item.id) || 0;
+            const availableStock = Math.max(0, ing.inventory_item.currentStock - reservedForIng);
+            menuItemIngredients.get(menuItemId).push({
+                quantity: ing.quantity,
+                stock: availableStock,
+            });
+        }
+        // Calculate max servings for each menu item
+        const result = new Map();
+        for (const [menuItemId, ingredients] of menuItemIngredients) {
+            if (ingredients.length === 0) {
+                result.set(menuItemId, -1); // No recipe, unlimited
+                continue;
+            }
+            let maxServings = Infinity;
+            for (const ing of ingredients) {
+                if (ing.quantity > 0) {
+                    const servingsFromIng = Math.floor(ing.stock / ing.quantity);
+                    maxServings = Math.min(maxServings, servingsFromIng);
+                }
+            }
+            result.set(menuItemId, maxServings === Infinity ? -1 : maxServings);
+        }
+        return result;
+    }
+    /**
+     * Calculate maximum servings for ALL menu items accounting for cart contents
+     * This ensures shared ingredients across different menu items are properly calculated
+     */
+    async calculateAllMenuItemServingsWithCart(cartItems) {
+        // Get all menu items with their ingredients
+        const allIngredients = await prisma.menu_item_ingredients.findMany({
+            include: {
+                inventory_item: {
+                    select: {
+                        id: true,
+                        currentStock: true,
+                    },
+                },
+                menu_item: {
+                    select: {
+                        id: true,
+                    },
+                },
+            },
+        });
+        // Get PREPARING orders to calculate reserved ingredients
+        const preparingOrders = await prisma.orders.findMany({
+            where: {
+                status: 'PREPARING',
+            },
+            include: {
+                order_items: {
+                    select: {
+                        menuItemId: true,
+                        quantity: true,
+                    },
+                },
+            },
+        });
+        // Calculate reserved ingredients from PREPARING orders AND cart items
+        const reservedIngredients = new Map();
+        // First, get all unique menu item IDs from preparing orders
+        const preparingMenuItemQuantities = new Map();
+        for (const order of preparingOrders) {
+            for (const item of order.order_items) {
+                const current = preparingMenuItemQuantities.get(item.menuItemId) || 0;
+                preparingMenuItemQuantities.set(item.menuItemId, current + item.quantity);
+            }
+        }
+        // Add cart items to reserved quantities
+        for (const cartItem of cartItems) {
+            const current = preparingMenuItemQuantities.get(cartItem.menuItemId) || 0;
+            preparingMenuItemQuantities.set(cartItem.menuItemId, current + cartItem.quantity);
+        }
+        // Then calculate how much of each inventory item is reserved
+        for (const ing of allIngredients) {
+            const menuItemId = ing.menuItemId;
+            const reservedQty = preparingMenuItemQuantities.get(menuItemId) || 0;
+            if (reservedQty > 0) {
+                const inventoryItemId = ing.inventory_item.id;
+                const reservedAmount = ing.quantity * reservedQty;
+                const current = reservedIngredients.get(inventoryItemId) || 0;
+                reservedIngredients.set(inventoryItemId, current + reservedAmount);
+            }
+        }
+        // Group ingredients by menu item, accounting for reserved stock
+        const menuItemIngredients = new Map();
+        for (const ing of allIngredients) {
+            const menuItemId = ing.menuItemId;
+            if (!menuItemIngredients.has(menuItemId)) {
+                menuItemIngredients.set(menuItemId, []);
+            }
+            // Calculate available stock (current stock minus reserved)
+            const reservedForIng = reservedIngredients.get(ing.inventory_item.id) || 0;
+            const availableStock = Math.max(0, ing.inventory_item.currentStock - reservedForIng);
+            menuItemIngredients.get(menuItemId).push({
+                inventoryItemId: ing.inventory_item.id,
+                quantity: ing.quantity,
+                stock: availableStock,
+            });
+        }
+        // Calculate max servings for each menu item
+        const result = new Map();
+        for (const [menuItemId, ingredients] of menuItemIngredients) {
+            if (ingredients.length === 0) {
+                result.set(menuItemId, -1); // No recipe, unlimited
+                continue;
+            }
+            let maxServings = Infinity;
+            for (const ing of ingredients) {
+                if (ing.quantity > 0) {
+                    const servingsFromIng = Math.floor(ing.stock / ing.quantity);
+                    maxServings = Math.min(maxServings, servingsFromIng);
+                }
+            }
+            result.set(menuItemId, maxServings === Infinity ? -1 : maxServings);
+        }
+        return result;
+    }
 }
 export const recipeService = new RecipeService();

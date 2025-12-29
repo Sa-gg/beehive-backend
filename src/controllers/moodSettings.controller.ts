@@ -166,12 +166,20 @@ export const initializeMoodOrderStats = async (_req: Request, res: Response) => 
 export const trackMoodShown = async (req: Request, res: Response) => {
   try {
     const { mood } = req.params;
+    const { menuItemIds } = req.body;  // Array of menu item IDs that were shown
     
     if (!isValidMoodType(mood)) {
       return res.status(400).json({ error: 'Invalid mood type' });
     }
 
+    // Increment overall mood stats
     const stats = await moodSettingsRepository.incrementMoodShown(mood.toUpperCase() as mood_type);
+    
+    // Increment per-item stats if item IDs provided
+    if (menuItemIds && Array.isArray(menuItemIds) && menuItemIds.length > 0) {
+      await moodSettingsRepository.incrementItemsShown(menuItemIds, mood.toUpperCase() as mood_type);
+    }
+    
     res.json(stats);
   } catch (error) {
     console.error('Error tracking mood shown:', error);
@@ -198,7 +206,7 @@ export const trackMoodOrdered = async (req: Request, res: Response) => {
 export const recordMoodFeedback = async (req: Request, res: Response) => {
   try {
     const { mood } = req.params;
-    const { outcome } = req.body;
+    const { outcome, orderId } = req.body;
     
     if (!isValidMoodType(mood)) {
       return res.status(400).json({ error: 'Invalid mood type' });
@@ -208,13 +216,24 @@ export const recordMoodFeedback = async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Invalid outcome. Must be: improved, same, or worse' });
     }
 
+    if (!orderId) {
+      return res.status(400).json({ error: 'Order ID is required' });
+    }
+
     const stats = await moodSettingsRepository.recordMoodFeedback(
       mood.toUpperCase() as mood_type,
-      outcome
+      outcome,
+      orderId
     );
     res.json(stats);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error recording mood feedback:', error);
+    if (error.message === 'Feedback already given for this order') {
+      return res.status(400).json({ error: 'Feedback already given for this order' });
+    }
+    if (error.message === 'Order not found') {
+      return res.status(404).json({ error: 'Order not found' });
+    }
     res.status(500).json({ error: 'Failed to record mood feedback' });
   }
 };
@@ -253,5 +272,130 @@ export const initializeAllMoodData = async (_req: Request, res: Response) => {
   } catch (error) {
     console.error('Error initializing mood data:', error);
     res.status(500).json({ error: 'Failed to initialize mood data' });
+  }
+};
+
+// ==================== PER-ITEM MOOD ANALYTICS ====================
+
+export const getItemMoodStats = async (req: Request, res: Response) => {
+  try {
+    const { menuItemId } = req.params;
+    const stats = await moodSettingsRepository.getItemMoodStats(menuItemId);
+    res.json(stats);
+  } catch (error) {
+    console.error('Error getting item mood stats:', error);
+    res.status(500).json({ error: 'Failed to get item mood stats' });
+  }
+};
+
+export const getMoodItemStats = async (req: Request, res: Response) => {
+  try {
+    const { mood } = req.params;
+    
+    if (!isValidMoodType(mood)) {
+      return res.status(400).json({ error: 'Invalid mood type' });
+    }
+
+    const stats = await moodSettingsRepository.getMoodItemStats(mood.toUpperCase() as mood_type);
+    res.json(stats);
+  } catch (error) {
+    console.error('Error getting mood item stats:', error);
+    res.status(500).json({ error: 'Failed to get mood item stats' });
+  }
+};
+
+export const getTopItemsForMood = async (req: Request, res: Response) => {
+  try {
+    const { mood } = req.params;
+    const limit = parseInt(req.query.limit as string) || 10;
+    
+    if (!isValidMoodType(mood)) {
+      return res.status(400).json({ error: 'Invalid mood type' });
+    }
+
+    const items = await moodSettingsRepository.getTopItemsForMood(mood.toUpperCase() as mood_type, limit);
+    res.json(items);
+  } catch (error) {
+    console.error('Error getting top items for mood:', error);
+    res.status(500).json({ error: 'Failed to get top items for mood' });
+  }
+};
+
+export const getDetailedMoodAnalytics = async (req: Request, res: Response) => {
+  try {
+    const { mood } = req.params;
+    
+    if (!isValidMoodType(mood)) {
+      return res.status(400).json({ error: 'Invalid mood type' });
+    }
+
+    const analytics = await moodSettingsRepository.getDetailedMoodAnalytics(mood.toUpperCase() as mood_type);
+    res.json(analytics);
+  } catch (error) {
+    console.error('Error getting detailed mood analytics:', error);
+    res.status(500).json({ error: 'Failed to get detailed mood analytics' });
+  }
+};
+// ==================== RESET FUNCTIONS ====================
+
+export const resetAllMoodOrderStats = async (_req: Request, res: Response) => {
+  try {
+    const result = await moodSettingsRepository.resetAllMoodOrderStats();
+    res.json(result);
+  } catch (error) {
+    console.error('Error resetting mood order stats:', error);
+    res.status(500).json({ error: 'Failed to reset mood order stats' });
+  }
+};
+
+export const resetMoodOrderStatsByMood = async (req: Request, res: Response) => {
+  try {
+    const { mood } = req.params;
+    
+    if (!isValidMoodType(mood)) {
+      return res.status(400).json({ error: 'Invalid mood type' });
+    }
+
+    const result = await moodSettingsRepository.resetMoodOrderStatsByMood(mood.toUpperCase() as mood_type);
+    res.json(result);
+  } catch (error) {
+    console.error('Error resetting mood order stats:', error);
+    res.status(500).json({ error: 'Failed to reset mood order stats' });
+  }
+};
+
+export const resetAllMenuItemMoodStats = async (_req: Request, res: Response) => {
+  try {
+    const result = await moodSettingsRepository.resetAllMenuItemMoodStats();
+    res.json(result);
+  } catch (error) {
+    console.error('Error resetting menu item mood stats:', error);
+    res.status(500).json({ error: 'Failed to reset menu item mood stats' });
+  }
+};
+
+export const resetMenuItemMoodStatsByMood = async (req: Request, res: Response) => {
+  try {
+    const { mood } = req.params;
+    
+    if (!isValidMoodType(mood)) {
+      return res.status(400).json({ error: 'Invalid mood type' });
+    }
+
+    const result = await moodSettingsRepository.resetMenuItemMoodStatsByMood(mood.toUpperCase() as mood_type);
+    res.json(result);
+  } catch (error) {
+    console.error('Error resetting menu item mood stats:', error);
+    res.status(500).json({ error: 'Failed to reset menu item mood stats' });
+  }
+};
+
+export const resetAllMoodStatistics = async (_req: Request, res: Response) => {
+  try {
+    const result = await moodSettingsRepository.resetAllMoodStatistics();
+    res.json(result);
+  } catch (error) {
+    console.error('Error resetting all mood statistics:', error);
+    res.status(500).json({ error: 'Failed to reset all mood statistics' });
   }
 };

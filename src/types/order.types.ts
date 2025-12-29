@@ -23,6 +23,7 @@ export interface OrderDTO {
   paymentStatus: 'UNPAID' | 'PAID' | 'REFUNDED';
   linkedOrderId: string | null;
   createdBy: string | null;
+  deviceId: string | null;
   createdAt: string;
   updatedAt: string;
   completedAt: string | null;
@@ -36,6 +37,7 @@ export interface CreateOrderDTO {
   moodContext?: string; // The mood when order was placed
   linkedOrderId?: string; // Link to original order when reordering
   createdBy?: string; // User ID who created the order
+  deviceId?: string; // Device ID for guest order tracking
   items: Array<{
     menuItemId: string;
     quantity: number;
@@ -51,4 +53,5 @@ export interface UpdateOrderDTO {
   status?: 'PENDING' | 'PREPARING' | 'READY' | 'COMPLETED' | 'CANCELLED';
   paymentMethod?: string;
   paymentStatus?: 'UNPAID' | 'PAID' | 'REFUNDED';
+  processedBy?: string | null;
 }

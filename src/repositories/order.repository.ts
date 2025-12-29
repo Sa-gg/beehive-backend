@@ -1,5 +1,6 @@
 import { PrismaClient } from '../../generated/prisma/client.js';
 import type { CreateOrderDTO, UpdateOrderDTO } from '../types/order.types.js';
+import { MenuItemRepository } from './menuItem.repository.js';
 
 export class OrderRepository {
   constructor(
@@ -29,6 +30,25 @@ export class OrderRepository {
   async findById(id: string) {
     return this.prisma.orders.findUnique({
       where: { id },
+      include: {
+        order_items: {
+          include: {
+            menu_items: {
+              select: {
+                name: true,
+                category: true,
+                image: true
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  async findByOrderNumber(orderNumber: string) {
+    return this.prisma.orders.findUnique({
+      where: { orderNumber },
       include: {
         order_items: {
           include: {
@@ -86,10 +106,15 @@ export class OrderRepository {
       // Get all menu item IDs from the order
       const menuItemIds = data.items.map(item => item.menuItemId);
       
-      // Increment ordered count for these items with this mood
-      const menuItemRepository = require('./menuItem.repository.js');
-      const repo = new menuItemRepository.MenuItemRepository(this.prisma);
-      await repo.incrementMoodOrders(menuItemIds, data.moodContext);
+      // Import mood settings repository
+      const { MoodSettingsRepository } = await import('./moodSettings.repository.js');
+      const moodRepo = new MoodSettingsRepository(this.prisma);
+      
+      // Increment overall mood order stats (for analytics dashboard)
+      await moodRepo.incrementMoodOrdered(data.moodContext.toUpperCase() as any);
+      
+      // Increment per-item ordered stats
+      await moodRepo.incrementItemsOrdered(menuItemIds, data.moodContext.toUpperCase() as any);
     }
 
     return this.prisma.orders.create({
@@ -101,7 +126,12 @@ export class OrderRepository {
         orderType: data.orderType || 'DINE_IN',
         moodContext: data.moodContext || null,
         linkedOrderId: data.linkedOrderId || null,
-        createdBy: data.createdBy || null,
+        // createdBy logic:
+        // - If deviceId is present (phone/customer order), set to 'GUEST' for guest customers
+        // - If createdBy is provided (e.g., cashier name), use that value
+        // - If neither, it's a POS walk-in order (handled by caller)
+        createdBy: data.createdBy || (data.deviceId ? 'GUEST' : null),
+        deviceId: data.deviceId || null,
         subtotal,
         tax,
         totalAmount,
@@ -140,6 +170,7 @@ export class OrderRepository {
     }
     if (data.paymentMethod !== undefined) updateData.paymentMethod = data.paymentMethod;
     if (data.paymentStatus !== undefined) updateData.paymentStatus = data.paymentStatus;
+    if (data.processedBy !== undefined) updateData.processedBy = data.processedBy;
 
     return this.prisma.orders.update({
       where: { id },
@@ -189,6 +220,28 @@ export class OrderRepository {
         order_items: true
       },
       orderBy: { createdAt: 'asc' }
+    });
+  }
+
+  // Find orders by device ID (for guest order tracking)
+  async findByDeviceId(deviceId: string, limit: number = 20) {
+    return this.prisma.orders.findMany({
+      where: { deviceId },
+      include: {
+        order_items: {
+          include: {
+            menu_items: {
+              select: {
+                name: true,
+                category: true,
+                image: true
+              }
+            }
+          }
+        }
+      },
+      orderBy: { createdAt: 'desc' },
+      take: limit
     });
   }
 }

@@ -11,8 +11,8 @@ export class AuthService {
         const { password, ...userWithoutPassword } = user;
         return userWithoutPassword;
     }
-    generateToken(userId, email, role) {
-        return jwt.sign({ userId, email, role }, this.jwtSecret, { expiresIn: '7d' });
+    generateToken(userId, email, role, name) {
+        return jwt.sign({ userId, email, role, name }, this.jwtSecret, { expiresIn: '7d' });
     }
     async register(data) {
         // Check if email already exists
@@ -43,7 +43,7 @@ export class AuthService {
             user.cardNumber = cardNumber;
         }
         // Generate token
-        const token = this.generateToken(user.id, user.email, user.role);
+        const token = this.generateToken(user.id, user.email, user.role, user.name);
         return {
             user: this.excludePassword(user),
             token
@@ -67,7 +67,7 @@ export class AuthService {
         // Update last login
         await this.authRepository.updateLastLogin(user.id);
         // Generate token
-        const token = this.generateToken(user.id, user.email, user.role);
+        const token = this.generateToken(user.id, user.email, user.role, user.name);
         return {
             user: this.excludePassword(user),
             token

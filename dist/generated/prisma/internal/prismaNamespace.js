@@ -74,7 +74,11 @@ export const ModelName = {
     inventory_items: 'inventory_items',
     expenses: 'expenses',
     stock_transactions: 'stock_transactions',
-    menu_item_ingredients: 'menu_item_ingredients'
+    menu_item_ingredients: 'menu_item_ingredients',
+    mood_settings: 'mood_settings',
+    mood_feedback_config: 'mood_feedback_config',
+    mood_order_stats: 'mood_order_stats',
+    menu_item_mood_stats: 'menu_item_mood_stats'
 };
 /**
  * Enums
@@ -112,7 +116,6 @@ export const Menu_itemsScalarFieldEnum = {
     prepTime: 'prepTime',
     nutrients: 'nutrients',
     moodBenefits: 'moodBenefits',
-    moodOrderStats: 'moodOrderStats',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };
@@ -139,6 +142,11 @@ export const OrdersScalarFieldEnum = {
     paymentMethod: 'paymentMethod',
     paymentStatus: 'paymentStatus',
     moodContext: 'moodContext',
+    moodFeedbackGiven: 'moodFeedbackGiven',
+    linkedOrderId: 'linkedOrderId',
+    createdBy: 'createdBy',
+    processedBy: 'processedBy',
+    deviceId: 'deviceId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     completedAt: 'completedAt'
@@ -154,6 +162,7 @@ export const Inventory_itemsScalarFieldEnum = {
     costPerUnit: 'costPerUnit',
     supplier: 'supplier',
     status: 'status',
+    restockFrequencyDays: 'restockFrequencyDays',
     lastRestocked: 'lastRestocked',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -185,6 +194,67 @@ export const Menu_item_ingredientsScalarFieldEnum = {
     menuItemId: 'menuItemId',
     inventoryItemId: 'inventoryItemId',
     quantity: 'quantity',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+export const Mood_settingsScalarFieldEnum = {
+    id: 'id',
+    mood: 'mood',
+    emoji: 'emoji',
+    label: 'label',
+    color: 'color',
+    description: 'description',
+    supportMessage: 'supportMessage',
+    scientificExplanation: 'scientificExplanation',
+    beneficialNutrients: 'beneficialNutrients',
+    preferredCategories: 'preferredCategories',
+    excludeCategories: 'excludeCategories',
+    preferredCategoryPoints: 'preferredCategoryPoints',
+    isActive: 'isActive',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+export const Mood_feedback_configScalarFieldEnum = {
+    id: 'id',
+    baselineThreshold: 'baselineThreshold',
+    feedbackEnabled: 'feedbackEnabled',
+    autoEnableFeedback: 'autoEnableFeedback',
+    orderRateWeight: 'orderRateWeight',
+    feedbackRateWeight: 'feedbackRateWeight',
+    moodBenefitsWeight: 'moodBenefitsWeight',
+    preferredCategoryWeight: 'preferredCategoryWeight',
+    featuredItemWeight: 'featuredItemWeight',
+    priceRangeWeight: 'priceRangeWeight',
+    historicalDataWeight: 'historicalDataWeight',
+    timeOfDayWeight: 'timeOfDayWeight',
+    showMoodReflection: 'showMoodReflection',
+    reflectionDelayMinutes: 'reflectionDelayMinutes',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+export const Mood_order_statsScalarFieldEnum = {
+    id: 'id',
+    mood: 'mood',
+    totalShown: 'totalShown',
+    totalOrdered: 'totalOrdered',
+    feedbackCount: 'feedbackCount',
+    moodImproved: 'moodImproved',
+    moodSame: 'moodSame',
+    moodWorse: 'moodWorse',
+    baselineReached: 'baselineReached',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+export const Menu_item_mood_statsScalarFieldEnum = {
+    id: 'id',
+    menuItemId: 'menuItemId',
+    mood: 'mood',
+    timesShown: 'timesShown',
+    timesOrdered: 'timesOrdered',
+    feedbackCount: 'feedbackCount',
+    moodImproved: 'moodImproved',
+    moodSame: 'moodSame',
+    moodWorse: 'moodWorse',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };

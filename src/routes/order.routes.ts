@@ -1,11 +1,77 @@
 import { Router } from 'express';
 import { OrderController } from '../controllers/order.controller.js';
+import { orderEventEmitter } from '../utils/eventEmitter.js';
+import { authenticate } from '../middleware/auth.middleware.js';
+import crypto from 'crypto';
 
 export function createOrderRoutes(orderController: OrderController): Router {
   const router = Router();
 
+  // SSE endpoint for real-time order updates (cashier side)
+  router.get('/events/cashier', (req, res) => {
+    // Set SSE headers
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.flushHeaders();
+
+    const clientId = crypto.randomUUID();
+    orderEventEmitter.addClient({
+      id: clientId,
+      response: res,
+      type: 'cashier'
+    });
+
+    // Send initial connection success event
+    res.write(`event: CONNECTED\n`);
+    res.write(`data: {"clientId": "${clientId}", "type": "cashier"}\n\n`);
+
+    // Handle client disconnect
+    req.on('close', () => {
+      orderEventEmitter.removeClient(clientId);
+    });
+  });
+
+  // SSE endpoint for real-time order updates (customer side)
+  router.get('/events/customer', (req, res) => {
+    const customerId = req.query.customerId as string || req.query.deviceId as string;
+    
+    // Set SSE headers
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.flushHeaders();
+
+    const clientId = crypto.randomUUID();
+    orderEventEmitter.addClient({
+      id: clientId,
+      response: res,
+      type: 'customer',
+      customerId: customerId
+    });
+
+    // Send initial connection success event
+    res.write(`event: CONNECTED\n`);
+    res.write(`data: {"clientId": "${clientId}", "type": "customer", "customerId": "${customerId || 'anonymous'}"}\n\n`);
+
+    // Handle client disconnect
+    req.on('close', () => {
+      orderEventEmitter.removeClient(clientId);
+    });
+  });
+
+  // Get SSE connection status
+  router.get('/events/status', (req, res) => {
+    res.json(orderEventEmitter.getClientCount());
+  });
+
   // Get all orders (optionally filtered by status)
   router.get('/', (req, res) => orderController.getAllOrders(req, res));
+
+  // Track order by order number (for guests) - must come before /:id
+  router.get('/track/:orderNumber', (req, res) => orderController.getOrderByOrderNumber(req, res));
 
   // Get order by ID
   router.get('/:id', (req, res) => orderController.getOrderById(req, res));
@@ -28,8 +94,8 @@ export function createOrderRoutes(orderController: OrderController): Router {
   // Delete order
   router.delete('/:id', (req, res) => orderController.deleteOrder(req, res));
 
-  // Update order status
-  router.patch('/:id/status', (req, res) => orderController.updateOrderStatus(req, res));
+  // Update order status (requires authentication to track who completed the order)
+  router.patch('/:id/status', authenticate, (req, res) => orderController.updateOrderStatus(req, res));
 
   // Mark order as paid
   router.patch('/:id/payment', (req, res) => orderController.markOrderAsPaid(req, res));

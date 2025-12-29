@@ -25,6 +25,18 @@ export class OrderService {
     return order;
   }
 
+  async getOrderByOrderNumber(orderNumber: string) {
+    const order = await this.orderRepository.findByOrderNumber(orderNumber);
+    if (!order) {
+      throw new Error('Order not found');
+    }
+    return order;
+  }
+
+  async getOrdersByDeviceId(deviceId: string, limit: number = 20) {
+    return this.orderRepository.findByDeviceId(deviceId, limit);
+  }
+
   async createOrder(data: CreateOrderDTO) {
     // Validate items
     if (!data.items || data.items.length === 0) {
@@ -60,7 +72,7 @@ export class OrderService {
     return this.orderRepository.findByStatus(status);
   }
 
-  async updateOrderStatus(id: string, status: string) {
+  async updateOrderStatus(id: string, status: string, processedBy?: string | null) {
     const validStatuses = ['PENDING', 'PREPARING', 'READY', 'COMPLETED', 'CANCELLED'];
     if (!validStatuses.includes(status)) {
       throw new Error('Invalid order status');
@@ -70,10 +82,14 @@ export class OrderService {
     const order = await this.getOrderById(id);
     const isCompletingOrder = status === 'COMPLETED' && order.status !== 'COMPLETED';
     
+    // Prepare update data - set processedBy when order is marked as COMPLETED
+    const updateData: any = { status: status as any };
+    if (isCompletingOrder && processedBy) {
+      updateData.processedBy = processedBy;
+    }
+    
     // Update the order status
-    const updatedOrder = await this.orderRepository.update(id, { 
-      status: status as any 
-    });
+    const updatedOrder = await this.orderRepository.update(id, updateData);
 
     // If order is being moved to COMPLETED, deduct inventory (permanent deduction)
     if (isCompletingOrder) {

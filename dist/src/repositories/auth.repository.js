@@ -54,6 +54,8 @@ export class AuthRepository {
             updateData.cardNumber = data.cardNumber;
         if (data.isActive !== undefined)
             updateData.isActive = data.isActive;
+        if (data.role !== undefined)
+            updateData.role = data.role;
         return this.prisma.users.update({
             where: { id },
             data: updateData

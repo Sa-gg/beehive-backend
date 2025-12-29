@@ -8,6 +8,7 @@ export interface AuthRequest extends Request {
     userId: string;
     email: string;
     role: string;
+    name: string;
   };
 }
 
@@ -26,7 +27,8 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
       (req as AuthRequest).user = {
         userId: decoded.userId,
         email: decoded.email,
-        role: decoded.role
+        role: decoded.role,
+        name: decoded.name || decoded.email // Fallback to email if name not in token
       };
       next();
     } catch (error) {

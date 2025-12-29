@@ -12,7 +12,8 @@ export const authenticate = (req, res, next) => {
             req.user = {
                 userId: decoded.userId,
                 email: decoded.email,
-                role: decoded.role
+                role: decoded.role,
+                name: decoded.name || decoded.email // Fallback to email if name not in token
             };
             next();
         }

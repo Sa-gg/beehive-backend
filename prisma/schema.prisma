@@ -39,11 +39,11 @@ model menu_items {
   prepTime              Int?                      @default(5)
   nutrients             String?
   moodBenefits          String?
-  moodOrderStats        String?                   // JSON: { "happy": { "shown": 0, "ordered": 0 }, ... }
   createdAt             DateTime                  @default(now())
   updatedAt             DateTime
   order_items           order_items[]
   menu_item_ingredients menu_item_ingredients[]
+  menu_item_mood_stats  menu_item_mood_stats[]
 
   @@index([available])
   @@index([category])
@@ -67,29 +67,34 @@ model order_items {
 }
 
 model orders {
-  id            String         @id
-  orderNumber   String         @unique
-  customerName  String?
-  tableNumber   String?
-  orderType     order_type     @default(DINE_IN)
-  status        order_status   @default(PENDING)
-  subtotal      Float
-  tax           Float
-  totalAmount   Float
-  paymentMethod String?
-  paymentStatus payment_status @default(UNPAID)
-  moodContext   String?        // Stores mood when order was placed
-  linkedOrderId String?        // Links reordered/related orders
-  createdBy     String?        // User ID who created the order (cashier/manager)
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime
-  completedAt   DateTime?
-  order_items   order_items[]
+  id                 String         @id
+  orderNumber        String         @unique
+  customerName       String?
+  tableNumber        String?
+  orderType          order_type     @default(DINE_IN)
+  status             order_status   @default(PENDING)
+  subtotal           Float
+  tax                Float
+  totalAmount        Float
+  paymentMethod      String?
+  paymentStatus      payment_status @default(UNPAID)
+  moodContext        String?        // Stores mood when order was placed
+  moodFeedbackGiven  Boolean        @default(false) // Track if customer already gave feedback
+  linkedOrderId      String?        // Links reordered/related orders
+  createdBy          String?        // User ID who created the order (cashier/manager) or "CUSTOMER" for phone orders
+  processedBy        String?        // Cashier who processed the order (set when status changes from PENDING)
+  deviceId           String?        // Device ID for guest order tracking
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime
+  completedAt        DateTime?
+  order_items        order_items[]
 
   @@index([createdAt])
   @@index([status])
   @@index([linkedOrderId])
   @@index([createdBy])
+  @@index([deviceId])
+  @@index([processedBy])
 }
 
 model inventory_items {
@@ -275,6 +280,7 @@ model mood_settings {
   beneficialNutrients    String?   // JSON array of nutrients
   preferredCategories    String?   // JSON array of category names
   excludeCategories      String?   // JSON array of categories to exclude
+  preferredCategoryPoints Int      @default(10) // Points awarded for preferred categories
   isActive               Boolean   @default(true)
   createdAt              DateTime  @default(now())
   updatedAt              DateTime
@@ -323,4 +329,25 @@ model mood_order_stats {
 
   @@index([mood])
   @@index([baselineReached])
+}
+
+// Menu Item Mood Statistics (per item per mood tracking)
+model menu_item_mood_stats {
+  id             String     @id
+  menuItemId     String
+  mood           mood_type
+  timesShown     Int        @default(0)   // Times this item was shown for this mood
+  timesOrdered   Int        @default(0)   // Times this item was ordered with this mood
+  feedbackCount  Int        @default(0)   // Times feedback was received for this item+mood
+  moodImproved   Int        @default(0)   // Times mood improved after ordering this item
+  moodSame       Int        @default(0)   // Times mood stayed same
+  moodWorse      Int        @default(0)   // Times mood got worse
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime
+
+  menu_items     menu_items @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  @@unique([menuItemId, mood])  // One record per item per mood
+  @@index([menuItemId])
+  @@index([mood])
 }

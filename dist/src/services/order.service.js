@@ -21,6 +21,16 @@ export class OrderService {
         }
         return order;
     }
+    async getOrderByOrderNumber(orderNumber) {
+        const order = await this.orderRepository.findByOrderNumber(orderNumber);
+        if (!order) {
+            throw new Error('Order not found');
+        }
+        return order;
+    }
+    async getOrdersByDeviceId(deviceId, limit = 20) {
+        return this.orderRepository.findByDeviceId(deviceId, limit);
+    }
     async createOrder(data) {
         // Validate items
         if (!data.items || data.items.length === 0) {
@@ -50,7 +60,7 @@ export class OrderService {
         }
         return this.orderRepository.findByStatus(status);
     }
-    async updateOrderStatus(id, status) {
+    async updateOrderStatus(id, status, processedBy) {
         const validStatuses = ['PENDING', 'PREPARING', 'READY', 'COMPLETED', 'CANCELLED'];
         if (!validStatuses.includes(status)) {
             throw new Error('Invalid order status');
@@ -58,11 +68,14 @@ export class OrderService {
         // Get the order to check if status is changing to COMPLETED
         const order = await this.getOrderById(id);
         const isCompletingOrder = status === 'COMPLETED' && order.status !== 'COMPLETED';
+        // Prepare update data - set processedBy when order is marked as COMPLETED
+        const updateData = { status: status };
+        if (isCompletingOrder && processedBy) {
+            updateData.processedBy = processedBy;
+        }
         // Update the order status
-        const updatedOrder = await this.orderRepository.update(id, {
-            status: status
-        });
-        // If order is being completed, deduct inventory
+        const updatedOrder = await this.orderRepository.update(id, updateData);
+        // If order is being moved to COMPLETED, deduct inventory (permanent deduction)
         if (isCompletingOrder) {
             await this.deductInventoryForCompletedOrder(id);
         }
@@ -74,8 +87,11 @@ export class OrderService {
             paymentMethod
         });
     }
+    async getLinkedOrders(orderId) {
+        return this.orderRepository.findLinkedOrders(orderId);
+    }
     /**
-     * Automatically deduct inventory when an order is completed
+     * Automatically deduct inventory when an order moves to COMPLETED status
      * Uses menu item recipes to calculate required ingredients
      * Creates stock-out transactions for auditability
      * Ensures idempotency using order ID as reference
@@ -170,5 +186,73 @@ export class OrderService {
             console.warn(`⚠️ Some inventory deductions failed for order ${order.orderNumber}`);
             // You could create a notification or alert here
         }
+    }
+    /**
+     * Merge multiple orders into a single receipt/payment
+     * Useful when customer orders multiple times but pays once
+     * Returns merged order data for receipt printing
+     */
+    async mergeOrders(orderIds) {
+        if (orderIds.length < 2) {
+            throw new Error('At least 2 orders are required to merge');
+        }
+        // Fetch all orders
+        const orders = await Promise.all(orderIds.map(id => this.getOrderById(id)));
+        // Validate all orders can be merged
+        for (const order of orders) {
+            if (order.status === 'CANCELLED') {
+                throw new Error(`Cannot merge cancelled order: ${order.orderNumber}`);
+            }
+            if (order.paymentStatus === 'PAID') {
+                throw new Error(`Cannot merge already paid order: ${order.orderNumber}`);
+            }
+        }
+        // Combine all items
+        const allItems = [];
+        for (const order of orders) {
+            for (const item of order.order_items) {
+                const existingItem = allItems.find(i => i.menuItemId === item.menuItemId);
+                if (existingItem) {
+                    existingItem.quantity += item.quantity;
+                    existingItem.subtotal += item.subtotal;
+                }
+                else {
+                    allItems.push({
+                        menuItemId: item.menuItemId,
+                        name: item.menu_items?.name || item.menuItemId,
+                        quantity: item.quantity,
+                        price: item.price,
+                        subtotal: item.subtotal
+                    });
+                }
+            }
+        }
+        // Calculate totals
+        const subtotal = allItems.reduce((sum, item) => sum + item.subtotal, 0);
+        const tax = subtotal * 0.12;
+        const totalAmount = subtotal + tax;
+        // Get primary order info (use first order)
+        const primaryOrder = orders[0];
+        return {
+            mergedOrderIds: orderIds,
+            orderNumbers: orders.map(o => o.orderNumber),
+            customerName: primaryOrder.customerName || orders.find(o => o.customerName)?.customerName,
+            tableNumber: primaryOrder.tableNumber || orders.find(o => o.tableNumber)?.tableNumber,
+            items: allItems,
+            subtotal,
+            tax,
+            totalAmount,
+            orderType: primaryOrder.orderType
+        };
+    }
+    /**
+     * Mark multiple orders as paid at once (for merged orders)
+     */
+    async markMergedOrdersAsPaid(orderIds, paymentMethod) {
+        const results = await Promise.all(orderIds.map(id => this.orderRepository.update(id, {
+            paymentStatus: 'PAID',
+            paymentMethod
+        })));
+        return results;
     }
 }

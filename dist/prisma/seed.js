@@ -12,6 +12,22 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
     console.log('Start seeding default users...');
     const defaultPassword = await bcrypt.hash('password123', 10);
+    // Create Admin
+    const admin = await prisma.users.upsert({
+        where: { email: 'admin@beehive.com' },
+        update: {},
+        create: {
+            id: `user-${Date.now()}-admin`,
+            email: 'admin@beehive.com',
+            password: defaultPassword,
+            name: 'Admin User',
+            role: 'ADMIN',
+            phone: '+1234567800',
+            isActive: true,
+            updatedAt: new Date()
+        }
+    });
+    console.log('Created admin:', admin.email);
     // Create Manager
     const manager = await prisma.users.upsert({
         where: { email: 'manager@beehive.com' },
@@ -80,6 +96,7 @@ async function main() {
     console.log('Created customer:', customer.email);
     console.log('\n✅ Default users created successfully!');
     console.log('\n📧 Login credentials:');
+    console.log('Admin: admin@beehive.com / password123');
     console.log('Manager: manager@beehive.com / password123');
     console.log('Cashier: cashier@beehive.com / password123');
     console.log('Cook: cook@beehive.com / password123');

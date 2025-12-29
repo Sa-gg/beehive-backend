@@ -191,3 +191,81 @@ export const getMenuItemsWithLowStock = async (req, res) => {
         });
     }
 };
+/**
+ * Calculate maximum servings for all menu items
+ * GET /api/recipes/max-servings
+ */
+export const getAllMaxServings = async (_req, res) => {
+    try {
+        const servingsMap = await recipeService.calculateAllMenuItemServings();
+        // Convert Map to object for JSON response
+        const servingsObj = {};
+        for (const [menuItemId, servings] of servingsMap) {
+            servingsObj[menuItemId] = servings;
+        }
+        res.status(200).json({
+            success: true,
+            data: servingsObj,
+        });
+    }
+    catch (error) {
+        console.error('Get max servings error:', error);
+        res.status(400).json({
+            success: false,
+            error: error.message || 'Failed to calculate max servings',
+        });
+    }
+};
+/**
+ * Calculate maximum servings for a single menu item
+ * GET /api/recipes/:menuItemId/max-servings
+ */
+export const getMaxServings = async (req, res) => {
+    try {
+        const { menuItemId } = req.params;
+        const maxServings = await recipeService.calculateMaxServings(menuItemId);
+        res.status(200).json({
+            success: true,
+            data: { menuItemId, maxServings },
+        });
+    }
+    catch (error) {
+        console.error('Get max servings error:', error);
+        res.status(400).json({
+            success: false,
+            error: error.message || 'Failed to calculate max servings',
+        });
+    }
+};
+/**
+ * Calculate maximum servings for all menu items with cart items considered
+ * POST /api/recipes/max-servings-with-cart
+ */
+export const getMaxServingsWithCart = async (req, res) => {
+    try {
+        const { cartItems } = req.body;
+        if (!Array.isArray(cartItems)) {
+            return res.status(400).json({
+                success: false,
+                error: 'cartItems must be an array',
+            });
+        }
+        const servingsMap = await recipeService.calculateAllMenuItemServingsWithCart(cartItems);
+        // Convert Map to object for JSON response
+        const servingsObj = {};
+        for (const [menuItemId, servings] of servingsMap) {
+            servingsObj[menuItemId] = servings;
+        }
+        res.status(200).json({
+            success: true,
+            data: servingsObj,
+        });
+    }
+    catch (error) {
+        console.error('Get max servings with cart error:', error);
+        res.status(400).json({
+            success: false,
+            error: error.message || 'Failed to calculate max servings with cart',
+        });
+    }
+};

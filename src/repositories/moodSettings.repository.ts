@@ -12,6 +12,7 @@ export interface MoodSettingDTO {
   beneficialNutrients?: string[] | null;
   preferredCategories?: string[] | null;
   excludeCategories?: string[] | null;
+  preferredCategoryPoints?: number;
   isActive?: boolean;
 }
 
@@ -356,24 +357,59 @@ export class MoodSettingsRepository {
     return stats;
   }
 
-  async recordMoodFeedback(mood: mood_type, outcome: 'improved' | 'same' | 'worse') {
-    const updateData: any = {
+  async recordMoodFeedback(mood: mood_type, outcome: 'improved' | 'same' | 'worse', orderId: string) {
+    // Check if feedback already given for this order
+    const order = await this.prisma.orders.findUnique({
+      where: { id: orderId },
+      select: { moodFeedbackGiven: true }
+    });
+
+    if (!order) {
+      throw new Error('Order not found');
+    }
+
+    if (order.moodFeedbackGiven) {
+      throw new Error('Feedback already given for this order');
+    }
+
+    const incrementData: any = {
       feedbackCount: { increment: 1 },
       updatedAt: new Date()
     };
 
     if (outcome === 'improved') {
-      updateData.moodImproved = { increment: 1 };
+      incrementData.moodImproved = { increment: 1 };
     } else if (outcome === 'same') {
-      updateData.moodSame = { increment: 1 };
+      incrementData.moodSame = { increment: 1 };
     } else {
-      updateData.moodWorse = { increment: 1 };
+      incrementData.moodWorse = { increment: 1 };
     }
 
-    return this.prisma.mood_order_stats.update({
+    // Use upsert to create record if it doesn't exist
+    const stats = await this.prisma.mood_order_stats.upsert({
       where: { mood },
-      data: updateData
+      update: incrementData,
+      create: {
+        id: `mood_stat_${mood}_${Date.now()}`,
+        mood,
+        totalShown: 0,
+        totalOrdered: 0,
+        feedbackCount: 1,
+        moodImproved: outcome === 'improved' ? 1 : 0,
+        moodSame: outcome === 'same' ? 1 : 0,
+        moodWorse: outcome === 'worse' ? 1 : 0,
+        baselineReached: false,
+        updatedAt: new Date()
+      }
     });
+
+    // Mark order as feedback given
+    await this.prisma.orders.update({
+      where: { id: orderId },
+      data: { moodFeedbackGiven: true, updatedAt: new Date() }
+    });
+
+    return stats;
   }
 
   async resetMoodOrderStats(mood?: mood_type) {
@@ -408,6 +444,139 @@ export class MoodSettingsRepository {
     });
   }
 
+  // ==================== PER-ITEM MOOD STATS ====================
+
+  // Increment shown count for multiple items when mood recommendations are displayed
+  async incrementItemsShown(menuItemIds: string[], mood: mood_type) {
+    const updates = menuItemIds.map(menuItemId =>
+      this.prisma.menu_item_mood_stats.upsert({
+        where: { menuItemId_mood: { menuItemId, mood } },
+        create: {
+          id: randomUUID(),
+          menuItemId,
+          mood,
+          timesShown: 1,
+          updatedAt: new Date()
+        },
+        update: {
+          timesShown: { increment: 1 },
+          updatedAt: new Date()
+        }
+      })
+    );
+
+    await Promise.all(updates);
+    return { message: `Shown stats incremented for ${menuItemIds.length} items` };
+  }
+
+  // Increment ordered count for multiple items when order is placed
+  async incrementItemsOrdered(menuItemIds: string[], mood: mood_type) {
+    const updates = menuItemIds.map(menuItemId =>
+      this.prisma.menu_item_mood_stats.upsert({
+        where: { menuItemId_mood: { menuItemId, mood } },
+        create: {
+          id: randomUUID(),
+          menuItemId,
+          mood,
+          timesOrdered: 1,
+          updatedAt: new Date()
+        },
+        update: {
+          timesOrdered: { increment: 1 },
+          updatedAt: new Date()
+        }
+      })
+    );
+
+    await Promise.all(updates);
+    return { message: `Ordered stats incremented for ${menuItemIds.length} items` };
+  }
+
+  // Record feedback for items in an order
+  async recordItemsFeedback(menuItemIds: string[], mood: mood_type, outcome: 'improved' | 'same' | 'worse') {
+    const incrementData: any = {
+      feedbackCount: { increment: 1 },
+      updatedAt: new Date()
+    };
+
+    if (outcome === 'improved') {
+      incrementData.moodImproved = { increment: 1 };
+    } else if (outcome === 'same') {
+      incrementData.moodSame = { increment: 1 };
+    } else {
+      incrementData.moodWorse = { increment: 1 };
+    }
+
+    const updates = menuItemIds.map(menuItemId =>
+      this.prisma.menu_item_mood_stats.upsert({
+        where: { menuItemId_mood: { menuItemId, mood } },
+        create: {
+          id: randomUUID(),
+          menuItemId,
+          mood,
+          feedbackCount: 1,
+          moodImproved: outcome === 'improved' ? 1 : 0,
+          moodSame: outcome === 'same' ? 1 : 0,
+          moodWorse: outcome === 'worse' ? 1 : 0,
+          updatedAt: new Date()
+        },
+        update: incrementData
+      })
+    );
+
+    await Promise.all(updates);
+    return { message: `Feedback recorded for ${menuItemIds.length} items` };
+  }
+
+  // Get mood stats for a specific menu item
+  async getItemMoodStats(menuItemId: string) {
+    return this.prisma.menu_item_mood_stats.findMany({
+      where: { menuItemId },
+      orderBy: { mood: 'asc' }
+    });
+  }
+
+  // Get all item stats for a specific mood
+  async getMoodItemStats(mood: mood_type) {
+    return this.prisma.menu_item_mood_stats.findMany({
+      where: { mood },
+      include: {
+        menu_items: {
+          select: { id: true, name: true, category: true, price: true, image: true }
+        }
+      },
+      orderBy: { timesOrdered: 'desc' }
+    });
+  }
+
+  // Get top performing items for a mood (highest order rate)
+  async getTopItemsForMood(mood: mood_type, limit: number = 10) {
+    const stats = await this.prisma.menu_item_mood_stats.findMany({
+      where: { 
+        mood,
+        timesShown: { gt: 0 }  // Only items that have been shown
+      },
+      include: {
+        menu_items: {
+          select: { id: true, name: true, category: true, price: true, image: true, available: true }
+        }
+      }
+    });
+
+    // Calculate order rate and sort
+    const scoredStats = stats
+      .filter(s => s.menu_items.available)  // Only available items
+      .map(s => ({
+        ...s,
+        orderRate: s.timesShown > 0 ? s.timesOrdered / s.timesShown : 0,
+        improvementRate: s.feedbackCount > 0 ? s.moodImproved / s.feedbackCount : 0
+      }))
+      .sort((a, b) => b.orderRate - a.orderRate)
+      .slice(0, limit);
+
+    return scoredStats;
+  }
+
   // ==================== ANALYTICS ====================
 
   async getMoodAnalytics() {
@@ -434,5 +603,121 @@ export class MoodSettingsRepository {
         baselineProgress: Math.min(100, Math.round((stat.totalOrdered / config.baselineThreshold) * 100))
       };
     });
+  }
+
+  // Get comprehensive analytics including per-item stats
+  async getDetailedMoodAnalytics(mood: mood_type) {
+    const moodStats = await this.prisma.mood_order_stats.findUnique({
+      where: { mood }
+    });
+    
+    const itemStats = await this.getMoodItemStats(mood);
+    const topItems = await this.getTopItemsForMood(mood, 10);
+    const config = await this.getFeedbackConfig();
+
+    const orderRate = moodStats && moodStats.totalShown > 0 
+      ? moodStats.totalOrdered / moodStats.totalShown 
+      : 0;
+    const improvementRate = moodStats && moodStats.feedbackCount > 0 
+      ? moodStats.moodImproved / moodStats.feedbackCount 
+      : 0;
+
+    return {
+      mood,
+      overallStats: moodStats ? {
+        totalShown: moodStats.totalShown,
+        totalOrdered: moodStats.totalOrdered,
+        orderRate: Math.round(orderRate * 100),
+        feedbackCount: moodStats.feedbackCount,
+        moodImproved: moodStats.moodImproved,
+        moodSame: moodStats.moodSame,
+        moodWorse: moodStats.moodWorse,
+        improvementRate: Math.round(improvementRate * 100),
+        baselineReached: moodStats.baselineReached,
+        baselineProgress: Math.min(100, Math.round((moodStats.totalOrdered / config.baselineThreshold) * 100))
+      } : null,
+      itemStats: itemStats.map(s => ({
+        menuItem: s.menu_items,
+        timesShown: s.timesShown,
+        timesOrdered: s.timesOrdered,
+        orderRate: s.timesShown > 0 ? Math.round((s.timesOrdered / s.timesShown) * 100) : 0,
+        feedbackCount: s.feedbackCount,
+        moodImproved: s.moodImproved,
+        improvementRate: s.feedbackCount > 0 ? Math.round((s.moodImproved / s.feedbackCount) * 100) : 0
+      })),
+      topPerformingItems: topItems.map(s => ({
+        menuItem: s.menu_items,
+        orderRate: Math.round(s.orderRate * 100),
+        improvementRate: Math.round(s.improvementRate * 100),
+        timesOrdered: s.timesOrdered,
+        timesShown: s.timesShown
+      }))
+    };
+  }
+
+  // ==================== RESET FUNCTIONS ====================
+
+  // Reset all mood order stats (mood_order_stats table)
+  async resetAllMoodOrderStats() {
+    await this.prisma.mood_order_stats.updateMany({
+      data: {
+        totalShown: 0,
+        totalOrdered: 0,
+        feedbackCount: 0,
+        moodImproved: 0,
+        moodSame: 0,
+        moodWorse: 0,
+        baselineReached: false
+      }
+    });
+    return { message: 'All mood order stats have been reset' };
+  }
+
+  // Reset mood order stats for a specific mood
+  async resetMoodOrderStatsByMood(mood: mood_type) {
+    await this.prisma.mood_order_stats.update({
+      where: { mood },
+      data: {
+        totalShown: 0,
+        totalOrdered: 0,
+        feedbackCount: 0,
+        moodImproved: 0,
+        moodSame: 0,
+        moodWorse: 0,
+        baselineReached: false
+      }
+    });
+    return { message: `Mood order stats for ${mood} have been reset` };
+  }
+
+  // Reset all menu item mood stats (menu_item_mood_stats table)
+  async resetAllMenuItemMoodStats() {
+    await this.prisma.menu_item_mood_stats.deleteMany({});
+    return { message: 'All menu item mood stats have been reset' };
+  }
+
+  // Reset menu item mood stats for a specific mood
+  async resetMenuItemMoodStatsByMood(mood: mood_type) {
+    await this.prisma.menu_item_mood_stats.deleteMany({
+      where: { mood }
+    });
+    return { message: `Menu item mood stats for ${mood} have been reset` };
+  }
+
+  // Reset menu item mood stats for a specific menu item
+  async resetMenuItemMoodStatsByItem(menuItemId: string) {
+    await this.prisma.menu_item_mood_stats.deleteMany({
+      where: { menuItemId }
+    });
+    return { message: `Mood stats for menu item have been reset` };
+  }
+
+  // Reset ALL mood statistics (both tables)
+  async resetAllMoodStatistics() {
+    await Promise.all([
+      this.resetAllMoodOrderStats(),
+      this.resetAllMenuItemMoodStats()
+    ]);
+    return { message: 'All mood statistics have been reset' };
   }
 }

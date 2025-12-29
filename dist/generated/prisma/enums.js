@@ -38,7 +38,8 @@ export const user_role = {
     CUSTOMER: 'CUSTOMER',
     CASHIER: 'CASHIER',
     COOK: 'COOK',
-    MANAGER: 'MANAGER'
+    MANAGER: 'MANAGER',
+    ADMIN: 'ADMIN'
 };
 export const inventory_category = {
     INGREDIENTS: 'INGREDIENTS',
@@ -75,4 +76,16 @@ export const stock_transaction_reason = {
     WASTE: 'WASTE',
     ADJUSTMENT: 'ADJUSTMENT',
     RECONCILIATION: 'RECONCILIATION'
+};
+export const mood_type = {
+    HAPPY: 'HAPPY',
+    ENERGETIC: 'ENERGETIC',
+    RELAXED: 'RELAXED',
+    EXCITED: 'EXCITED',
+    TIRED: 'TIRED',
+    STRESSED: 'STRESSED',
+    ANXIOUS: 'ANXIOUS',
+    SAD: 'SAD',
+    DEPRESSED: 'DEPRESSED',
+    ANGRY: 'ANGRY'
 };

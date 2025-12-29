@@ -17,9 +17,9 @@ export class AuthService {
     return userWithoutPassword as UserDTO;
   }
 
-  private generateToken(userId: string, email: string, role: string): string {
+  private generateToken(userId: string, email: string, role: string, name: string): string {
     return jwt.sign(
-      { userId, email, role },
+      { userId, email, role, name },
       this.jwtSecret,
       { expiresIn: '7d' }
     );
@@ -60,7 +60,7 @@ export class AuthService {
     }
 
     // Generate token
-    const token = this.generateToken(user.id, user.email, user.role);
+    const token = this.generateToken(user.id, user.email, user.role, user.name);
 
     return {
       user: this.excludePassword(user),
@@ -90,7 +90,7 @@ export class AuthService {
     await this.authRepository.updateLastLogin(user.id);
 
     // Generate token
-    const token = this.generateToken(user.id, user.email, user.role);
+    const token = this.generateToken(user.id, user.email, user.role, user.name);
 
     return {
       user: this.excludePassword(user),

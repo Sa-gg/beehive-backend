@@ -44,6 +44,47 @@ class SettingsController {
       res.status(500).json({ error: 'Failed to reset order numbers' });
     }
   };
+  
+  validateManagerPin = async (req: Request, res: Response) => {
+    try {
+      const { pin } = req.body;
+      
+      if (!pin || typeof pin !== 'string' || pin.length !== 4) {
+        return res.status(400).json({ error: 'PIN must be 4 digits' });
+      }
+      
+      const isValid = this.settingsService.validateManagerPin(pin);
+      res.json({ valid: isValid });
+    } catch (error) {
+      console.error('Error validating PIN:', error);
+      res.status(500).json({ error: 'Failed to validate PIN' });
+    }
+  };
+  
+  updateManagerPin = async (req: Request, res: Response) => {
+    try {
+      const { currentPin, newPin } = req.body;
+      
+      if (!currentPin || typeof currentPin !== 'string' || currentPin.length !== 4) {
+        return res.status(400).json({ error: 'Current PIN must be 4 digits' });
+      }
+      
+      if (!newPin || typeof newPin !== 'string' || newPin.length !== 4) {
+        return res.status(400).json({ error: 'New PIN must be 4 digits' });
+      }
+      
+      // Validate current PIN first
+      if (!this.settingsService.validateManagerPin(currentPin)) {
+        return res.status(401).json({ error: 'Current PIN is incorrect' });
+      }
+      
+      this.settingsService.updateManagerPin(newPin);
+      res.json({ success: true, message: 'Manager PIN updated successfully' });
+    } catch (error) {
+      console.error('Error updating manager PIN:', error);
+      res.status(500).json({ error: 'Failed to update manager PIN' });
+    }
+  };
 }
 
 export { SettingsController };

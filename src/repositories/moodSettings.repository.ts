@@ -28,6 +28,16 @@ export interface MoodFeedbackConfigDTO {
   priceRangeWeight?: number;
   historicalDataWeight?: number;
   timeOfDayWeight?: number;
+  explorationBonusWeight?: number;
+  minimumOrdersThreshold?: number;
+  // Time of day configuration
+  morningStartHour?: number;
+  morningEndHour?: number;
+  afternoonEndHour?: number;
+  morningCategories?: string[];
+  afternoonCategories?: string[];
+  eveningCategories?: string[];
+  // UI settings
   showMoodReflection?: boolean;
   reflectionDelayMinutes?: number;
 }
@@ -253,15 +263,27 @@ export class MoodSettingsRepository {
   }
 
   async updateFeedbackConfig(data: MoodFeedbackConfigDTO) {
+    // Handle array fields - convert to JSON strings
+    const processedData: any = { ...data };
+    if (data.morningCategories !== undefined) {
+      processedData.morningCategories = JSON.stringify(data.morningCategories);
+    }
+    if (data.afternoonCategories !== undefined) {
+      processedData.afternoonCategories = JSON.stringify(data.afternoonCategories);
+    }
+    if (data.eveningCategories !== undefined) {
+      processedData.eveningCategories = JSON.stringify(data.eveningCategories);
+    }
+
     return this.prisma.mood_feedback_config.upsert({
       where: { id: 'default' },
       create: {
         id: 'default',
-        ...data,
+        ...processedData,
         updatedAt: new Date()
       },
       update: {
-        ...data,
+        ...processedData,
         updatedAt: new Date()
       }
     });
@@ -361,7 +383,12 @@ export class MoodSettingsRepository {
     // Check if feedback already given for this order
     const order = await this.prisma.orders.findUnique({
       where: { id: orderId },
-      select: { moodFeedbackGiven: true }
+      select: { 
+        moodFeedbackGiven: true,
+        order_items: {
+          select: { menuItemId: true }
+        }
+      }
     });
 
     if (!order) {
@@ -385,7 +412,7 @@ export class MoodSettingsRepository {
       incrementData.moodWorse = { increment: 1 };
     }
 
-    // Use upsert to create record if it doesn't exist
+    // Update mood_order_stats (aggregated per mood)
     const stats = await this.prisma.mood_order_stats.upsert({
       where: { mood },
       update: incrementData,
@@ -402,6 +429,44 @@ export class MoodSettingsRepository {
         updatedAt: new Date()
       }
     });
+
+    // Update menu_item_mood_stats for each item in the order
+    const menuItemIds = order.order_items.map(item => item.menuItemId);
+    if (menuItemIds.length > 0) {
+      const itemIncrementData: any = {
+        feedbackCount: { increment: 1 },
+        updatedAt: new Date()
+      };
+      if (outcome === 'improved') {
+        itemIncrementData.moodImproved = { increment: 1 };
+      } else if (outcome === 'same') {
+        itemIncrementData.moodSame = { increment: 1 };
+      } else {
+        itemIncrementData.moodWorse = { increment: 1 };
+      }
+
+      // Update feedback stats for each menu item in this order
+      for (const menuItemId of menuItemIds) {
+        await this.prisma.menu_item_mood_stats.upsert({
+          where: {
+            menuItemId_mood: { menuItemId, mood }
+          },
+          update: itemIncrementData,
+          create: {
+            id: `item_mood_${menuItemId}_${mood}_${Date.now()}`,
+            menuItemId,
+            mood,
+            timesShown: 0,
+            timesOrdered: 0,
+            feedbackCount: 1,
+            moodImproved: outcome === 'improved' ? 1 : 0,
+            moodSame: outcome === 'same' ? 1 : 0,
+            moodWorse: outcome === 'worse' ? 1 : 0,
+            updatedAt: new Date()
+          }
+        });
+      }
+    }
 
     // Mark order as feedback given
     await this.prisma.orders.update({

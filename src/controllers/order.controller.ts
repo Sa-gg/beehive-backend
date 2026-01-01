@@ -155,6 +155,7 @@ export class OrderController {
   }
 
   // Void an order (sets payment status to VOIDED)
+  // If order was COMPLETED, also replenishes stock since the order didn't happen
   async voidOrder(req: Request, res: Response) {
     try {
       const { reason, authorizedBy } = req.body;
@@ -165,11 +166,14 @@ export class OrderController {
         return res.status(400).json({ error: 'Manager authorization is required' });
       }
       
-      const order = await this.orderService.updateOrder(req.params.id, {
-        status: 'CANCELLED',
-        paymentStatus: 'VOIDED',
-        notes: reason,
-        authorizedBy: authorizedBy
+      // Get the logged-in user name for processedBy
+      const processedBy = (req as any).user?.name || null;
+      
+      // Void the order and replenish stock if it was completed
+      const order = await this.orderService.voidOrder(req.params.id, {
+        reason,
+        authorizedBy,
+        processedBy
       });
       
       orderEventEmitter.broadcastOrderUpdate(order);
@@ -190,10 +194,14 @@ export class OrderController {
         return res.status(400).json({ error: 'Manager authorization is required' });
       }
       
+      // Get the logged-in user name for processedBy
+      const processedBy = (req as any).user?.name || null;
+      
       const order = await this.orderService.updateOrder(req.params.id, {
         paymentStatus: 'REFUNDED',
         notes: reason,
-        authorizedBy: authorizedBy
+        authorizedBy: authorizedBy,
+        processedBy: processedBy
       });
       
       orderEventEmitter.broadcastOrderUpdate(order);
@@ -214,10 +222,14 @@ export class OrderController {
         return res.status(400).json({ error: 'Manager authorization is required' });
       }
       
+      // Get the logged-in user name for processedBy
+      const processedBy = (req as any).user?.name || null;
+      
       const order = await this.orderService.updateOrder(req.params.id, {
         paymentStatus: 'COMPLIMENTARY',
         notes: reason,
         authorizedBy: authorizedBy,
+        processedBy: processedBy,
         paidAt: new Date().toISOString() // Mark as settled
       });
       
@@ -239,10 +251,14 @@ export class OrderController {
         return res.status(400).json({ error: 'Manager authorization is required' });
       }
       
+      // Get the logged-in user name for processedBy
+      const processedBy = (req as any).user?.name || null;
+      
       const order = await this.orderService.updateOrder(req.params.id, {
         paymentStatus: 'WRITTEN_OFF',
         notes: reason,
-        authorizedBy: authorizedBy
+        authorizedBy: authorizedBy,
+        processedBy: processedBy
       });
       
       orderEventEmitter.broadcastOrderUpdate(order);

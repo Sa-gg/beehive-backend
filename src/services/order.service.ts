@@ -111,6 +111,127 @@ export class OrderService {
   }
 
   /**
+   * Void an order - sets payment status to VOIDED and status to CANCELLED
+   * If order was COMPLETED, also replenishes stock since the order didn't actually happen
+   */
+  async voidOrder(orderId: string, params: {
+    reason: string;
+    authorizedBy: string;
+    processedBy?: string | null;
+  }) {
+    // Get the order first to check its status
+    const order = await this.getOrderById(orderId);
+    const wasCompleted = order.status === 'COMPLETED';
+    
+    // Update the order status to CANCELLED and paymentStatus to VOIDED
+    const updatedOrder = await this.orderRepository.update(orderId, {
+      status: 'CANCELLED',
+      paymentStatus: 'VOIDED',
+      notes: params.reason,
+      authorizedBy: params.authorizedBy,
+      processedBy: params.processedBy
+    });
+    
+    // If the order was completed, we need to replenish the stock
+    if (wasCompleted) {
+      await this.replenishInventoryForVoidedOrder(orderId, params.reason);
+    }
+    
+    return updatedOrder;
+  }
+
+  /**
+   * Replenish inventory when a COMPLETED order is voided
+   * Returns the ingredients that were deducted when the order was completed
+   */
+  private async replenishInventoryForVoidedOrder(orderId: string, reason: string): Promise<void> {
+    // Get order with items
+    const order = await prisma.orders.findUnique({
+      where: { id: orderId },
+      include: {
+        order_items: {
+          include: {
+            menu_items: true,
+          },
+        },
+      },
+    });
+
+    if (!order) {
+      throw new Error(`Order ${orderId} not found`);
+    }
+
+    // Get all menu item IDs from the order
+    const menuItemIds = order.order_items.map((item) => item.menuItemId);
+
+    // Get recipes for all menu items in the order
+    const recipes = await prisma.menu_item_ingredients.findMany({
+      where: {
+        menuItemId: { in: menuItemIds },
+      },
+      include: {
+        inventory_item: true,
+        menu_item: true,
+      },
+    });
+
+    // Group recipes by inventory item and calculate total required quantity
+    const inventoryRequirements = new Map<string, {
+      inventoryItemId: string;
+      inventoryItemName: string;
+      unit: string;
+      totalRequired: number;
+    }>();
+
+    for (const orderItem of order.order_items) {
+      const menuItemRecipes = recipes.filter(
+        (recipe) => recipe.menuItemId === orderItem.menuItemId
+      );
+
+      for (const recipe of menuItemRecipes) {
+        const key = recipe.inventoryItemId;
+        const existingReq = inventoryRequirements.get(key);
+
+        if (existingReq) {
+          existingReq.totalRequired += recipe.quantity * orderItem.quantity;
+        } else {
+          inventoryRequirements.set(key, {
+            inventoryItemId: recipe.inventoryItemId,
+            inventoryItemName: recipe.inventory_item.name,
+            unit: recipe.inventory_item.unit,
+            totalRequired: recipe.quantity * orderItem.quantity,
+          });
+        }
+      }
+    }
+
+    // Replenish inventory for each ingredient (stock IN with VOID reason)
+    for (const [_, requirement] of inventoryRequirements) {
+      try {
+        await stockTransactionService.stockIn({
+          inventoryItemId: requirement.inventoryItemId,
+          quantity: requirement.totalRequired,
+          reason: 'VOID',
+          referenceId: `void_${orderId}`,
+          notes: `Stock replenished - voided order ${order.orderNumber}: ${reason}`,
+        });
+
+        console.log(
+          `✓ Replenished ${requirement.totalRequired} ${requirement.unit} of ${requirement.inventoryItemName} for voided order ${order.orderNumber}`
+        );
+      } catch (error: any) {
+        console.error(
+          `✗ Failed to replenish ${requirement.inventoryItemName}: ${error.message}`
+        );
+      }
+    }
+
+    console.log(
+      `Stock replenishment completed for voided order ${order.orderNumber}`
+    );
+  }
+
+  /**
    * Automatically deduct inventory when an order moves to COMPLETED status
    * Uses menu item recipes to calculate required ingredients
    * Creates stock-out transactions for auditability

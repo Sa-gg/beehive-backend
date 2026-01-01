@@ -6,14 +6,17 @@ class SettingsRepository {
   private settings: SettingsDTO = {
     openTime: '08:00',
     closeTime: '22:00',
-    lastResetDate: null
+    lastResetDate: null,
+    managerPin: '1234' // Default manager PIN
   };
   
   // Flag to force reset on next order
   private forceResetFlag: boolean = false;
 
   getAllSettings(): SettingsDTO {
-    return { ...this.settings };
+    // Return settings without exposing the actual PIN
+    const { managerPin, ...publicSettings } = this.settings;
+    return { ...publicSettings };
   }
 
   updateSettings(settings: Partial<SettingsDTO>): void {
@@ -42,6 +45,18 @@ class SettingsRepository {
 
   setForceResetFlag(value: boolean): void {
     this.forceResetFlag = value;
+  }
+  
+  getManagerPin(): string {
+    return this.settings.managerPin || '1234';
+  }
+  
+  setManagerPin(pin: string): void {
+    this.settings.managerPin = pin;
+  }
+  
+  validateManagerPin(pin: string): boolean {
+    return this.settings.managerPin === pin;
   }
 }
 

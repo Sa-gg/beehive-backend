@@ -17,6 +17,14 @@ class SettingsService {
     // Set the force reset flag - next order will reset to 1
     this.settingsRepository.setForceResetFlag(true);
   }
+  
+  validateManagerPin(pin: string): boolean {
+    return this.settingsRepository.validateManagerPin(pin);
+  }
+  
+  updateManagerPin(pin: string): void {
+    this.settingsRepository.setManagerPin(pin);
+  }
 }
 
 export { SettingsService };

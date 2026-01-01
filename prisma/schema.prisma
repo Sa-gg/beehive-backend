@@ -223,6 +223,7 @@ enum stock_transaction_reason {
   WASTE
   ADJUSTMENT
   RECONCILIATION
+  VOID            // Stock returned when an order is voided
 }
 
 // Stock Transactions Model
@@ -314,6 +315,15 @@ model mood_feedback_config {
   priceRangeWeight          Int      @default(5)      // Points for price range match
   historicalDataWeight      Int      @default(15)     // Points for historical success
   timeOfDayWeight           Int      @default(5)      // Points for time-based preference
+  explorationBonusWeight    Int      @default(3)      // Max points for UCB exploration bonus
+  minimumOrdersThreshold    Int      @default(10)     // Min orders before trusting historical data
+  // Time of day configuration (JSON format)
+  morningStartHour          Int      @default(6)      // Morning starts at 6 AM
+  morningEndHour            Int      @default(12)     // Morning ends at 12 PM
+  afternoonEndHour          Int      @default(18)     // Afternoon ends at 6 PM (evening starts)
+  morningCategories         String   @default("[\"HOT_DRINKS\"]")  // Categories boosted in morning
+  afternoonCategories       String   @default("[]")   // Categories boosted in afternoon
+  eveningCategories         String   @default("[\"HOT_DRINKS\",\"PLATTER\"]")  // Categories boosted in evening
   // UI settings
   showMoodReflection        Boolean  @default(true)   // Show mood reflection modal after order
   reflectionDelayMinutes    Int      @default(15)     // Wait time before showing reflection

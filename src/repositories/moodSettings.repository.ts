@@ -30,6 +30,8 @@ export interface MoodFeedbackConfigDTO {
   timeOfDayWeight?: number;
   explorationBonusWeight?: number;
   minimumOrdersThreshold?: number;
+  excludedCategoryPenalty?: number;
+  day0PositionShuffle?: boolean;
   // Time of day configuration
   morningStartHour?: number;
   morningEndHour?: number;
@@ -40,6 +42,7 @@ export interface MoodFeedbackConfigDTO {
   // UI settings
   showMoodReflection?: boolean;
   reflectionDelayMinutes?: number;
+  showRankingNumbers?: boolean;
 }
 
 export interface MoodOrderStatsDTO {
@@ -601,16 +604,46 @@ export class MoodSettingsRepository {
     });
   }
 
-  // Get all item stats for a specific mood
+  // Get all item stats for a specific mood (includes ALL menu items, not just those with stats)
   async getMoodItemStats(mood: mood_type) {
-    return this.prisma.menu_item_mood_stats.findMany({
+    // Get all available menu items first
+    const allMenuItems = await this.prisma.menu_items.findMany({
+      where: { available: true },
+      select: { id: true, name: true, category: true, price: true, image: true, featured: true, moodBenefits: true }
+    });
+
+    // Get existing mood stats for this mood
+    const existingStats = await this.prisma.menu_item_mood_stats.findMany({
       where: { mood },
       include: {
         menu_items: {
-          select: { id: true, name: true, category: true, price: true, image: true }
+          select: { id: true, name: true, category: true, price: true, image: true, featured: true, moodBenefits: true }
         }
-      },
-      orderBy: { timesOrdered: 'desc' }
+      }
+    });
+
+    // Create a map of existing stats by menuItemId
+    const statsMap = new Map(existingStats.map(s => [s.menuItemId, s]));
+
+    // Return all menu items with their stats (or zero stats if none exist)
+    return allMenuItems.map(menuItem => {
+      const existingStat = statsMap.get(menuItem.id);
+      if (existingStat) {
+        return existingStat;
+      }
+      // Return a synthetic record for items without mood stats (Cold-Start items)
+      return {
+        id: `synthetic-${menuItem.id}-${mood}`,
+        menuItemId: menuItem.id,
+        mood,
+        timesShown: 0,
+        timesOrdered: 0,
+        feedbackCount: 0,
+        moodImproved: 0,
+        moodSame: 0,
+        moodWorse: 0,
+        menu_items: menuItem
+      };
     });
   }
 

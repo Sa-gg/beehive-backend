@@ -1,0 +1,20 @@
+{
+  "createdAt": "2026-01-02T11:08:57.951Z",
+  "totalRecords": 0,
+  "tables": [
+    "users",
+    "menu_items",
+    "orders",
+    "order_items",
+    "customers",
+    "inventory_items",
+    "stock_transactions",
+    "recipes",
+    "recipe_ingredients",
+    "expenses",
+    "mood_settings",
+    "mood_order_stats",
+    "mood_feedback_config",
+    "menu_item_mood_stats"
+  ]
+}

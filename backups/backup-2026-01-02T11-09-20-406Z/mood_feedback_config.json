@@ -1,0 +1,31 @@
+[
+  {
+    "id": "default",
+    "baselineThreshold": 50,
+    "feedbackEnabled": false,
+    "autoEnableFeedback": true,
+    "orderRateWeight": 0.6,
+    "feedbackRateWeight": 0.4,
+    "moodBenefitsWeight": 20,
+    "preferredCategoryWeight": 10,
+    "featuredItemWeight": 5,
+    "priceRangeWeight": 5,
+    "historicalDataWeight": 15,
+    "timeOfDayWeight": 5,
+    "showMoodReflection": true,
+    "reflectionDelayMinutes": 1,
+    "createdAt": "2025-12-27T08:12:17.794Z",
+    "updatedAt": "2025-12-30T00:45:58.669Z",
+    "afternoonCategories": "[]",
+    "afternoonEndHour": 18,
+    "eveningCategories": "[\"HOT_DRINKS\",\"PLATTER\"]",
+    "morningCategories": "[\"HOT_DRINKS\"]",
+    "morningEndHour": 12,
+    "morningStartHour": 6,
+    "explorationBonusWeight": 3,
+    "minimumOrdersThreshold": 10,
+    "excludedCategoryPenalty": 0,
+    "day0PositionShuffle": true,
+    "showRankingNumbers": false
+  }
+]

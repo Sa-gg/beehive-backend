@@ -23,6 +23,10 @@ export interface OrderDTO {
   tax: number;
   totalAmount: number;
   discountAmount: number;
+  deliveryFee: number;
+  serviceFee: number;
+  cashReceived: number | null;
+  changeAmount: number | null;
   paymentMethod: string | null;
   paymentStatus: PaymentStatus;
   linkedOrderId: string | null;
@@ -46,6 +50,9 @@ export interface CreateOrderDTO {
   linkedOrderId?: string; // Link to original order when reordering
   createdBy?: string; // User ID who created the order
   deviceId?: string; // Device ID for guest order tracking
+  deliveryFee?: number;
+  serviceFee?: number;
+  discountAmount?: number;
   items: Array<{
     menuItemId: string;
     quantity: number;
@@ -63,6 +70,10 @@ export interface UpdateOrderDTO {
   paymentStatus?: PaymentStatus;
   processedBy?: string | null;
   discountAmount?: number;
+  deliveryFee?: number;
+  serviceFee?: number;
+  cashReceived?: number | null;
+  changeAmount?: number | null;
   notes?: string | null;
   authorizedBy?: string | null;
   paidAt?: string | null;

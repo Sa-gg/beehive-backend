@@ -99,7 +99,10 @@ export class OrderRepository {
     // Calculate totals - tax is already included in menu item prices
     const subtotal = data.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const tax = 0; // Tax is included in item prices
-    const totalAmount = subtotal;
+    const deliveryFee = data.deliveryFee || 0;
+    const serviceFee = data.serviceFee || 0;
+    const discountAmount = data.discountAmount || 0;
+    const totalAmount = subtotal + deliveryFee + serviceFee - discountAmount;
 
     // Track mood-based orders if mood context is provided
     if (data.moodContext) {
@@ -134,6 +137,9 @@ export class OrderRepository {
         deviceId: data.deviceId || null,
         subtotal,
         tax,
+        deliveryFee,
+        serviceFee,
+        discountAmount,
         totalAmount,
         paymentMethod: data.paymentMethod || null,
         status: 'PENDING',
@@ -178,6 +184,10 @@ export class OrderRepository {
     }
     if (data.processedBy !== undefined) updateData.processedBy = data.processedBy;
     if (data.discountAmount !== undefined) updateData.discountAmount = data.discountAmount;
+    if (data.deliveryFee !== undefined) updateData.deliveryFee = data.deliveryFee;
+    if (data.serviceFee !== undefined) updateData.serviceFee = data.serviceFee;
+    if (data.cashReceived !== undefined) updateData.cashReceived = data.cashReceived;
+    if (data.changeAmount !== undefined) updateData.changeAmount = data.changeAmount;
     if (data.notes !== undefined) updateData.notes = data.notes;
     if (data.authorizedBy !== undefined) updateData.authorizedBy = data.authorizedBy;
     if (data.paidAt !== undefined) updateData.paidAt = data.paidAt ? new Date(data.paidAt) : null;

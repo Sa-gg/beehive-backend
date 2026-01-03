@@ -76,7 +76,11 @@ model orders {
   subtotal           Float
   tax                Float
   discountAmount     Float          @default(0)   // For Comp/VIP/Promos
+  deliveryFee        Float          @default(0)   // Delivery fee
+  serviceFee         Float          @default(0)   // Service charge
   totalAmount        Float
+  cashReceived       Float?         // Cash amount given by customer
+  changeAmount       Float?         // Change to return to customer
   paymentMethod      String?
   paymentStatus      payment_status @default(UNPAID)
   moodContext        String?        // Stores mood when order was placed

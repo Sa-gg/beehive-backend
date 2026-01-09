@@ -144,4 +144,106 @@ export class OrderController {
             res.status(400).json({ error: error.message });
         }
     }
+    // Void an order (sets payment status to VOIDED)
+    // If order was COMPLETED, also replenishes stock since the order didn't happen
+    async voidOrder(req, res) {
+        try {
+            const { reason, authorizedBy } = req.body;
+            if (!reason) {
+                return res.status(400).json({ error: 'Reason is required for voiding an order' });
+            }
+            if (!authorizedBy) {
+                return res.status(400).json({ error: 'Manager authorization is required' });
+            }
+            // Get the logged-in user name for processedBy
+            const processedBy = req.user?.name || null;
+            // Void the order and replenish stock if it was completed
+            const order = await this.orderService.voidOrder(req.params.id, {
+                reason,
+                authorizedBy,
+                processedBy
+            });
+            orderEventEmitter.broadcastOrderUpdate(order);
+            res.json(order);
+        }
+        catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
+    // Refund a paid order
+    async refundOrder(req, res) {
+        try {
+            const { reason, authorizedBy } = req.body;
+            if (!reason) {
+                return res.status(400).json({ error: 'Reason is required for refunding an order' });
+            }
+            if (!authorizedBy) {
+                return res.status(400).json({ error: 'Manager authorization is required' });
+            }
+            // Get the logged-in user name for processedBy
+            const processedBy = req.user?.name || null;
+            const order = await this.orderService.updateOrder(req.params.id, {
+                paymentStatus: 'REFUNDED',
+                notes: reason,
+                authorizedBy: authorizedBy,
+                processedBy: processedBy
+            });
+            orderEventEmitter.broadcastOrderUpdate(order);
+            res.json(order);
+        }
+        catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
+    // Mark order as complimentary
+    async markAsComplimentary(req, res) {
+        try {
+            const { reason, authorizedBy } = req.body;
+            if (!reason) {
+                return res.status(400).json({ error: 'Reason is required for complimentary orders' });
+            }
+            if (!authorizedBy) {
+                return res.status(400).json({ error: 'Manager authorization is required' });
+            }
+            // Get the logged-in user name for processedBy
+            const processedBy = req.user?.name || null;
+            const order = await this.orderService.updateOrder(req.params.id, {
+                paymentStatus: 'COMPLIMENTARY',
+                notes: reason,
+                authorizedBy: authorizedBy,
+                processedBy: processedBy,
+                paidAt: new Date().toISOString() // Mark as settled
+            });
+            orderEventEmitter.broadcastOrderUpdate(order);
+            res.json(order);
+        }
+        catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
+    // Write off an unpaid order (customer left without paying)
+    async writeOff(req, res) {
+        try {
+            const { reason, authorizedBy } = req.body;
+            if (!reason) {
+                return res.status(400).json({ error: 'Reason is required for write-off' });
+            }
+            if (!authorizedBy) {
+                return res.status(400).json({ error: 'Manager authorization is required' });
+            }
+            // Get the logged-in user name for processedBy
+            const processedBy = req.user?.name || null;
+            const order = await this.orderService.updateOrder(req.params.id, {
+                paymentStatus: 'WRITTEN_OFF',
+                notes: reason,
+                authorizedBy: authorizedBy,
+                processedBy: processedBy
+            });
+            orderEventEmitter.broadcastOrderUpdate(order);
+            res.json(order);
+        }
+        catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
 }

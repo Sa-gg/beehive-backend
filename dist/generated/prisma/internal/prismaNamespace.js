@@ -68,6 +68,7 @@ export const JsonNull = runtime.JsonNull;
 export const AnyNull = runtime.AnyNull;
 export const ModelName = {
     users: 'users',
+    categories: 'categories',
     menu_items: 'menu_items',
     order_items: 'order_items',
     orders: 'orders',
@@ -103,10 +104,19 @@ export const UsersScalarFieldEnum = {
     updatedAt: 'updatedAt',
     lastLoginAt: 'lastLoginAt'
 };
+export const CategoriesScalarFieldEnum = {
+    id: 'id',
+    name: 'name',
+    displayName: 'displayName',
+    description: 'description',
+    sortOrder: 'sortOrder',
+    isActive: 'isActive',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
 export const Menu_itemsScalarFieldEnum = {
     id: 'id',
     name: 'name',
-    category: 'category',
     price: 'price',
     cost: 'cost',
     image: 'image',
@@ -117,7 +127,8 @@ export const Menu_itemsScalarFieldEnum = {
     nutrients: 'nutrients',
     moodBenefits: 'moodBenefits',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    categoryId: 'categoryId'
 };
 export const Order_itemsScalarFieldEnum = {
     id: 'id',
@@ -134,22 +145,30 @@ export const OrdersScalarFieldEnum = {
     orderNumber: 'orderNumber',
     customerName: 'customerName',
     tableNumber: 'tableNumber',
-    orderType: 'orderType',
     status: 'status',
     subtotal: 'subtotal',
     tax: 'tax',
     totalAmount: 'totalAmount',
     paymentMethod: 'paymentMethod',
     paymentStatus: 'paymentStatus',
-    moodContext: 'moodContext',
-    moodFeedbackGiven: 'moodFeedbackGiven',
-    linkedOrderId: 'linkedOrderId',
-    createdBy: 'createdBy',
-    processedBy: 'processedBy',
-    deviceId: 'deviceId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    completedAt: 'completedAt'
+    completedAt: 'completedAt',
+    orderType: 'orderType',
+    moodContext: 'moodContext',
+    linkedOrderId: 'linkedOrderId',
+    createdBy: 'createdBy',
+    moodFeedbackGiven: 'moodFeedbackGiven',
+    deviceId: 'deviceId',
+    processedBy: 'processedBy',
+    authorizedBy: 'authorizedBy',
+    discountAmount: 'discountAmount',
+    notes: 'notes',
+    paidAt: 'paidAt',
+    cashReceived: 'cashReceived',
+    changeAmount: 'changeAmount',
+    deliveryFee: 'deliveryFee',
+    serviceFee: 'serviceFee'
 };
 export const Inventory_itemsScalarFieldEnum = {
     id: 'id',
@@ -162,10 +181,10 @@ export const Inventory_itemsScalarFieldEnum = {
     costPerUnit: 'costPerUnit',
     supplier: 'supplier',
     status: 'status',
-    restockFrequencyDays: 'restockFrequencyDays',
     lastRestocked: 'lastRestocked',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    restockFrequencyDays: 'restockFrequencyDays'
 };
 export const ExpensesScalarFieldEnum = {
     id: 'id',
@@ -230,7 +249,18 @@ export const Mood_feedback_configScalarFieldEnum = {
     showMoodReflection: 'showMoodReflection',
     reflectionDelayMinutes: 'reflectionDelayMinutes',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    afternoonCategories: 'afternoonCategories',
+    afternoonEndHour: 'afternoonEndHour',
+    eveningCategories: 'eveningCategories',
+    morningCategories: 'morningCategories',
+    morningEndHour: 'morningEndHour',
+    morningStartHour: 'morningStartHour',
+    explorationBonusWeight: 'explorationBonusWeight',
+    minimumOrdersThreshold: 'minimumOrdersThreshold',
+    excludedCategoryPenalty: 'excludedCategoryPenalty',
+    day0PositionShuffle: 'day0PositionShuffle',
+    showRankingNumbers: 'showRankingNumbers'
 };
 export const Mood_order_statsScalarFieldEnum = {
     id: 'id',

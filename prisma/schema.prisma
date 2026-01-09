@@ -8,16 +8,16 @@ datasource db {
 }
 
 model users {
-  id            String     @id
-  email         String     @unique
+  id            String    @id
+  email         String    @unique
   password      String
   name          String
-  role          user_role  @default(CUSTOMER)
+  role          user_role @default(CUSTOMER)
   phone         String?
-  loyaltyPoints Int        @default(0)
-  cardNumber    String?    @unique
-  isActive      Boolean    @default(true)
-  createdAt     DateTime   @default(now())
+  loyaltyPoints Int       @default(0)
+  cardNumber    String?   @unique
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
   updatedAt     DateTime
   lastLoginAt   DateTime?
 
@@ -26,28 +26,45 @@ model users {
   @@index([cardNumber])
 }
 
+model categories {
+  id          String       @id @db.VarChar(255)
+  name        String       @unique @db.VarChar(255)
+  displayName String       @db.VarChar(255)
+  description String?
+  sortOrder   Int?         @default(0)
+  isActive    Boolean?     @default(true)
+  createdAt   DateTime?    @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime?    @default(now()) @db.Timestamp(6)
+  menu_items  menu_items[]
+
+  @@index([name])
+  @@index([isActive], map: "categories_isactive_idx")
+  @@index([sortOrder], map: "categories_sortorder_idx")
+}
+
 model menu_items {
-  id                    String                    @id
+  id                    String                  @id
   name                  String
-  category              category
   price                 Float
-  cost                  Float?                    @default(0)
+  cost                  Float?                  @default(0)
   image                 String?
   description           String?
-  available             Boolean                   @default(true)
-  featured              Boolean                   @default(false)
-  prepTime              Int?                      @default(5)
+  available             Boolean                 @default(true)
+  featured              Boolean                 @default(false)
+  prepTime              Int?                    @default(5)
   nutrients             String?
   moodBenefits          String?
-  createdAt             DateTime                  @default(now())
+  createdAt             DateTime                @default(now())
   updatedAt             DateTime
-  order_items           order_items[]
+  categoryId            String                  @db.VarChar(255)
   menu_item_ingredients menu_item_ingredients[]
   menu_item_mood_stats  menu_item_mood_stats[]
+  category              categories              @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "menu_items_categoryid_fkey")
+  order_items           order_items[]
 
   @@index([available])
-  @@index([category])
   @@index([featured])
+  @@index([categoryId], map: "menu_items_categoryid_idx")
 }
 
 model order_items {
@@ -67,35 +84,35 @@ model order_items {
 }
 
 model orders {
-  id                 String         @id
-  orderNumber        String         @unique
-  customerName       String?
-  tableNumber        String?
-  orderType          order_type     @default(DINE_IN)
-  status             order_status   @default(PENDING)
-  subtotal           Float
-  tax                Float
-  discountAmount     Float          @default(0)   // For Comp/VIP/Promos
-  deliveryFee        Float          @default(0)   // Delivery fee
-  serviceFee         Float          @default(0)   // Service charge
-  totalAmount        Float
-  cashReceived       Float?         // Cash amount given by customer
-  changeAmount       Float?         // Change to return to customer
-  paymentMethod      String?
-  paymentStatus      payment_status @default(UNPAID)
-  moodContext        String?        // Stores mood when order was placed
-  moodFeedbackGiven  Boolean        @default(false) // Track if customer already gave feedback
-  linkedOrderId      String?        // Links reordered/related orders
-  createdBy          String?        // User ID who created the order (cashier/manager) or "CUSTOMER" for phone orders
-  processedBy        String?        // Cashier who processed the order (set when status changes from PENDING)
-  deviceId           String?        // Device ID for guest order tracking
-  notes              String?        // Reason for Void/Write-off/Comp
-  authorizedBy       String?        // Manager ID who approved a Void/Refund/Loss
-  createdAt          DateTime       @default(now())
-  updatedAt          DateTime
-  completedAt        DateTime?
-  paidAt             DateTime?      // When the money was actually received
-  order_items        order_items[]
+  id                String         @id
+  orderNumber       String         @unique
+  customerName      String?
+  tableNumber       String?
+  status            order_status   @default(PENDING)
+  subtotal          Float
+  tax               Float
+  totalAmount       Float
+  paymentMethod     String?
+  paymentStatus     payment_status @default(UNPAID)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime
+  completedAt       DateTime?
+  orderType         order_type     @default(DINE_IN)
+  moodContext       String?
+  linkedOrderId     String?
+  createdBy         String?
+  moodFeedbackGiven Boolean        @default(false)
+  deviceId          String?
+  processedBy       String?
+  authorizedBy      String?
+  discountAmount    Float          @default(0)
+  notes             String?
+  paidAt            DateTime?
+  cashReceived      Float?
+  changeAmount      Float?
+  deliveryFee       Float          @default(0)
+  serviceFee        Float          @default(0)
+  order_items       order_items[]
 
   @@index([createdAt])
   @@index([status])
@@ -107,7 +124,7 @@ model orders {
 }
 
 model inventory_items {
-  id                    String                    @id
+  id                    String                  @id
   name                  String
   category              inventory_category
   currentStock          Float
@@ -116,27 +133,153 @@ model inventory_items {
   unit                  String
   costPerUnit           Float
   supplier              String
-  status                inventory_status          @default(IN_STOCK)
-  restockFrequencyDays  Int?                      @default(7) // How often this item is typically restocked
-  lastRestocked         DateTime                  @default(now())
-  createdAt             DateTime                  @default(now())
+  status                inventory_status        @default(IN_STOCK)
+  lastRestocked         DateTime                @default(now())
+  createdAt             DateTime                @default(now())
   updatedAt             DateTime
-  stock_transactions    stock_transactions[]
+  restockFrequencyDays  Int?                    @default(7)
   menu_item_ingredients menu_item_ingredients[]
+  stock_transactions    stock_transactions[]
 
   @@index([category])
   @@index([status])
 }
 
-enum category {
-  PIZZA
-  APPETIZER
-  HOT_DRINKS
-  COLD_DRINKS
-  SMOOTHIE
-  PLATTER
-  SAVERS
-  VALUE_MEAL
+model expenses {
+  id          String            @id
+  category    expense_category
+  date        DateTime
+  amount      Float
+  description String
+  frequency   expense_frequency
+  attachment  String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime
+
+  @@index([date])
+  @@index([category])
+  @@index([frequency])
+}
+
+model stock_transactions {
+  id              String                   @id
+  inventoryItemId String
+  type            stock_transaction_type
+  reason          stock_transaction_reason
+  quantity        Float
+  referenceId     String?
+  userId          String?
+  notes           String?
+  createdAt       DateTime                 @default(now())
+  inventory_item  inventory_items          @relation(fields: [inventoryItemId], references: [id], onDelete: Cascade)
+
+  @@index([inventoryItemId])
+  @@index([type])
+  @@index([reason])
+  @@index([referenceId])
+  @@index([createdAt])
+}
+
+model menu_item_ingredients {
+  id              String          @id
+  menuItemId      String
+  inventoryItemId String
+  quantity        Float
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime
+  inventory_item  inventory_items @relation(fields: [inventoryItemId], references: [id], onDelete: Cascade)
+  menu_item       menu_items      @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  @@unique([menuItemId, inventoryItemId])
+  @@index([menuItemId])
+  @@index([inventoryItemId])
+}
+
+model mood_settings {
+  id                      String    @id
+  mood                    mood_type @unique
+  emoji                   String
+  label                   String
+  color                   String
+  description             String
+  supportMessage          String?
+  scientificExplanation   String?
+  beneficialNutrients     String?
+  preferredCategories     String?
+  excludeCategories       String?
+  preferredCategoryPoints Int       @default(10)
+  isActive                Boolean   @default(true)
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime
+
+  @@index([mood])
+  @@index([isActive])
+}
+
+model mood_feedback_config {
+  id                      String   @id @default("default")
+  baselineThreshold       Int      @default(50)
+  feedbackEnabled         Boolean  @default(false)
+  autoEnableFeedback      Boolean  @default(true)
+  orderRateWeight         Float    @default(0.6)
+  feedbackRateWeight      Float    @default(0.4)
+  moodBenefitsWeight      Int      @default(20)
+  preferredCategoryWeight Int      @default(10)
+  featuredItemWeight      Int      @default(5)
+  priceRangeWeight        Int      @default(5)
+  historicalDataWeight    Int      @default(15)
+  timeOfDayWeight         Int      @default(5)
+  showMoodReflection      Boolean  @default(true)
+  reflectionDelayMinutes  Int      @default(15)
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime
+  afternoonCategories     String   @default("[]")
+  afternoonEndHour        Int      @default(18)
+  eveningCategories       String   @default("[\"HOT_DRINKS\",\"PLATTER\"]")
+  morningCategories       String   @default("[\"HOT_DRINKS\"]")
+  morningEndHour          Int      @default(12)
+  morningStartHour        Int      @default(6)
+  explorationBonusWeight  Int      @default(8)
+  minimumOrdersThreshold  Int      @default(10)
+  excludedCategoryPenalty Int      @default(0)
+  day0PositionShuffle     Boolean  @default(true)
+  showRankingNumbers      Boolean  @default(false)
+}
+
+model mood_order_stats {
+  id              String    @id
+  mood            mood_type @unique
+  totalShown      Int       @default(0)
+  totalOrdered    Int       @default(0)
+  feedbackCount   Int       @default(0)
+  moodImproved    Int       @default(0)
+  moodSame        Int       @default(0)
+  moodWorse       Int       @default(0)
+  baselineReached Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime
+
+  @@index([mood])
+  @@index([baselineReached])
+}
+
+model menu_item_mood_stats {
+  id            String     @id
+  menuItemId    String
+  mood          mood_type
+  timesShown    Int        @default(0)
+  timesOrdered  Int        @default(0)
+  feedbackCount Int        @default(0)
+  moodImproved  Int        @default(0)
+  moodSame      Int        @default(0)
+  moodWorse     Int        @default(0)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime
+  menu_items    menu_items @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  @@unique([menuItemId, mood])
+  @@index([menuItemId])
+  @@index([mood])
 }
 
 enum order_type {
@@ -154,12 +297,12 @@ enum order_status {
 }
 
 enum payment_status {
-  UNPAID          // Order served, awaiting payment
-  PAID            // Transaction finalized
-  REFUNDED        // Payment reversed after being PAID
-  COMPLIMENTARY   // Given for free (VIP/Marketing)
-  WRITTEN_OFF     // Loss (Walk-out/Refusal/No-show)
-  VOIDED          // Error (Cancelled & inventory restored)
+  UNPAID
+  PAID
+  REFUNDED
+  COMPLIMENTARY
+  WRITTEN_OFF
+  VOIDED
 }
 
 enum user_role {
@@ -183,22 +326,6 @@ enum inventory_status {
   OUT_OF_STOCK
 }
 
-model expenses {
-  id          String            @id
-  category    expense_category
-  date        DateTime
-  amount      Float
-  description String
-  frequency   expense_frequency
-  attachment  String?
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime
-
-  @@index([date])
-  @@index([category])
-  @@index([frequency])
-}
-
 enum expense_category {
   RENT_LEASE
   UTILITIES
@@ -215,7 +342,6 @@ enum expense_frequency {
   ANNUAL
 }
 
-// Stock Transaction Enums
 enum stock_transaction_type {
   IN
   OUT
@@ -227,46 +353,9 @@ enum stock_transaction_reason {
   WASTE
   ADJUSTMENT
   RECONCILIATION
-  VOID            // Stock returned when an order is voided
+  VOID
 }
 
-// Stock Transactions Model
-model stock_transactions {
-  id              String                   @id
-  inventoryItemId String
-  type            stock_transaction_type
-  reason          stock_transaction_reason
-  quantity        Float
-  referenceId     String? // Order ID, Purchase ID, etc.
-  userId          String? // Who performed the transaction
-  notes           String?
-  createdAt       DateTime                 @default(now())
-  inventory_item  inventory_items          @relation(fields: [inventoryItemId], references: [id], onDelete: Cascade)
-
-  @@index([inventoryItemId])
-  @@index([type])
-  @@index([reason])
-  @@index([referenceId])
-  @@index([createdAt])
-}
-
-// Menu Item Ingredients (Recipe/BOM)
-model menu_item_ingredients {
-  id              String          @id
-  menuItemId      String
-  inventoryItemId String
-  quantity        Float // Amount of inventory item needed per menu item
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime
-  menu_item       menu_items      @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
-  inventory_item  inventory_items @relation(fields: [inventoryItemId], references: [id], onDelete: Cascade)
-
-  @@unique([menuItemId, inventoryItemId])
-  @@index([menuItemId])
-  @@index([inventoryItemId])
-}
-
-// Mood types enum
 enum mood_type {
   HAPPY
   ENERGETIC
@@ -278,101 +367,4 @@ enum mood_type {
   SAD
   DEPRESSED
   ANGRY
-}
-
-// Mood Settings - Configurable by Admin/Manager
-model mood_settings {
-  id                     String    @id
-  mood                   mood_type @unique
-  emoji                  String
-  label                  String
-  color                  String
-  description            String
-  supportMessage         String?
-  scientificExplanation  String?
-  beneficialNutrients    String?   // JSON array of nutrients
-  preferredCategories    String?   // JSON array of category names
-  excludeCategories      String?   // JSON array of categories to exclude
-  preferredCategoryPoints Int      @default(10) // Points awarded for preferred categories
-  isActive               Boolean   @default(true)
-  createdAt              DateTime  @default(now())
-  updatedAt              DateTime
-
-  @@index([mood])
-  @@index([isActive])
-}
-
-// Mood Feedback Configuration
-model mood_feedback_config {
-  id                        String   @id @default("default")
-  // Baseline settings
-  baselineThreshold         Int      @default(50)     // Orders needed before enabling feedback
-  feedbackEnabled           Boolean  @default(false)  // Master toggle for feedback collection
-  autoEnableFeedback        Boolean  @default(true)   // Auto-enable when baseline reached
-  // Scoring weights
-  orderRateWeight           Float    @default(0.6)    // 60% weight for order rate
-  feedbackRateWeight        Float    @default(0.4)    // 40% weight for feedback rate
-  // Recommendation algorithm weights
-  moodBenefitsWeight        Int      @default(20)     // Points for mood benefits match
-  preferredCategoryWeight   Int      @default(10)     // Points for preferred category
-  excludedCategoryPenalty   Int      @default(0)      // Negative points for excluded category (0 = filter out, >0 = penalty)
-  featuredItemWeight        Int      @default(5)      // Points for featured items
-  priceRangeWeight          Int      @default(5)      // Points for price range match
-  historicalDataWeight      Int      @default(15)     // Points for historical success
-  timeOfDayWeight           Int      @default(5)      // Points for time-based preference
-  explorationBonusWeight    Int      @default(8)      // Max points for UCB exploration bonus
-  minimumOrdersThreshold    Int      @default(10)     // Min orders before trusting historical data
-  day0PositionShuffle       Boolean  @default(true)   // Shuffle display order of recommended items to prevent position bias
-  // Time of day configuration (JSON format)
-  morningStartHour          Int      @default(6)      // Morning starts at 6 AM
-  morningEndHour            Int      @default(12)     // Morning ends at 12 PM
-  afternoonEndHour          Int      @default(18)     // Afternoon ends at 6 PM (evening starts)
-  morningCategories         String   @default("[\"HOT_DRINKS\"]")  // Categories boosted in morning
-  afternoonCategories       String   @default("[]")   // Categories boosted in afternoon
-  eveningCategories         String   @default("[\"HOT_DRINKS\",\"PLATTER\"]")  // Categories boosted in evening
-  // UI settings
-  showMoodReflection        Boolean  @default(true)   // Show mood reflection modal after order
-  reflectionDelayMinutes    Int      @default(15)     // Wait time before showing reflection
-  showRankingNumbers        Boolean  @default(false)  // Show ranking numbers (#1, #2) on recommended items
-  createdAt                 DateTime @default(now())
-  updatedAt                 DateTime
-}
-
-// Mood Order Statistics (aggregated per mood, not per item)
-model mood_order_stats {
-  id             String    @id
-  mood           mood_type @unique
-  totalShown     Int       @default(0)   // Times recommendations shown for this mood
-  totalOrdered   Int       @default(0)   // Times items were ordered with this mood
-  feedbackCount  Int       @default(0)   // Times feedback was received
-  moodImproved   Int       @default(0)   // Times mood improved after order
-  moodSame       Int       @default(0)   // Times mood stayed same
-  moodWorse      Int       @default(0)   // Times mood got worse
-  baselineReached Boolean  @default(false) // Whether this mood has enough data
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime
-
-  @@index([mood])
-  @@index([baselineReached])
-}
-
-// Menu Item Mood Statistics (per item per mood tracking)
-model menu_item_mood_stats {
-  id             String     @id
-  menuItemId     String
-  mood           mood_type
-  timesShown     Int        @default(0)   // Times this item was shown for this mood
-  timesOrdered   Int        @default(0)   // Times this item was ordered with this mood
-  feedbackCount  Int        @default(0)   // Times feedback was received for this item+mood
-  moodImproved   Int        @default(0)   // Times mood improved after ordering this item
-  moodSame       Int        @default(0)   // Times mood stayed same
-  moodWorse      Int        @default(0)   // Times mood got worse
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime
-
-  menu_items     menu_items @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
-
-  @@unique([menuItemId, mood])  // One record per item per mood
-  @@index([menuItemId])
-  @@index([mood])
 }

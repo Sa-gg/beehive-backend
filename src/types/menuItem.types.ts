@@ -1,8 +1,6 @@
-import { category } from '../../generated/prisma/client.js';
-
 export interface CreateMenuItemDTO {
   name: string;
-  category: category;
+  categoryId: string;
   price: number;
   cost?: number;
   image?: string;
@@ -16,7 +14,7 @@ export interface CreateMenuItemDTO {
 
 export interface UpdateMenuItemDTO {
   name?: string;
-  category?: category;
+  categoryId?: string;
   price?: number;
   cost?: number;
   image?: string;
@@ -29,7 +27,7 @@ export interface UpdateMenuItemDTO {
 }
 
 export interface MenuItemFilters {
-  category?: category;
+  categoryId?: string;
   available?: boolean;
   featured?: boolean;
   search?: string;
@@ -38,7 +36,12 @@ export interface MenuItemFilters {
 export interface MenuItemResponse {
   id: string;
   name: string;
-  category: string;
+  categoryId: string;
+  category?: {
+    id: string;
+    name: string;
+    displayName: string;
+  };
   price: number;
   cost: number | null;
   image: string | null;

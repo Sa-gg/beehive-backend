@@ -4,12 +4,15 @@ class SettingsRepository {
     settings = {
         openTime: '08:00',
         closeTime: '22:00',
-        lastResetDate: null
+        lastResetDate: null,
+        managerPin: '1234' // Default manager PIN
     };
     // Flag to force reset on next order
     forceResetFlag = false;
     getAllSettings() {
-        return { ...this.settings };
+        // Return settings without exposing the actual PIN
+        const { managerPin, ...publicSettings } = this.settings;
+        return { ...publicSettings };
     }
     updateSettings(settings) {
         this.settings = { ...this.settings, ...settings };
@@ -31,6 +34,15 @@ class SettingsRepository {
     }
     setForceResetFlag(value) {
         this.forceResetFlag = value;
+    }
+    getManagerPin() {
+        return this.settings.managerPin || '1234';
+    }
+    setManagerPin(pin) {
+        this.settings.managerPin = pin;
+    }
+    validateManagerPin(pin) {
+        return this.settings.managerPin === pin;
     }
 }
 export { SettingsRepository };

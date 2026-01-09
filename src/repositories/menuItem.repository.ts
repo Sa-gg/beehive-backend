@@ -12,8 +12,8 @@ export class MenuItemRepository {
   async findAll(filters?: MenuItemFilters) {
     const where: any = {};
 
-    if (filters?.category) {
-      where.category = filters.category;
+    if (filters?.categoryId) {
+      where.categoryId = filters.categoryId;
     }
 
     if (filters?.available !== undefined) {
@@ -33,6 +33,15 @@ export class MenuItemRepository {
 
     return this.prisma.menu_items.findMany({
       where,
+      include: {
+        category: {
+          select: {
+            id: true,
+            name: true,
+            displayName: true
+          }
+        }
+      },
       orderBy: [
         { featured: 'desc' },
         { createdAt: 'desc' }
@@ -42,7 +51,16 @@ export class MenuItemRepository {
 
   async findById(id: string) {
     return this.prisma.menu_items.findUnique({
-      where: { id }
+      where: { id },
+      include: {
+        category: {
+          select: {
+            id: true,
+            name: true,
+            displayName: true
+          }
+        }
+      }
     });
   }
 
@@ -51,7 +69,7 @@ export class MenuItemRepository {
       data: {
         id: randomUUID(),
         name: data.name,
-        category: data.category,
+        categoryId: data.categoryId,
         price: data.price,
         cost: data.cost ?? 0,
         image: data.image,
@@ -62,6 +80,15 @@ export class MenuItemRepository {
         nutrients: data.nutrients,
         moodBenefits: data.moodBenefits,
         updatedAt: new Date()
+      },
+      include: {
+        category: {
+          select: {
+            id: true,
+            name: true,
+            displayName: true
+          }
+        }
       }
     });
   }
@@ -72,6 +99,15 @@ export class MenuItemRepository {
       data: {
         ...data,
         updatedAt: new Date()
+      },
+      include: {
+        category: {
+          select: {
+            id: true,
+            name: true,
+            displayName: true
+          }
+        }
       }
     });
   }
@@ -94,11 +130,41 @@ export class MenuItemRepository {
     });
   }
 
-  async getByCategory(category: string) {
+  async getByCategory(categoryId: string) {
     return this.prisma.menu_items.findMany({
       where: { 
-        category: category as any,
+        categoryId: categoryId,
         available: true 
+      },
+      include: {
+        category: {
+          select: {
+            id: true,
+            name: true,
+            displayName: true
+          }
+        }
+      },
+      orderBy: { name: 'asc' }
+    });
+  }
+
+  async getByCategoryName(categoryName: string) {
+    return this.prisma.menu_items.findMany({
+      where: { 
+        category: {
+          name: categoryName
+        },
+        available: true 
+      },
+      include: {
+        category: {
+          select: {
+            id: true,
+            name: true,
+            displayName: true
+          }
+        }
       },
       orderBy: { name: 'asc' }
     });
@@ -109,6 +175,15 @@ export class MenuItemRepository {
       where: { 
         featured: true,
         available: true
+      },
+      include: {
+        category: {
+          select: {
+            id: true,
+            name: true,
+            displayName: true
+          }
+        }
       },
       orderBy: { createdAt: 'desc' }
     });
@@ -122,6 +197,15 @@ export class MenuItemRepository {
           mode: 'insensitive'
         }
       },
+      include: {
+        category: {
+          select: {
+            id: true,
+            name: true,
+            displayName: true
+          }
+        }
+      },
       orderBy: { name: 'asc' }
     });
   }
@@ -129,8 +213,8 @@ export class MenuItemRepository {
   async count(filters?: MenuItemFilters) {
     const where: any = {};
 
-    if (filters?.category) {
-      where.category = filters.category;
+    if (filters?.categoryId) {
+      where.categoryId = filters.categoryId;
     }
 
     if (filters?.available !== undefined) {

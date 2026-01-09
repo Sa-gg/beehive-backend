@@ -201,15 +201,26 @@ export class MoodSettingsRepository {
         return config;
     }
     async updateFeedbackConfig(data) {
+        // Handle array fields - convert to JSON strings
+        const processedData = { ...data };
+        if (data.morningCategories !== undefined) {
+            processedData.morningCategories = JSON.stringify(data.morningCategories);
+        }
+        if (data.afternoonCategories !== undefined) {
+            processedData.afternoonCategories = JSON.stringify(data.afternoonCategories);
+        }
+        if (data.eveningCategories !== undefined) {
+            processedData.eveningCategories = JSON.stringify(data.eveningCategories);
+        }
         return this.prisma.mood_feedback_config.upsert({
             where: { id: 'default' },
             create: {
                 id: 'default',
-                ...data,
+                ...processedData,
                 updatedAt: new Date()
             },
             update: {
-                ...data,
+                ...processedData,
                 updatedAt: new Date()
             }
         });
@@ -294,7 +305,12 @@ export class MoodSettingsRepository {
         // Check if feedback already given for this order
         const order = await this.prisma.orders.findUnique({
             where: { id: orderId },
-            select: { moodFeedbackGiven: true }
+            select: {
+                moodFeedbackGiven: true,
+                order_items: {
+                    select: { menuItemId: true }
+                }
+            }
         });
         if (!order) {
             throw new Error('Order not found');
@@ -315,7 +331,7 @@ export class MoodSettingsRepository {
         else {
             incrementData.moodWorse = { increment: 1 };
         }
-        // Use upsert to create record if it doesn't exist
+        // Update mood_order_stats (aggregated per mood)
         const stats = await this.prisma.mood_order_stats.upsert({
             where: { mood },
             update: incrementData,
@@ -332,6 +348,44 @@ export class MoodSettingsRepository {
                 updatedAt: new Date()
             }
         });
+        // Update menu_item_mood_stats for each item in the order
+        const menuItemIds = order.order_items.map(item => item.menuItemId);
+        if (menuItemIds.length > 0) {
+            const itemIncrementData = {
+                feedbackCount: { increment: 1 },
+                updatedAt: new Date()
+            };
+            if (outcome === 'improved') {
+                itemIncrementData.moodImproved = { increment: 1 };
+            }
+            else if (outcome === 'same') {
+                itemIncrementData.moodSame = { increment: 1 };
+            }
+            else {
+                itemIncrementData.moodWorse = { increment: 1 };
+            }
+            // Update feedback stats for each menu item in this order
+            for (const menuItemId of menuItemIds) {
+                await this.prisma.menu_item_mood_stats.upsert({
+                    where: {
+                        menuItemId_mood: { menuItemId, mood }
+                    },
+                    update: itemIncrementData,
+                    create: {
+                        id: `item_mood_${menuItemId}_${mood}_${Date.now()}`,
+                        menuItemId,
+                        mood,
+                        timesShown: 0,
+                        timesOrdered: 0,
+                        feedbackCount: 1,
+                        moodImproved: outcome === 'improved' ? 1 : 0,
+                        moodSame: outcome === 'same' ? 1 : 0,
+                        moodWorse: outcome === 'worse' ? 1 : 0,
+                        updatedAt: new Date()
+                    }
+                });
+            }
+        }
         // Mark order as feedback given
         await this.prisma.orders.update({
             where: { id: orderId },
@@ -447,16 +501,43 @@ export class MoodSettingsRepository {
             orderBy: { mood: 'asc' }
         });
     }
-    // Get all item stats for a specific mood
+    // Get all item stats for a specific mood (includes ALL menu items, not just those with stats)
     async getMoodItemStats(mood) {
-        return this.prisma.menu_item_mood_stats.findMany({
+        // Get all available menu items first
+        const allMenuItems = await this.prisma.menu_items.findMany({
+            where: { available: true },
+            select: { id: true, name: true, category: true, price: true, image: true, featured: true, moodBenefits: true }
+        });
+        // Get existing mood stats for this mood
+        const existingStats = await this.prisma.menu_item_mood_stats.findMany({
             where: { mood },
             include: {
                 menu_items: {
-                    select: { id: true, name: true, category: true, price: true, image: true }
+                    select: { id: true, name: true, category: true, price: true, image: true, featured: true, moodBenefits: true }
                 }
-            },
-            orderBy: { timesOrdered: 'desc' }
+            }
+        });
+        // Create a map of existing stats by menuItemId
+        const statsMap = new Map(existingStats.map(s => [s.menuItemId, s]));
+        // Return all menu items with their stats (or zero stats if none exist)
+        return allMenuItems.map(menuItem => {
+            const existingStat = statsMap.get(menuItem.id);
+            if (existingStat) {
+                return existingStat;
+            }
+            // Return a synthetic record for items without mood stats (Cold-Start items)
+            return {
+                id: `synthetic-${menuItem.id}-${mood}`,
+                menuItemId: menuItem.id,
+                mood,
+                timesShown: 0,
+                timesOrdered: 0,
+                feedbackCount: 0,
+                moodImproved: 0,
+                moodSame: 0,
+                moodWorse: 0,
+                menu_items: menuItem
+            };
         });
     }
     // Get top performing items for a mood (highest order rate)

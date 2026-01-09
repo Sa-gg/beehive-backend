@@ -76,5 +76,15 @@ export function createOrderRoutes(orderController) {
     router.patch('/:id/status', authenticate, (req, res) => orderController.updateOrderStatus(req, res));
     // Mark order as paid
     router.patch('/:id/payment', (req, res) => orderController.markOrderAsPaid(req, res));
+    // Void an order (requires manager authorization)
+    router.patch('/:id/void', authenticate, (req, res) => orderController.voidOrder(req, res));
+    // Refund a paid order (requires manager authorization)
+    router.patch('/:id/refund', authenticate, (req, res) => orderController.refundOrder(req, res));
+    // Mark order as complimentary (requires manager authorization)
+    router.patch('/:id/complimentary', authenticate, (req, res) => orderController.markAsComplimentary(req, res));
+    // Write off an unpaid order (requires manager authorization)
+    router.patch('/:id/write-off', authenticate, (req, res) => orderController.writeOff(req, res));
+    // Update order (generic update)
+    router.patch('/:id', (req, res) => orderController.updateOrder(req, res));
     return router;
 }

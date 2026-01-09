@@ -1,5 +1,5 @@
-import { PrismaClient } from '../../generated/prisma'
-import { Customer, CreateCustomerDTO, UpdateCustomerDTO, CustomerFilters, CustomerStats, UserRole } from '../types/customers.types'
+import { PrismaClient } from '../../generated/prisma/client.js'
+import { Customer, CreateCustomerDTO, UpdateCustomerDTO, CustomerFilters, CustomerStats, UserRole } from '../types/customers.types.js'
 
 export class CustomersRepository {
   constructor(private prisma: PrismaClient) {}

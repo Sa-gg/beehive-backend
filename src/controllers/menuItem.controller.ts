@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { MenuItemService } from '../services/menuItem.service.js';
 import { CreateMenuItemDTO, UpdateMenuItemDTO } from '../types/menuItem.types.js';
-import { category } from '../../generated/prisma/client.js';
 
 export class MenuItemController {
   private service: MenuItemService;
@@ -13,12 +12,13 @@ export class MenuItemController {
   // GET /api/menu-items
   getAllMenuItems = async (req: Request, res: Response) => {
     try {
-      const { category, available, featured, search } = req.query;
+      const { categoryId, category, available, featured, search } = req.query;
 
       const filters: any = {};
 
-      if (category) {
-        filters.category = category as category;
+      // Support both categoryId and category (category name) for backwards compatibility
+      if (categoryId) {
+        filters.categoryId = categoryId as string;
       }
 
       if (available !== undefined) {

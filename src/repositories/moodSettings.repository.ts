@@ -609,7 +609,18 @@ export class MoodSettingsRepository {
     // Get all available menu items first
     const allMenuItems = await this.prisma.menu_items.findMany({
       where: { available: true },
-      select: { id: true, name: true, category: true, price: true, image: true, featured: true, moodBenefits: true }
+      select: { 
+        id: true, 
+        name: true, 
+        categoryId: true,
+        category: {
+          select: { id: true, name: true, displayName: true }
+        },
+        price: true, 
+        image: true, 
+        featured: true, 
+        moodBenefits: true 
+      }
     });
 
     // Get existing mood stats for this mood
@@ -617,7 +628,18 @@ export class MoodSettingsRepository {
       where: { mood },
       include: {
         menu_items: {
-          select: { id: true, name: true, category: true, price: true, image: true, featured: true, moodBenefits: true }
+          select: { 
+            id: true, 
+            name: true, 
+            categoryId: true,
+            category: {
+              select: { id: true, name: true, displayName: true }
+            },
+            price: true, 
+            image: true, 
+            featured: true, 
+            moodBenefits: true 
+          }
         }
       }
     });
@@ -656,7 +678,17 @@ export class MoodSettingsRepository {
       },
       include: {
         menu_items: {
-          select: { id: true, name: true, category: true, price: true, image: true, available: true }
+          select: { 
+            id: true, 
+            name: true, 
+            categoryId: true,
+            category: {
+              select: { id: true, name: true, displayName: true }
+            },
+            price: true, 
+            image: true, 
+            available: true 
+          }
         }
       }
     });

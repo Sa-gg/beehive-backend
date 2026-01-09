@@ -5,6 +5,9 @@ export function createAuthRouter(authController) {
     // Public routes
     router.post('/register', authController.register.bind(authController));
     router.post('/login', authController.login.bind(authController));
+    // Manager PIN validation (for authorization of sensitive actions)
+    // This is accessible to any authenticated staff member
+    router.post('/validate-manager-pin', authenticate, authController.validateManagerPin.bind(authController));
     // Protected routes
     router.get('/me', authenticate, authController.getMe.bind(authController));
     // Manager and Admin routes

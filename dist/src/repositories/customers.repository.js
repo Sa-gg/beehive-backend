@@ -1,4 +1,4 @@
-import { UserRole } from '../types/customers.types';
+import { UserRole } from '../types/customers.types.js';
 export class CustomersRepository {
     prisma;
     constructor(prisma) {

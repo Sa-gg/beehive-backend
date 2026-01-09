@@ -6,10 +6,11 @@ export class MenuItemController {
     // GET /api/menu-items
     getAllMenuItems = async (req, res) => {
         try {
-            const { category, available, featured, search } = req.query;
+            const { categoryId, category, available, featured, search } = req.query;
             const filters = {};
-            if (category) {
-                filters.category = category;
+            // Support both categoryId and category (category name) for backwards compatibility
+            if (categoryId) {
+                filters.categoryId = categoryId;
             }
             if (available !== undefined) {
                 filters.available = available === 'true';

@@ -6,8 +6,8 @@ export class MenuItemRepository {
     }
     async findAll(filters) {
         const where = {};
-        if (filters?.category) {
-            where.category = filters.category;
+        if (filters?.categoryId) {
+            where.categoryId = filters.categoryId;
         }
         if (filters?.available !== undefined) {
             where.available = filters.available;
@@ -23,6 +23,15 @@ export class MenuItemRepository {
         }
         return this.prisma.menu_items.findMany({
             where,
+            include: {
+                category: {
+                    select: {
+                        id: true,
+                        name: true,
+                        displayName: true
+                    }
+                }
+            },
             orderBy: [
                 { featured: 'desc' },
                 { createdAt: 'desc' }
@@ -31,7 +40,16 @@ export class MenuItemRepository {
     }
     async findById(id) {
         return this.prisma.menu_items.findUnique({
-            where: { id }
+            where: { id },
+            include: {
+                category: {
+                    select: {
+                        id: true,
+                        name: true,
+                        displayName: true
+                    }
+                }
+            }
         });
     }
     async create(data) {
@@ -39,7 +57,7 @@ export class MenuItemRepository {
             data: {
                 id: randomUUID(),
                 name: data.name,
-                category: data.category,
+                categoryId: data.categoryId,
                 price: data.price,
                 cost: data.cost ?? 0,
                 image: data.image,
@@ -50,6 +68,15 @@ export class MenuItemRepository {
                 nutrients: data.nutrients,
                 moodBenefits: data.moodBenefits,
                 updatedAt: new Date()
+            },
+            include: {
+                category: {
+                    select: {
+                        id: true,
+                        name: true,
+                        displayName: true
+                    }
+                }
             }
         });
     }
@@ -59,6 +86,15 @@ export class MenuItemRepository {
             data: {
                 ...data,
                 updatedAt: new Date()
+            },
+            include: {
+                category: {
+                    select: {
+                        id: true,
+                        name: true,
+                        displayName: true
+                    }
+                }
             }
         });
     }
@@ -78,11 +114,40 @@ export class MenuItemRepository {
             }
         });
     }
-    async getByCategory(category) {
+    async getByCategory(categoryId) {
         return this.prisma.menu_items.findMany({
             where: {
-                category: category,
+                categoryId: categoryId,
                 available: true
+            },
+            include: {
+                category: {
+                    select: {
+                        id: true,
+                        name: true,
+                        displayName: true
+                    }
+                }
+            },
+            orderBy: { name: 'asc' }
+        });
+    }
+    async getByCategoryName(categoryName) {
+        return this.prisma.menu_items.findMany({
+            where: {
+                category: {
+                    name: categoryName
+                },
+                available: true
+            },
+            include: {
+                category: {
+                    select: {
+                        id: true,
+                        name: true,
+                        displayName: true
+                    }
+                }
             },
             orderBy: { name: 'asc' }
         });
@@ -92,6 +157,15 @@ export class MenuItemRepository {
             where: {
                 featured: true,
                 available: true
+            },
+            include: {
+                category: {
+                    select: {
+                        id: true,
+                        name: true,
+                        displayName: true
+                    }
+                }
             },
             orderBy: { createdAt: 'desc' }
         });
@@ -104,13 +178,22 @@ export class MenuItemRepository {
                     mode: 'insensitive'
                 }
             },
+            include: {
+                category: {
+                    select: {
+                        id: true,
+                        name: true,
+                        displayName: true
+                    }
+                }
+            },
             orderBy: { name: 'asc' }
         });
     }
     async count(filters) {
         const where = {};
-        if (filters?.category) {
-            where.category = filters.category;
+        if (filters?.categoryId) {
+            where.categoryId = filters.categoryId;
         }
         if (filters?.available !== undefined) {
             where.available = filters.available;

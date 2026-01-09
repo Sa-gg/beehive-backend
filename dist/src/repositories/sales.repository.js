@@ -129,13 +129,17 @@ export class SalesRepository {
                 }
             },
             include: {
-                menu_items: true
+                menu_items: {
+                    include: {
+                        category: true
+                    }
+                }
             }
         });
         // Aggregate by category
         const categorySales = new Map();
         orderItems.forEach(item => {
-            const category = item.menu_items.category;
+            const category = item.menu_items.category?.displayName || item.menu_items.categoryId;
             const existing = categorySales.get(category);
             if (existing) {
                 existing.revenue += item.subtotal;

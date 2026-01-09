@@ -20,8 +20,8 @@ export class MenuItemService {
 
   async createMenuItem(data: CreateMenuItemDTO): Promise<MenuItemResponse> {
     // Validate required fields
-    if (!data.name || !data.category || data.price === undefined) {
-      throw new Error('Name, category, and price are required');
+    if (!data.name || !data.categoryId || data.price === undefined) {
+      throw new Error('Name, categoryId, and price are required');
     }
 
     if (data.price < 0) {
@@ -104,8 +104,13 @@ export class MenuItemService {
     return { count: result.count };
   }
 
-  async getMenuItemsByCategory(category: string): Promise<MenuItemResponse[]> {
-    const items = await this.repository.getByCategory(category);
+  async getMenuItemsByCategory(categoryId: string): Promise<MenuItemResponse[]> {
+    const items = await this.repository.getByCategory(categoryId);
+    return items.map(item => this.mapToResponse(item));
+  }
+
+  async getMenuItemsByCategoryName(categoryName: string): Promise<MenuItemResponse[]> {
+    const items = await this.repository.getByCategoryName(categoryName);
     return items.map(item => this.mapToResponse(item));
   }
 
@@ -145,15 +150,21 @@ export class MenuItemService {
   }
 
   async trackMoodViews(itemIds: string[], mood: string): Promise<void> {
-    // Track that these items were shown for this mood
-    await this.repository.incrementMoodViews(itemIds, mood);
+    // This method has been moved to moodSettings.repository.ts
+    // Keeping stub for backwards compatibility
+    console.log('trackMoodViews: moved to moodSettings.repository.ts');
   }
 
   private mapToResponse(item: any): MenuItemResponse {
     return {
       id: item.id,
       name: item.name,
-      category: item.category,
+      categoryId: item.categoryId,
+      category: item.category ? {
+        id: item.category.id,
+        name: item.category.name,
+        displayName: item.category.displayName
+      } : undefined,
       price: item.price,
       cost: item.cost,
       image: item.image,

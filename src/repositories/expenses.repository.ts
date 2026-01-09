@@ -1,5 +1,5 @@
-import { PrismaClient } from '../../generated/prisma'
-import { CreateExpenseDTO, UpdateExpenseDTO, ExpenseFilters } from '../types/expenses.types'
+import { PrismaClient } from '../../generated/prisma/client.js'
+import { CreateExpenseDTO, UpdateExpenseDTO, ExpenseFilters } from '../types/expenses.types.js'
 
 export class ExpensesRepository {
   constructor(private prisma: PrismaClient) {}

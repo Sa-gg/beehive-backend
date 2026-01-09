@@ -7,16 +7,6 @@
 *
 * 🟢 You can import this file directly.
 */
-export const category = {
-    PIZZA: 'PIZZA',
-    APPETIZER: 'APPETIZER',
-    HOT_DRINKS: 'HOT_DRINKS',
-    COLD_DRINKS: 'COLD_DRINKS',
-    SMOOTHIE: 'SMOOTHIE',
-    PLATTER: 'PLATTER',
-    SAVERS: 'SAVERS',
-    VALUE_MEAL: 'VALUE_MEAL'
-};
 export const order_type = {
     DINE_IN: 'DINE_IN',
     TAKEOUT: 'TAKEOUT',
@@ -32,7 +22,10 @@ export const order_status = {
 export const payment_status = {
     UNPAID: 'UNPAID',
     PAID: 'PAID',
-    REFUNDED: 'REFUNDED'
+    REFUNDED: 'REFUNDED',
+    COMPLIMENTARY: 'COMPLIMENTARY',
+    WRITTEN_OFF: 'WRITTEN_OFF',
+    VOIDED: 'VOIDED'
 };
 export const user_role = {
     CUSTOMER: 'CUSTOMER',
@@ -75,7 +68,8 @@ export const stock_transaction_reason = {
     ORDER: 'ORDER',
     WASTE: 'WASTE',
     ADJUSTMENT: 'ADJUSTMENT',
-    RECONCILIATION: 'RECONCILIATION'
+    RECONCILIATION: 'RECONCILIATION',
+    VOID: 'VOID'
 };
 export const mood_type = {
     HAPPY: 'HAPPY',

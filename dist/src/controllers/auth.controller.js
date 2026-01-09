@@ -81,4 +81,18 @@ export class AuthController {
             res.status(400).json({ error: error.message });
         }
     }
+    // Validate manager PIN for authorization
+    async validateManagerPin(req, res) {
+        try {
+            const { pin } = req.body;
+            if (!pin) {
+                return res.status(400).json({ error: 'PIN is required' });
+            }
+            const result = await this.authService.validateManagerPin(pin);
+            res.json(result);
+        }
+        catch (error) {
+            res.status(401).json({ valid: false, error: error.message });
+        }
+    }
 }

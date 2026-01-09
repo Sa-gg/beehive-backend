@@ -147,7 +147,11 @@ export class SalesRepository {
         }
       },
       include: {
-        menu_items: true
+        menu_items: {
+          include: {
+            category: true
+          }
+        }
       }
     });
 
@@ -155,7 +159,7 @@ export class SalesRepository {
     const categorySales = new Map<string, { revenue: number; orders: Set<string> }>();
 
     orderItems.forEach(item => {
-      const category = item.menu_items.category;
+      const category = item.menu_items.category?.displayName || item.menu_items.categoryId;
       const existing = categorySales.get(category);
       
       if (existing) {

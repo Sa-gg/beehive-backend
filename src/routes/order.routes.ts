@@ -112,6 +112,22 @@ export function createOrderRoutes(orderController: OrderController): Router {
   // Write off an unpaid order (requires manager authorization)
   router.patch('/:id/write-off', authenticate, (req, res) => orderController.writeOff(req, res));
 
+  // ============================================
+  // TAB ORDER ROUTES (Item-level management)
+  // ============================================
+
+  // Add items to an existing tab order (unpaid order)
+  router.post('/:id/items', authenticate, (req, res) => orderController.addItemsToTab(req, res));
+
+  // Mark all items in a tab order as completed
+  router.patch('/:id/items/complete-all', authenticate, (req, res) => orderController.markAllItemsCompleted(req, res));
+
+  // Update individual order item status
+  router.patch('/:id/items/:itemId/status', authenticate, (req, res) => orderController.updateOrderItemStatus(req, res));
+
+  // Void a single order item (requires manager authorization)
+  router.patch('/:id/items/:itemId/void', authenticate, (req, res) => orderController.voidOrderItem(req, res));
+
   // Update order (generic update)
   router.patch('/:id', (req, res) => orderController.updateOrder(req, res));
 

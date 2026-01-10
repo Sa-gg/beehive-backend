@@ -1,0 +1,24 @@
+[
+  {
+    "id": "exp_1766853109383_e1s7skzw1",
+    "category": "UTILITIES",
+    "date": "2025-12-28T00:00:00.000Z",
+    "amount": 5000,
+    "description": "",
+    "frequency": "MONTHLY",
+    "attachment": null,
+    "createdAt": "2025-12-27T16:31:49.384Z",
+    "updatedAt": "2025-12-27T16:31:49.383Z"
+  },
+  {
+    "id": "exp_1767083202921_5bcjbwe3p",
+    "category": "MAINTENANCE",
+    "date": "2025-12-30T00:00:00.000Z",
+    "amount": 1000,
+    "description": "",
+    "frequency": "ONE_TIME",
+    "attachment": null,
+    "createdAt": "2025-12-30T08:26:42.922Z",
+    "updatedAt": "2025-12-30T08:26:42.921Z"
+  }
+]

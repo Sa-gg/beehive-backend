@@ -264,4 +264,136 @@ export class OrderRepository {
       take: limit
     });
   }
+
+  // Update order item status (for tab orders - item-level status tracking)
+  async updateOrderItemStatus(orderItemId: string, status: 'PREPARING' | 'COMPLETED' | 'VOIDED') {
+    return this.prisma.order_items.update({
+      where: { id: orderItemId },
+      data: { 
+        status,
+        updatedAt: new Date()
+      }
+    });
+  }
+
+  // Update all order items status (mark all as complete for tab orders)
+  async updateAllOrderItemsStatus(orderId: string, status: 'PREPARING' | 'COMPLETED' | 'VOIDED') {
+    return this.prisma.order_items.updateMany({
+      where: { orderId },
+      data: { 
+        status,
+        updatedAt: new Date()
+      }
+    });
+  }
+
+  // Add items to an existing order (for tab orders - adding to the tab)
+  async addItemsToOrder(orderId: string, items: Array<{ menuItemId: string; quantity: number; price: number }>) {
+    // Get current order to recalculate totals
+    const order = await this.findById(orderId);
+    if (!order) {
+      throw new Error('Order not found');
+    }
+
+    // Calculate new item subtotals
+    const newItemsSubtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    
+    // Create new order items with PREPARING status
+    const newItems = await Promise.all(
+      items.map(item => 
+        this.prisma.order_items.create({
+          data: {
+            id: `orderItem_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
+            orderId,
+            menuItemId: item.menuItemId,
+            quantity: item.quantity,
+            price: item.price,
+            subtotal: item.price * item.quantity,
+            status: 'PREPARING',
+            updatedAt: new Date()
+          }
+        })
+      )
+    );
+
+    // Recalculate order totals
+    const newSubtotal = order.subtotal + newItemsSubtotal;
+    const newTotalAmount = newSubtotal + order.deliveryFee + order.serviceFee - order.discountAmount;
+
+    // Update order with new totals and set status to PREPARING if not already
+    // (because we added new items that need to be prepared)
+    await this.prisma.orders.update({
+      where: { id: orderId },
+      data: {
+        subtotal: newSubtotal,
+        totalAmount: newTotalAmount,
+        status: 'PREPARING',
+        updatedAt: new Date()
+      }
+    });
+
+    return newItems;
+  }
+
+  // Get order with detailed item status (for tab orders UI)
+  async findByIdWithItemStatus(id: string) {
+    return this.prisma.orders.findUnique({
+      where: { id },
+      include: {
+        order_items: {
+          include: {
+            menu_items: {
+              select: {
+                id: true,
+                name: true,
+                category: true,
+                image: true,
+                price: true
+              }
+            }
+          },
+          orderBy: { createdAt: 'asc' }
+        }
+      }
+    });
+  }
+
+  // Void a single order item (for tab orders)
+  async voidOrderItem(orderItemId: string, orderId: string) {
+    // Update item status to VOIDED
+    await this.prisma.order_items.update({
+      where: { id: orderItemId },
+      data: { 
+        status: 'VOIDED',
+        updatedAt: new Date()
+      }
+    });
+
+    // Recalculate order totals excluding voided items
+    const order = await this.prisma.orders.findUnique({
+      where: { id: orderId },
+      include: {
+        order_items: true
+      }
+    });
+
+    if (order) {
+      const newSubtotal = order.order_items
+        .filter(item => item.status !== 'VOIDED')
+        .reduce((sum, item) => sum + item.subtotal, 0);
+      
+      const newTotalAmount = newSubtotal + order.deliveryFee + order.serviceFee - order.discountAmount;
+
+      await this.prisma.orders.update({
+        where: { id: orderId },
+        data: {
+          subtotal: newSubtotal,
+          totalAmount: newTotalAmount,
+          updatedAt: new Date()
+        }
+      });
+    }
+
+    return this.findById(orderId);
+  }
 }

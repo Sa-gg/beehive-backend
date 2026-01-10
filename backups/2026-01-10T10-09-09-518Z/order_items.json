@@ -1,0 +1,4852 @@
+[
+  {
+    "id": "orderItem_1766859830996_btpfv3m",
+    "orderId": "order_1766859830996_u0ssvsr",
+    "menuItemId": "menu-ham--cheese-hawaiian-1766851877979",
+    "quantity": 1,
+    "price": 289,
+    "subtotal": 289,
+    "createdAt": "2025-12-27T18:23:50.997Z",
+    "updatedAt": "2025-12-27T18:23:50.996Z"
+  },
+  {
+    "id": "orderItem_1766859867521_69180ox",
+    "orderId": "order_1766859867521_4du61fr",
+    "menuItemId": "menu-ham--cheese-hawaiian-1766851877979",
+    "quantity": 1,
+    "price": 289,
+    "subtotal": 289,
+    "createdAt": "2025-12-27T18:24:27.523Z",
+    "updatedAt": "2025-12-27T18:24:27.522Z"
+  },
+  {
+    "id": "orderItem_1766860807440_w1ecwky",
+    "orderId": "order_1766860807440_9lg2ymc",
+    "menuItemId": "menu-ham--cheese-hawaiian-1766851877979",
+    "quantity": 1,
+    "price": 289,
+    "subtotal": 289,
+    "createdAt": "2025-12-27T18:40:07.445Z",
+    "updatedAt": "2025-12-27T18:40:07.440Z"
+  },
+  {
+    "id": "orderItem_1766860848597_5tqmgin",
+    "orderId": "order_1766860848597_nq16ry2",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-27T18:40:48.599Z",
+    "updatedAt": "2025-12-27T18:40:48.597Z"
+  },
+  {
+    "id": "orderItem_1766860848597_eblg1ek",
+    "orderId": "order_1766860848597_nq16ry2",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2025-12-27T18:40:48.599Z",
+    "updatedAt": "2025-12-27T18:40:48.597Z"
+  },
+  {
+    "id": "orderItem_1766914463580_39so9ol",
+    "orderId": "order_1766914463580_80tpek0",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T09:34:23.586Z",
+    "updatedAt": "2025-12-28T09:34:23.580Z"
+  },
+  {
+    "id": "orderItem_1766915055019_xa2816z",
+    "orderId": "order_1766915055019_xfj6nd2",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T09:44:15.020Z",
+    "updatedAt": "2025-12-28T09:44:15.019Z"
+  },
+  {
+    "id": "orderItem_1766924944271_1t61arn",
+    "orderId": "order_1766924944271_tz14m72",
+    "menuItemId": "menu-cheesy-fries-1766851878006",
+    "quantity": 1,
+    "price": 89,
+    "subtotal": 89,
+    "createdAt": "2025-12-28T12:29:04.272Z",
+    "updatedAt": "2025-12-28T12:29:04.271Z"
+  },
+  {
+    "id": "orderItem_1766925233462_zz6wp04",
+    "orderId": "order_1766925233462_kt13qjh",
+    "menuItemId": "menu-lumpia-shanghai-1766851878051",
+    "quantity": 1,
+    "price": 79,
+    "subtotal": 79,
+    "createdAt": "2025-12-28T12:33:53.463Z",
+    "updatedAt": "2025-12-28T12:33:53.462Z"
+  },
+  {
+    "id": "orderItem_1766926406490_p4kzbsy",
+    "orderId": "order_1766926406490_2q3cvv5",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T12:53:26.491Z",
+    "updatedAt": "2025-12-28T12:53:26.490Z"
+  },
+  {
+    "id": "orderItem_1766926702215_5czvoe2",
+    "orderId": "order_1766926702215_as31nr2",
+    "menuItemId": "menu-cheesy-fries-1766851878006",
+    "quantity": 1,
+    "price": 89,
+    "subtotal": 89,
+    "createdAt": "2025-12-28T12:58:22.217Z",
+    "updatedAt": "2025-12-28T12:58:22.215Z"
+  },
+  {
+    "id": "orderItem_1766926796401_cv1h2lv",
+    "orderId": "order_1766926796401_buco254",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T12:59:56.404Z",
+    "updatedAt": "2025-12-28T12:59:56.401Z"
+  },
+  {
+    "id": "orderItem_1766926796401_6aolz70",
+    "orderId": "order_1766926796401_buco254",
+    "menuItemId": "menu-hot-coffee-1766851878068",
+    "quantity": 1,
+    "price": 59,
+    "subtotal": 59,
+    "createdAt": "2025-12-28T12:59:56.404Z",
+    "updatedAt": "2025-12-28T12:59:56.401Z"
+  },
+  {
+    "id": "orderItem_1766927030840_iy7cl9t",
+    "orderId": "order_1766927030840_d7lwfyh",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T13:03:50.842Z",
+    "updatedAt": "2025-12-28T13:03:50.840Z"
+  },
+  {
+    "id": "orderItem_1766927104320_42jsv7d",
+    "orderId": "order_1766927104320_uramysj",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T13:05:04.322Z",
+    "updatedAt": "2025-12-28T13:05:04.320Z"
+  },
+  {
+    "id": "orderItem_1766928299047_cabjr23",
+    "orderId": "order_1766928299047_a0ow6oa",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T13:24:59.056Z",
+    "updatedAt": "2025-12-28T13:24:59.047Z"
+  },
+  {
+    "id": "orderItem_1766928330118_5vvptti",
+    "orderId": "order_1766928330118_05rh7h8",
+    "menuItemId": "menu-cheesy-fries-1766851878006",
+    "quantity": 1,
+    "price": 89,
+    "subtotal": 89,
+    "createdAt": "2025-12-28T13:25:30.119Z",
+    "updatedAt": "2025-12-28T13:25:30.118Z"
+  },
+  {
+    "id": "orderItem_1766928422003_ty41bwu",
+    "orderId": "order_1766928422003_vz1i9pi",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T13:27:02.005Z",
+    "updatedAt": "2025-12-28T13:27:02.003Z"
+  },
+  {
+    "id": "orderItem_1766928485409_8fsfi4b",
+    "orderId": "order_1766928485409_tenwgjc",
+    "menuItemId": "menu-cheesy-fries-1766851878006",
+    "quantity": 1,
+    "price": 89,
+    "subtotal": 89,
+    "createdAt": "2025-12-28T13:28:05.410Z",
+    "updatedAt": "2025-12-28T13:28:05.409Z"
+  },
+  {
+    "id": "orderItem_1766928855084_8zd6mi9",
+    "orderId": "order_1766928855084_r96w9qn",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T13:34:15.086Z",
+    "updatedAt": "2025-12-28T13:34:15.084Z"
+  },
+  {
+    "id": "orderItem_1766928867081_v6wmkxe",
+    "orderId": "order_1766928867081_4awbe6d",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-28T13:34:27.083Z",
+    "updatedAt": "2025-12-28T13:34:27.081Z"
+  },
+  {
+    "id": "orderItem_1766928891826_6waz7z9",
+    "orderId": "order_1766928891826_q9vfpd9",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T13:34:51.827Z",
+    "updatedAt": "2025-12-28T13:34:51.826Z"
+  },
+  {
+    "id": "orderItem_1766928928725_47r99uy",
+    "orderId": "order_1766928928725_3cyl4tf",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T13:35:28.727Z",
+    "updatedAt": "2025-12-28T13:35:28.725Z"
+  },
+  {
+    "id": "orderItem_1766928940066_6l8595f",
+    "orderId": "order_1766928940066_akqf6hy",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T13:35:40.068Z",
+    "updatedAt": "2025-12-28T13:35:40.066Z"
+  },
+  {
+    "id": "orderItem_1766928959496_doaz5wd",
+    "orderId": "order_1766928959496_4d3x8nh",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T13:35:59.497Z",
+    "updatedAt": "2025-12-28T13:35:59.496Z"
+  },
+  {
+    "id": "orderItem_1766928969733_vlr2j1b",
+    "orderId": "order_1766928969733_q2mg62d",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T13:36:09.735Z",
+    "updatedAt": "2025-12-28T13:36:09.733Z"
+  },
+  {
+    "id": "orderItem_1766929002212_jckkldq",
+    "orderId": "order_1766929002212_kpuf6ip",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T13:36:42.215Z",
+    "updatedAt": "2025-12-28T13:36:42.212Z"
+  },
+  {
+    "id": "orderItem_1766929090865_khqdabe",
+    "orderId": "order_1766929090865_im86m43",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T13:38:10.867Z",
+    "updatedAt": "2025-12-28T13:38:10.865Z"
+  },
+  {
+    "id": "orderItem_1766929098947_qx7bwzi",
+    "orderId": "order_1766929098947_5x2tig6",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T13:38:18.948Z",
+    "updatedAt": "2025-12-28T13:38:18.947Z"
+  },
+  {
+    "id": "orderItem_1766929536245_bo0f0o6",
+    "orderId": "order_1766929536245_50mg3b3",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2025-12-28T13:45:36.250Z",
+    "updatedAt": "2025-12-28T13:45:36.245Z"
+  },
+  {
+    "id": "orderItem_1766929590856_a0ilvi6",
+    "orderId": "order_1766929590856_etll72z",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T13:46:30.857Z",
+    "updatedAt": "2025-12-28T13:46:30.856Z"
+  },
+  {
+    "id": "orderItem_1766929642319_f7nmr4g",
+    "orderId": "order_1766929642319_261mwnr",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T13:47:22.320Z",
+    "updatedAt": "2025-12-28T13:47:22.319Z"
+  },
+  {
+    "id": "orderItem_1766929896448_n7d9v0y",
+    "orderId": "order_1766929896448_6b0z43y",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T13:51:36.450Z",
+    "updatedAt": "2025-12-28T13:51:36.448Z"
+  },
+  {
+    "id": "orderItem_1766930495754_5fw6tmg",
+    "orderId": "order_1766930495753_z54xvcd",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T14:01:35.764Z",
+    "updatedAt": "2025-12-28T14:01:35.754Z"
+  },
+  {
+    "id": "orderItem_1766930518266_3m03wb6",
+    "orderId": "order_1766930518266_ep7j3qg",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T14:01:58.269Z",
+    "updatedAt": "2025-12-28T14:01:58.266Z"
+  },
+  {
+    "id": "orderItem_1766930789513_4063urv",
+    "orderId": "order_1766930789513_qbskdqj",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T14:06:29.520Z",
+    "updatedAt": "2025-12-28T14:06:29.513Z"
+  },
+  {
+    "id": "orderItem_1766930823475_t3f0bmk",
+    "orderId": "order_1766930823475_q5epphe",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T14:07:03.476Z",
+    "updatedAt": "2025-12-28T14:07:03.475Z"
+  },
+  {
+    "id": "orderItem_1766930868204_1okxfk3",
+    "orderId": "order_1766930868204_f009o50",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-28T14:07:48.206Z",
+    "updatedAt": "2025-12-28T14:07:48.204Z"
+  },
+  {
+    "id": "orderItem_1766930868204_ori2p3t",
+    "orderId": "order_1766930868204_f009o50",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-28T14:07:48.206Z",
+    "updatedAt": "2025-12-28T14:07:48.204Z"
+  },
+  {
+    "id": "orderItem_1766930879453_wwkjgif",
+    "orderId": "order_1766930879453_wrzqw6p",
+    "menuItemId": "menu-lumpia-shanghai-1766851878051",
+    "quantity": 1,
+    "price": 79,
+    "subtotal": 79,
+    "createdAt": "2025-12-28T14:07:59.455Z",
+    "updatedAt": "2025-12-28T14:07:59.453Z"
+  },
+  {
+    "id": "orderItem_1766930879453_38buuxi",
+    "orderId": "order_1766930879453_wrzqw6p",
+    "menuItemId": "menu-cheesy-fries-1766851878006",
+    "quantity": 1,
+    "price": 89,
+    "subtotal": 89,
+    "createdAt": "2025-12-28T14:07:59.455Z",
+    "updatedAt": "2025-12-28T14:07:59.453Z"
+  },
+  {
+    "id": "orderItem_1766931097192_sm5s8bi",
+    "orderId": "order_1766931097191_2pf97bf",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T14:11:37.219Z",
+    "updatedAt": "2025-12-28T14:11:37.192Z"
+  },
+  {
+    "id": "orderItem_1766931126727_b0i7gtg",
+    "orderId": "order_1766931126727_xqyysuv",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T14:12:06.729Z",
+    "updatedAt": "2025-12-28T14:12:06.727Z"
+  },
+  {
+    "id": "orderItem_1766931138614_jteewmb",
+    "orderId": "order_1766931138614_p6x2xbo",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T14:12:18.616Z",
+    "updatedAt": "2025-12-28T14:12:18.614Z"
+  },
+  {
+    "id": "orderItem_1766931149626_xkuia9n",
+    "orderId": "order_1766931149626_0y1n7kq",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T14:12:29.628Z",
+    "updatedAt": "2025-12-28T14:12:29.626Z"
+  },
+  {
+    "id": "orderItem_1766931149626_zyc6znf",
+    "orderId": "order_1766931149626_0y1n7kq",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T14:12:29.628Z",
+    "updatedAt": "2025-12-28T14:12:29.626Z"
+  },
+  {
+    "id": "orderItem_1766931155977_0410x8e",
+    "orderId": "order_1766931155977_toy1gjz",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-28T14:12:35.979Z",
+    "updatedAt": "2025-12-28T14:12:35.977Z"
+  },
+  {
+    "id": "orderItem_1766931158484_j9fhnr3",
+    "orderId": "order_1766931158484_snyc96s",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T14:12:38.485Z",
+    "updatedAt": "2025-12-28T14:12:38.484Z"
+  },
+  {
+    "id": "orderItem_1766931245649_7cxmywl",
+    "orderId": "order_1766931245649_m7didqs",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-28T14:14:05.650Z",
+    "updatedAt": "2025-12-28T14:14:05.649Z"
+  },
+  {
+    "id": "orderItem_1766931405836_j2eb2l9",
+    "orderId": "order_1766931405836_1dme24q",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T14:16:45.837Z",
+    "updatedAt": "2025-12-28T14:16:45.836Z"
+  },
+  {
+    "id": "orderItem_1766931724198_9pt1w4b",
+    "orderId": "order_1766931724198_cac9ihr",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T14:22:04.208Z",
+    "updatedAt": "2025-12-28T14:22:04.198Z"
+  },
+  {
+    "id": "orderItem_1766931889123_bkdrolu",
+    "orderId": "order_1766931889123_6c12rmi",
+    "menuItemId": "menu-cheesy-fries-1766851878006",
+    "quantity": 1,
+    "price": 89,
+    "subtotal": 89,
+    "createdAt": "2025-12-28T14:24:49.125Z",
+    "updatedAt": "2025-12-28T14:24:49.123Z"
+  },
+  {
+    "id": "orderItem_1766931908410_ik2a90p",
+    "orderId": "order_1766931908410_ar7i8ex",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T14:25:08.412Z",
+    "updatedAt": "2025-12-28T14:25:08.410Z"
+  },
+  {
+    "id": "orderItem_1766931908410_gn33n9s",
+    "orderId": "order_1766931908410_ar7i8ex",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-28T14:25:08.412Z",
+    "updatedAt": "2025-12-28T14:25:08.410Z"
+  },
+  {
+    "id": "orderItem_1766932295247_e6u65m6",
+    "orderId": "order_1766932295247_v790bm6",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T14:31:35.248Z",
+    "updatedAt": "2025-12-28T14:31:35.247Z"
+  },
+  {
+    "id": "orderItem_1766932323815_ebufwb6",
+    "orderId": "order_1766932323815_lc2tzqy",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T14:32:03.816Z",
+    "updatedAt": "2025-12-28T14:32:03.815Z"
+  },
+  {
+    "id": "orderItem_1766932352227_qi29ssg",
+    "orderId": "order_1766932352227_t0riep9",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T14:32:32.228Z",
+    "updatedAt": "2025-12-28T14:32:32.227Z"
+  },
+  {
+    "id": "orderItem_1766932654777_u54wi8r",
+    "orderId": "order_1766932654777_rgilvqt",
+    "menuItemId": "menu-cheesy-fries-1766851878006",
+    "quantity": 1,
+    "price": 89,
+    "subtotal": 89,
+    "createdAt": "2025-12-28T14:37:34.779Z",
+    "updatedAt": "2025-12-28T14:37:34.777Z"
+  },
+  {
+    "id": "orderItem_1766932654777_etu47ys",
+    "orderId": "order_1766932654777_rgilvqt",
+    "menuItemId": "menu-hot-chocolate-1766851878082",
+    "quantity": 1,
+    "price": 79,
+    "subtotal": 79,
+    "createdAt": "2025-12-28T14:37:34.779Z",
+    "updatedAt": "2025-12-28T14:37:34.777Z"
+  },
+  {
+    "id": "orderItem_1766932664640_6nf0twu",
+    "orderId": "order_1766932664640_2dlwo96",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T14:37:44.642Z",
+    "updatedAt": "2025-12-28T14:37:44.640Z"
+  },
+  {
+    "id": "orderItem_1766932670108_61s26i0",
+    "orderId": "order_1766932670108_8wrj9sd",
+    "menuItemId": "menu-iced-coffee-1766851878129",
+    "quantity": 1,
+    "price": 69,
+    "subtotal": 69,
+    "createdAt": "2025-12-28T14:37:50.109Z",
+    "updatedAt": "2025-12-28T14:37:50.108Z"
+  },
+  {
+    "id": "orderItem_1766932670108_24331d8",
+    "orderId": "order_1766932670108_8wrj9sd",
+    "menuItemId": "menu-iced-americano-1766851878111",
+    "quantity": 1,
+    "price": 79,
+    "subtotal": 79,
+    "createdAt": "2025-12-28T14:37:50.109Z",
+    "updatedAt": "2025-12-28T14:37:50.108Z"
+  },
+  {
+    "id": "orderItem_1766932724101_lo2yrg9",
+    "orderId": "order_1766932724101_xdmh077",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T14:38:44.103Z",
+    "updatedAt": "2025-12-28T14:38:44.101Z"
+  },
+  {
+    "id": "orderItem_1766932767199_t1a6nw6",
+    "orderId": "order_1766932767199_x6c96os",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T14:39:27.201Z",
+    "updatedAt": "2025-12-28T14:39:27.199Z"
+  },
+  {
+    "id": "orderItem_1766932872385_5oae90e",
+    "orderId": "order_1766932872385_sna9ufc",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T14:41:12.386Z",
+    "updatedAt": "2025-12-28T14:41:12.385Z"
+  },
+  {
+    "id": "orderItem_1766932935431_3wah38d",
+    "orderId": "order_1766932935431_45exlp1",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T14:42:15.432Z",
+    "updatedAt": "2025-12-28T14:42:15.431Z"
+  },
+  {
+    "id": "orderItem_1766933760875_70zhr1w",
+    "orderId": "order_1766933760875_6uvj9kl",
+    "menuItemId": "menu-cheesy-fries-1766851878006",
+    "quantity": 1,
+    "price": 89,
+    "subtotal": 89,
+    "createdAt": "2025-12-28T14:56:00.880Z",
+    "updatedAt": "2025-12-28T14:56:00.875Z"
+  },
+  {
+    "id": "orderItem_1766933810246_lzxs4b3",
+    "orderId": "order_1766933810245_7rdblsl",
+    "menuItemId": "menu-ham--cheese-hawaiian-1766851877979",
+    "quantity": 1,
+    "price": 289,
+    "subtotal": 289,
+    "createdAt": "2025-12-28T14:56:50.248Z",
+    "updatedAt": "2025-12-28T14:56:50.246Z"
+  },
+  {
+    "id": "orderItem_1766933838581_9cbf1vk",
+    "orderId": "order_1766933838581_vxx64nl",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T14:57:18.583Z",
+    "updatedAt": "2025-12-28T14:57:18.581Z"
+  },
+  {
+    "id": "orderItem_1766934296530_opubceo",
+    "orderId": "order_1766934296530_usnb0ui",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T15:04:56.539Z",
+    "updatedAt": "2025-12-28T15:04:56.530Z"
+  },
+  {
+    "id": "orderItem_1766934620030_9j2g37f",
+    "orderId": "order_1766934620030_1eo6lon",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T15:10:20.037Z",
+    "updatedAt": "2025-12-28T15:10:20.030Z"
+  },
+  {
+    "id": "orderItem_1766934620030_n2vh3ji",
+    "orderId": "order_1766934620030_1eo6lon",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-28T15:10:20.037Z",
+    "updatedAt": "2025-12-28T15:10:20.030Z"
+  },
+  {
+    "id": "orderItem_1766935457043_1rh5u2e",
+    "orderId": "order_1766935457043_kgjqfri",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T15:24:17.055Z",
+    "updatedAt": "2025-12-28T15:24:17.043Z"
+  },
+  {
+    "id": "orderItem_1766935642759_gnuoz4d",
+    "orderId": "order_1766935642759_qz576c5",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T15:27:22.762Z",
+    "updatedAt": "2025-12-28T15:27:22.759Z"
+  },
+  {
+    "id": "orderItem_1766935642759_9no7wvo",
+    "orderId": "order_1766935642759_qz576c5",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T15:27:22.762Z",
+    "updatedAt": "2025-12-28T15:27:22.759Z"
+  },
+  {
+    "id": "orderItem_1766935871826_0qdlura",
+    "orderId": "order_1766935871826_1m1rmxx",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T15:31:11.836Z",
+    "updatedAt": "2025-12-28T15:31:11.826Z"
+  },
+  {
+    "id": "orderItem_1766935895653_9z2l1si",
+    "orderId": "order_1766935895653_nne9u97",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T15:31:35.655Z",
+    "updatedAt": "2025-12-28T15:31:35.653Z"
+  },
+  {
+    "id": "orderItem_1766936151822_gadc91q",
+    "orderId": "order_1766936151822_xs0397x",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T15:35:51.842Z",
+    "updatedAt": "2025-12-28T15:35:51.822Z"
+  },
+  {
+    "id": "orderItem_1766936484706_aw9sdnw",
+    "orderId": "order_1766936484706_p32s7v8",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T15:41:24.707Z",
+    "updatedAt": "2025-12-28T15:41:24.706Z"
+  },
+  {
+    "id": "orderItem_1766936557100_0pefacy",
+    "orderId": "order_1766936557100_e9spazb",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T15:42:37.108Z",
+    "updatedAt": "2025-12-28T15:42:37.100Z"
+  },
+  {
+    "id": "orderItem_1766936557100_8ki4f4y",
+    "orderId": "order_1766936557100_e9spazb",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-28T15:42:37.108Z",
+    "updatedAt": "2025-12-28T15:42:37.100Z"
+  },
+  {
+    "id": "orderItem_1766936577487_nfg3fvy",
+    "orderId": "order_1766936577487_bd5yk5d",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T15:42:57.489Z",
+    "updatedAt": "2025-12-28T15:42:57.487Z"
+  },
+  {
+    "id": "orderItem_1766936920777_h2hpmf2",
+    "orderId": "order_1766936920777_v2q9wup",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T15:48:40.778Z",
+    "updatedAt": "2025-12-28T15:48:40.777Z"
+  },
+  {
+    "id": "orderItem_1766936920777_mfjuv6z",
+    "orderId": "order_1766936920777_v2q9wup",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-28T15:48:40.778Z",
+    "updatedAt": "2025-12-28T15:48:40.777Z"
+  },
+  {
+    "id": "orderItem_1766937613486_4lbaafc",
+    "orderId": "order_1766937613486_ilg511e",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T16:00:13.490Z",
+    "updatedAt": "2025-12-28T16:00:13.486Z"
+  },
+  {
+    "id": "orderItem_1766937792128_nsq5m85",
+    "orderId": "order_1766937792128_ts5xtd2",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T16:03:12.143Z",
+    "updatedAt": "2025-12-28T16:03:12.128Z"
+  },
+  {
+    "id": "orderItem_1766938224304_qq3e9nv",
+    "orderId": "order_1766938224304_6ua9dhv",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T16:10:24.316Z",
+    "updatedAt": "2025-12-28T16:10:24.304Z"
+  },
+  {
+    "id": "orderItem_1766938264143_l0futxg",
+    "orderId": "order_1766938264143_xqi1eqx",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T16:11:04.145Z",
+    "updatedAt": "2025-12-28T16:11:04.143Z"
+  },
+  {
+    "id": "orderItem_1766938305884_td3r2an",
+    "orderId": "order_1766938305884_5t3qo5z",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T16:11:45.887Z",
+    "updatedAt": "2025-12-28T16:11:45.884Z"
+  },
+  {
+    "id": "orderItem_1766938331820_6m567n2",
+    "orderId": "order_1766938331820_g1st3gi",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T16:12:11.822Z",
+    "updatedAt": "2025-12-28T16:12:11.820Z"
+  },
+  {
+    "id": "orderItem_1766938366928_x8hhl1w",
+    "orderId": "order_1766938366928_zxmk9af",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T16:12:46.930Z",
+    "updatedAt": "2025-12-28T16:12:46.928Z"
+  },
+  {
+    "id": "orderItem_1766938495446_ccjrido",
+    "orderId": "order_1766938495446_8c7mgjw",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T16:14:55.448Z",
+    "updatedAt": "2025-12-28T16:14:55.446Z"
+  },
+  {
+    "id": "orderItem_1766938503759_f544rkt",
+    "orderId": "order_1766938503759_ydip1bg",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-28T16:15:03.760Z",
+    "updatedAt": "2025-12-28T16:15:03.759Z"
+  },
+  {
+    "id": "orderItem_1766938534978_26p3n4s",
+    "orderId": "order_1766938534978_fl9jt06",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T16:15:34.980Z",
+    "updatedAt": "2025-12-28T16:15:34.978Z"
+  },
+  {
+    "id": "orderItem_1766938631731_2ci0zaz",
+    "orderId": "order_1766938631731_9f5f68j",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T16:17:11.751Z",
+    "updatedAt": "2025-12-28T16:17:11.731Z"
+  },
+  {
+    "id": "orderItem_1766938640413_p96j7jo",
+    "orderId": "order_1766938640413_jd0d7lx",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-28T16:17:20.415Z",
+    "updatedAt": "2025-12-28T16:17:20.413Z"
+  },
+  {
+    "id": "orderItem_1766938648904_9thokus",
+    "orderId": "order_1766938648904_odv64b3",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-28T16:17:28.906Z",
+    "updatedAt": "2025-12-28T16:17:28.904Z"
+  },
+  {
+    "id": "orderItem_1766938686687_ld9313f",
+    "orderId": "order_1766938686687_54hltzf",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T16:18:06.688Z",
+    "updatedAt": "2025-12-28T16:18:06.687Z"
+  },
+  {
+    "id": "orderItem_1766938696890_7agawd2",
+    "orderId": "order_1766938696890_yln9un5",
+    "menuItemId": "menu-hot-matcha-1766851878088",
+    "quantity": 1,
+    "price": 89,
+    "subtotal": 89,
+    "createdAt": "2025-12-28T16:18:16.892Z",
+    "updatedAt": "2025-12-28T16:18:16.890Z"
+  },
+  {
+    "id": "orderItem_1766938741162_dy9fzzd",
+    "orderId": "order_1766938741162_gex9wqm",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-28T16:19:01.164Z",
+    "updatedAt": "2025-12-28T16:19:01.162Z"
+  },
+  {
+    "id": "orderItem_1766938741162_mxr8z1j",
+    "orderId": "order_1766938741162_gex9wqm",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-28T16:19:01.164Z",
+    "updatedAt": "2025-12-28T16:19:01.162Z"
+  },
+  {
+    "id": "orderItem_1766939081936_e40co7s",
+    "orderId": "order_1766939081936_9s98cx5",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-28T16:24:41.937Z",
+    "updatedAt": "2025-12-28T16:24:41.936Z"
+  },
+  {
+    "id": "orderItem_1766939148139_j3pgoen",
+    "orderId": "order_1766939148139_cr4ih6c",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-28T16:25:48.141Z",
+    "updatedAt": "2025-12-28T16:25:48.139Z"
+  },
+  {
+    "id": "orderItem_1766939148139_ef90cl8",
+    "orderId": "order_1766939148139_cr4ih6c",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-28T16:25:48.141Z",
+    "updatedAt": "2025-12-28T16:25:48.139Z"
+  },
+  {
+    "id": "orderItem_1766939148139_0wyb5dp",
+    "orderId": "order_1766939148139_cr4ih6c",
+    "menuItemId": "menu-hot-chocolate-1766851878082",
+    "quantity": 1,
+    "price": 79,
+    "subtotal": 79,
+    "createdAt": "2025-12-28T16:25:48.141Z",
+    "updatedAt": "2025-12-28T16:25:48.139Z"
+  },
+  {
+    "id": "orderItem_1766939148139_tjfaz7b",
+    "orderId": "order_1766939148139_cr4ih6c",
+    "menuItemId": "menu-boneless-bangus-1766851878234",
+    "quantity": 1,
+    "price": 159,
+    "subtotal": 159,
+    "createdAt": "2025-12-28T16:25:48.141Z",
+    "updatedAt": "2025-12-28T16:25:48.139Z"
+  },
+  {
+    "id": "orderItem_1766941736376_ufgpzli",
+    "orderId": "order_1766941736376_m03kw33",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-28T17:08:56.378Z",
+    "updatedAt": "2025-12-28T17:08:56.376Z"
+  },
+  {
+    "id": "orderItem_1766942122237_6po71cg",
+    "orderId": "order_1766942122237_2qqk72d",
+    "menuItemId": "menu-cheesy-fries-1766851878006",
+    "quantity": 1,
+    "price": 89,
+    "subtotal": 89,
+    "createdAt": "2025-12-28T17:15:22.238Z",
+    "updatedAt": "2025-12-28T17:15:22.237Z"
+  },
+  {
+    "id": "orderItem_1766982586639_fbczatt",
+    "orderId": "order_1766982586639_a4dyn31",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T04:29:46.646Z",
+    "updatedAt": "2025-12-29T04:29:46.639Z"
+  },
+  {
+    "id": "orderItem_1766982759160_jhemcmn",
+    "orderId": "order_1766982759160_jk7jhkh",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T04:32:39.162Z",
+    "updatedAt": "2025-12-29T04:32:39.160Z"
+  },
+  {
+    "id": "orderItem_1766989850357_lk3lzdv",
+    "orderId": "order_1766989850357_qvueoat",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T06:30:50.359Z",
+    "updatedAt": "2025-12-29T06:30:50.357Z"
+  },
+  {
+    "id": "orderItem_1766989850357_tkmg6iy",
+    "orderId": "order_1766989850357_qvueoat",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T06:30:50.359Z",
+    "updatedAt": "2025-12-29T06:30:50.357Z"
+  },
+  {
+    "id": "orderItem_1766989850357_3rs5c8v",
+    "orderId": "order_1766989850357_qvueoat",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2025-12-29T06:30:50.359Z",
+    "updatedAt": "2025-12-29T06:30:50.357Z"
+  },
+  {
+    "id": "orderItem_1766989850357_jyle1ko",
+    "orderId": "order_1766989850357_qvueoat",
+    "menuItemId": "menu-iced-coffee-1766851878129",
+    "quantity": 1,
+    "price": 69,
+    "subtotal": 69,
+    "createdAt": "2025-12-29T06:30:50.359Z",
+    "updatedAt": "2025-12-29T06:30:50.357Z"
+  },
+  {
+    "id": "orderItem_1766989850357_ztmuz8b",
+    "orderId": "order_1766989850357_qvueoat",
+    "menuItemId": "menu-iced-americano-1766851878111",
+    "quantity": 1,
+    "price": 79,
+    "subtotal": 79,
+    "createdAt": "2025-12-29T06:30:50.359Z",
+    "updatedAt": "2025-12-29T06:30:50.357Z"
+  },
+  {
+    "id": "orderItem_1766991048190_wn4ewnm",
+    "orderId": "order_1766991048190_wzgf23n",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T06:50:48.191Z",
+    "updatedAt": "2025-12-29T06:50:48.190Z"
+  },
+  {
+    "id": "orderItem_1766991048190_8flwfre",
+    "orderId": "order_1766991048190_wzgf23n",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 5,
+    "price": 189,
+    "subtotal": 945,
+    "createdAt": "2025-12-29T06:50:48.191Z",
+    "updatedAt": "2025-12-29T06:50:48.190Z"
+  },
+  {
+    "id": "orderItem_1766991048190_itf52lk",
+    "orderId": "order_1766991048190_wzgf23n",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T06:50:48.191Z",
+    "updatedAt": "2025-12-29T06:50:48.190Z"
+  },
+  {
+    "id": "orderItem_1766991048190_iiki6wm",
+    "orderId": "order_1766991048190_wzgf23n",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T06:50:48.191Z",
+    "updatedAt": "2025-12-29T06:50:48.190Z"
+  },
+  {
+    "id": "orderItem_1766991048190_lqwrxan",
+    "orderId": "order_1766991048190_wzgf23n",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2025-12-29T06:50:48.191Z",
+    "updatedAt": "2025-12-29T06:50:48.190Z"
+  },
+  {
+    "id": "orderItem_1766991216863_d3jjp0z",
+    "orderId": "order_1766991216862_9lua3rc",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T06:53:36.864Z",
+    "updatedAt": "2025-12-29T06:53:36.863Z"
+  },
+  {
+    "id": "orderItem_1766991216863_r38533d",
+    "orderId": "order_1766991216862_9lua3rc",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2025-12-29T06:53:36.864Z",
+    "updatedAt": "2025-12-29T06:53:36.863Z"
+  },
+  {
+    "id": "orderItem_1766991216863_r5sgxqd",
+    "orderId": "order_1766991216862_9lua3rc",
+    "menuItemId": "menu-iced-coffee-1766851878129",
+    "quantity": 1,
+    "price": 69,
+    "subtotal": 69,
+    "createdAt": "2025-12-29T06:53:36.864Z",
+    "updatedAt": "2025-12-29T06:53:36.863Z"
+  },
+  {
+    "id": "orderItem_1766991261241_0qz9ec5",
+    "orderId": "order_1766991261241_1i06y72",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T06:54:21.242Z",
+    "updatedAt": "2025-12-29T06:54:21.241Z"
+  },
+  {
+    "id": "orderItem_1766991261241_qhnzca8",
+    "orderId": "order_1766991261241_1i06y72",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2025-12-29T06:54:21.242Z",
+    "updatedAt": "2025-12-29T06:54:21.241Z"
+  },
+  {
+    "id": "orderItem_1766991261241_s1u77io",
+    "orderId": "order_1766991261241_1i06y72",
+    "menuItemId": "menu-iced-coffee-1766851878129",
+    "quantity": 1,
+    "price": 69,
+    "subtotal": 69,
+    "createdAt": "2025-12-29T06:54:21.242Z",
+    "updatedAt": "2025-12-29T06:54:21.241Z"
+  },
+  {
+    "id": "orderItem_1766991261241_iffpra6",
+    "orderId": "order_1766991261241_1i06y72",
+    "menuItemId": "menu-ham--cheese-hawaiian-1766851877979",
+    "quantity": 1,
+    "price": 289,
+    "subtotal": 289,
+    "createdAt": "2025-12-29T06:54:21.242Z",
+    "updatedAt": "2025-12-29T06:54:21.241Z"
+  },
+  {
+    "id": "orderItem_1766991286969_nq2et5c",
+    "orderId": "order_1766991286969_tfb8jk3",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T06:54:46.970Z",
+    "updatedAt": "2025-12-29T06:54:46.969Z"
+  },
+  {
+    "id": "orderItem_1766991286969_ia6la4q",
+    "orderId": "order_1766991286969_tfb8jk3",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2025-12-29T06:54:46.970Z",
+    "updatedAt": "2025-12-29T06:54:46.969Z"
+  },
+  {
+    "id": "orderItem_1766991286969_p324cgq",
+    "orderId": "order_1766991286969_tfb8jk3",
+    "menuItemId": "menu-iced-coffee-1766851878129",
+    "quantity": 1,
+    "price": 69,
+    "subtotal": 69,
+    "createdAt": "2025-12-29T06:54:46.970Z",
+    "updatedAt": "2025-12-29T06:54:46.969Z"
+  },
+  {
+    "id": "orderItem_1766991286969_d9vumg9",
+    "orderId": "order_1766991286969_tfb8jk3",
+    "menuItemId": "menu-ham--cheese-hawaiian-1766851877979",
+    "quantity": 1,
+    "price": 289,
+    "subtotal": 289,
+    "createdAt": "2025-12-29T06:54:46.970Z",
+    "updatedAt": "2025-12-29T06:54:46.969Z"
+  },
+  {
+    "id": "orderItem_1766991286969_2xdaice",
+    "orderId": "order_1766991286969_tfb8jk3",
+    "menuItemId": "menu-iced-americano-1766851878111",
+    "quantity": 1,
+    "price": 79,
+    "subtotal": 79,
+    "createdAt": "2025-12-29T06:54:46.970Z",
+    "updatedAt": "2025-12-29T06:54:46.969Z"
+  },
+  {
+    "id": "orderItem_1766991286969_98nplrd",
+    "orderId": "order_1766991286969_tfb8jk3",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T06:54:46.970Z",
+    "updatedAt": "2025-12-29T06:54:46.969Z"
+  },
+  {
+    "id": "orderItem_1766991516175_uoy4w0y",
+    "orderId": "order_1766991516175_a8tu004",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T06:58:36.176Z",
+    "updatedAt": "2025-12-29T06:58:36.175Z"
+  },
+  {
+    "id": "orderItem_1766991564973_a02p6di",
+    "orderId": "order_1766991564973_n54kuiv",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T06:59:24.975Z",
+    "updatedAt": "2025-12-29T06:59:24.973Z"
+  },
+  {
+    "id": "orderItem_1766991564973_dv3f1im",
+    "orderId": "order_1766991564973_n54kuiv",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T06:59:24.975Z",
+    "updatedAt": "2025-12-29T06:59:24.973Z"
+  },
+  {
+    "id": "orderItem_1766991595483_mvc203x",
+    "orderId": "order_1766991595483_az8rf7n",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T06:59:55.485Z",
+    "updatedAt": "2025-12-29T06:59:55.483Z"
+  },
+  {
+    "id": "orderItem_1766991595483_n03fifv",
+    "orderId": "order_1766991595483_az8rf7n",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T06:59:55.485Z",
+    "updatedAt": "2025-12-29T06:59:55.483Z"
+  },
+  {
+    "id": "orderItem_1766991595483_nhznc5q",
+    "orderId": "order_1766991595483_az8rf7n",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2025-12-29T06:59:55.485Z",
+    "updatedAt": "2025-12-29T06:59:55.483Z"
+  },
+  {
+    "id": "orderItem_1766991611302_f8qx7tk",
+    "orderId": "order_1766991611302_psjyu2h",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T07:00:11.304Z",
+    "updatedAt": "2025-12-29T07:00:11.302Z"
+  },
+  {
+    "id": "orderItem_1766991611302_rdv8ho4",
+    "orderId": "order_1766991611302_psjyu2h",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2025-12-29T07:00:11.304Z",
+    "updatedAt": "2025-12-29T07:00:11.302Z"
+  },
+  {
+    "id": "orderItem_1766991652831_r6vbzu9",
+    "orderId": "order_1766991652831_r0o22ab",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T07:00:52.832Z",
+    "updatedAt": "2025-12-29T07:00:52.831Z"
+  },
+  {
+    "id": "orderItem_1766991652831_2ps2caf",
+    "orderId": "order_1766991652831_r0o22ab",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T07:00:52.832Z",
+    "updatedAt": "2025-12-29T07:00:52.831Z"
+  },
+  {
+    "id": "orderItem_1766991902330_1ay5fti",
+    "orderId": "order_1766991902330_1j9ykhb",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T07:05:02.332Z",
+    "updatedAt": "2025-12-29T07:05:02.330Z"
+  },
+  {
+    "id": "orderItem_1766991948205_pa29r9j",
+    "orderId": "order_1766991948205_rr0yv67",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T07:05:48.206Z",
+    "updatedAt": "2025-12-29T07:05:48.205Z"
+  },
+  {
+    "id": "orderItem_1766995944133_apiwymz",
+    "orderId": "order_1766995944133_o38nuaq",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T08:12:24.135Z",
+    "updatedAt": "2025-12-29T08:12:24.133Z"
+  },
+  {
+    "id": "orderItem_1766996036158_kgqgwxs",
+    "orderId": "order_1766996036158_udd6n4k",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T08:13:56.160Z",
+    "updatedAt": "2025-12-29T08:13:56.158Z"
+  },
+  {
+    "id": "orderItem_1766996128079_7xj03dl",
+    "orderId": "order_1766996128079_vew79pz",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T08:15:28.080Z",
+    "updatedAt": "2025-12-29T08:15:28.079Z"
+  },
+  {
+    "id": "orderItem_1766996210492_3pb68lw",
+    "orderId": "order_1766996210492_rcys6kd",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T08:16:50.493Z",
+    "updatedAt": "2025-12-29T08:16:50.492Z"
+  },
+  {
+    "id": "orderItem_1766996579488_gdp40uh",
+    "orderId": "order_1766996579488_xpo7b7i",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2025-12-29T08:22:59.490Z",
+    "updatedAt": "2025-12-29T08:22:59.488Z"
+  },
+  {
+    "id": "orderItem_1766996582360_2ulqkpp",
+    "orderId": "order_1766996582360_lu7wu8w",
+    "menuItemId": "menu-hot-coffee-1766851878068",
+    "quantity": 1,
+    "price": 59,
+    "subtotal": 59,
+    "createdAt": "2025-12-29T08:23:02.361Z",
+    "updatedAt": "2025-12-29T08:23:02.360Z"
+  },
+  {
+    "id": "orderItem_1766996650590_0g0yd07",
+    "orderId": "order_1766996650590_qfgd0c7",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T08:24:10.591Z",
+    "updatedAt": "2025-12-29T08:24:10.590Z"
+  },
+  {
+    "id": "orderItem_1766996742538_xfb7bjr",
+    "orderId": "order_1766996742538_wcv7zrq",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T08:25:42.539Z",
+    "updatedAt": "2025-12-29T08:25:42.538Z"
+  },
+  {
+    "id": "orderItem_1766996745041_otcyv2v",
+    "orderId": "order_1766996745041_asksg7x",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2025-12-29T08:25:45.042Z",
+    "updatedAt": "2025-12-29T08:25:45.041Z"
+  },
+  {
+    "id": "orderItem_1766996909323_dxg9337",
+    "orderId": "order_1766996909323_ov1x259",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T08:28:29.324Z",
+    "updatedAt": "2025-12-29T08:28:29.323Z"
+  },
+  {
+    "id": "orderItem_1766997058556_b2lrmam",
+    "orderId": "order_1766997058556_g47rwxp",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T08:30:58.558Z",
+    "updatedAt": "2025-12-29T08:30:58.556Z"
+  },
+  {
+    "id": "orderItem_1766997128065_qczzbjg",
+    "orderId": "order_1766997128065_96y99c5",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T08:32:08.067Z",
+    "updatedAt": "2025-12-29T08:32:08.065Z"
+  },
+  {
+    "id": "orderItem_1766997157288_rvulx0u",
+    "orderId": "order_1766997157288_m6eoe5r",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T08:32:37.289Z",
+    "updatedAt": "2025-12-29T08:32:37.288Z"
+  },
+  {
+    "id": "orderItem_1766997217308_9sqqldx",
+    "orderId": "order_1766997217308_q3ur39u",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T08:33:37.309Z",
+    "updatedAt": "2025-12-29T08:33:37.308Z"
+  },
+  {
+    "id": "orderItem_1766997217308_k3slvps",
+    "orderId": "order_1766997217308_q3ur39u",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T08:33:37.309Z",
+    "updatedAt": "2025-12-29T08:33:37.308Z"
+  },
+  {
+    "id": "orderItem_1766997250213_njlygns",
+    "orderId": "order_1766997250213_xkjwmpx",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T08:34:10.215Z",
+    "updatedAt": "2025-12-29T08:34:10.213Z"
+  },
+  {
+    "id": "orderItem_1766997984463_9ylfaqv",
+    "orderId": "order_1766997984463_1gd7o4z",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T08:46:24.465Z",
+    "updatedAt": "2025-12-29T08:46:24.463Z"
+  },
+  {
+    "id": "orderItem_1766997993408_4k0i8nb",
+    "orderId": "order_1766997993408_szf8mhk",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T08:46:33.409Z",
+    "updatedAt": "2025-12-29T08:46:33.408Z"
+  },
+  {
+    "id": "orderItem_1766998023970_ohntw8k",
+    "orderId": "order_1766998023970_7teawa3",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T08:47:03.971Z",
+    "updatedAt": "2025-12-29T08:47:03.970Z"
+  },
+  {
+    "id": "orderItem_1766998425147_b8h1aix",
+    "orderId": "order_1766998425147_ohfhnl4",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T08:53:45.148Z",
+    "updatedAt": "2025-12-29T08:53:45.147Z"
+  },
+  {
+    "id": "orderItem_1766998531687_a3w0w26",
+    "orderId": "order_1766998531687_k3c13er",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T08:55:31.689Z",
+    "updatedAt": "2025-12-29T08:55:31.687Z"
+  },
+  {
+    "id": "orderItem_1766998611641_gkwuen4",
+    "orderId": "order_1766998611641_cey286p",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T08:56:51.642Z",
+    "updatedAt": "2025-12-29T08:56:51.641Z"
+  },
+  {
+    "id": "orderItem_1766998745601_0cn0f6r",
+    "orderId": "order_1766998745601_y5r54jb",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T08:59:05.603Z",
+    "updatedAt": "2025-12-29T08:59:05.601Z"
+  },
+  {
+    "id": "orderItem_1766999330588_js800w4",
+    "orderId": "order_1766999330588_706brhh",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T09:08:50.590Z",
+    "updatedAt": "2025-12-29T09:08:50.588Z"
+  },
+  {
+    "id": "orderItem_1766999943914_yqu9di0",
+    "orderId": "order_1766999943914_l5a07qv",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T09:19:03.915Z",
+    "updatedAt": "2025-12-29T09:19:03.914Z"
+  },
+  {
+    "id": "orderItem_1766999961145_ognqq06",
+    "orderId": "order_1766999961145_ghaf8s8",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T09:19:21.146Z",
+    "updatedAt": "2025-12-29T09:19:21.145Z"
+  },
+  {
+    "id": "orderItem_1766999990825_j55mpwo",
+    "orderId": "order_1766999990825_6c2l5t1",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T09:19:50.827Z",
+    "updatedAt": "2025-12-29T09:19:50.825Z"
+  },
+  {
+    "id": "orderItem_1767000041761_kg2dbpv",
+    "orderId": "order_1767000041761_w83elcu",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T09:20:41.763Z",
+    "updatedAt": "2025-12-29T09:20:41.761Z"
+  },
+  {
+    "id": "orderItem_1767000615519_7ja8rm0",
+    "orderId": "order_1767000615519_q5dkzy8",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T09:30:15.520Z",
+    "updatedAt": "2025-12-29T09:30:15.519Z"
+  },
+  {
+    "id": "orderItem_1767000651368_ak0wism",
+    "orderId": "order_1767000651368_coczfxs",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T09:30:51.371Z",
+    "updatedAt": "2025-12-29T09:30:51.368Z"
+  },
+  {
+    "id": "orderItem_1767023587140_h31xs08",
+    "orderId": "order_1767023587140_1jd1zsa",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T15:53:07.150Z",
+    "updatedAt": "2025-12-29T15:53:07.140Z"
+  },
+  {
+    "id": "orderItem_1767023592554_p49xhfg",
+    "orderId": "order_1767023592554_op01g7a",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T15:53:12.555Z",
+    "updatedAt": "2025-12-29T15:53:12.554Z"
+  },
+  {
+    "id": "orderItem_1767024552456_rvcjtf2",
+    "orderId": "order_1767024552456_6fnlv4o",
+    "menuItemId": "menu-hot-coffee-1766851878068",
+    "quantity": 1,
+    "price": 59,
+    "subtotal": 59,
+    "createdAt": "2025-12-29T16:09:12.464Z",
+    "updatedAt": "2025-12-29T16:09:12.456Z"
+  },
+  {
+    "id": "orderItem_1767024870094_pmy44pc",
+    "orderId": "order_1767024870094_cgs7qn3",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T16:14:30.097Z",
+    "updatedAt": "2025-12-29T16:14:30.094Z"
+  },
+  {
+    "id": "orderItem_1767024870094_672j7xy",
+    "orderId": "order_1767024870094_cgs7qn3",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T16:14:30.097Z",
+    "updatedAt": "2025-12-29T16:14:30.094Z"
+  },
+  {
+    "id": "orderItem_1767024973794_emecjqp",
+    "orderId": "order_1767024973794_vkwmmpf",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T16:16:13.796Z",
+    "updatedAt": "2025-12-29T16:16:13.794Z"
+  },
+  {
+    "id": "orderItem_1767024982424_5fk4o9p",
+    "orderId": "order_1767024982424_cdy6149",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T16:16:22.426Z",
+    "updatedAt": "2025-12-29T16:16:22.424Z"
+  },
+  {
+    "id": "orderItem_1767024982424_9si0pf9",
+    "orderId": "order_1767024982424_cdy6149",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T16:16:22.426Z",
+    "updatedAt": "2025-12-29T16:16:22.424Z"
+  },
+  {
+    "id": "orderItem_1767025139187_odlnqi4",
+    "orderId": "order_1767025139187_5d7ibbz",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T16:18:59.190Z",
+    "updatedAt": "2025-12-29T16:18:59.187Z"
+  },
+  {
+    "id": "orderItem_1767025150853_stvgct0",
+    "orderId": "order_1767025150853_7e9zdi0",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T16:19:10.854Z",
+    "updatedAt": "2025-12-29T16:19:10.853Z"
+  },
+  {
+    "id": "orderItem_1767025382889_11hcjhe",
+    "orderId": "order_1767025382889_pq0a6gr",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T16:23:02.890Z",
+    "updatedAt": "2025-12-29T16:23:02.889Z"
+  },
+  {
+    "id": "orderItem_1767025701167_dft2gps",
+    "orderId": "order_1767025701167_01nzkos",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T16:28:21.169Z",
+    "updatedAt": "2025-12-29T16:28:21.167Z"
+  },
+  {
+    "id": "orderItem_1767025840806_yyyrg40",
+    "orderId": "order_1767025840806_b724rxk",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T16:30:40.818Z",
+    "updatedAt": "2025-12-29T16:30:40.806Z"
+  },
+  {
+    "id": "orderItem_1767025872622_ya9p6jg",
+    "orderId": "order_1767025872622_3f9l4a3",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T16:31:12.624Z",
+    "updatedAt": "2025-12-29T16:31:12.622Z"
+  },
+  {
+    "id": "orderItem_1767026150255_wtr8t71",
+    "orderId": "order_1767026150254_48kesx9",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T16:35:50.256Z",
+    "updatedAt": "2025-12-29T16:35:50.255Z"
+  },
+  {
+    "id": "orderItem_1767026243111_trjuevf",
+    "orderId": "order_1767026243111_9a22fze",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T16:37:23.112Z",
+    "updatedAt": "2025-12-29T16:37:23.111Z"
+  },
+  {
+    "id": "orderItem_1767026376112_idkuq5t",
+    "orderId": "order_1767026376112_mn5btbj",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T16:39:36.114Z",
+    "updatedAt": "2025-12-29T16:39:36.112Z"
+  },
+  {
+    "id": "orderItem_1767026376112_f91xtvq",
+    "orderId": "order_1767026376112_mn5btbj",
+    "menuItemId": "menu-lumpia-shanghai-1766851878051",
+    "quantity": 1,
+    "price": 79,
+    "subtotal": 79,
+    "createdAt": "2025-12-29T16:39:36.114Z",
+    "updatedAt": "2025-12-29T16:39:36.112Z"
+  },
+  {
+    "id": "orderItem_1767026844437_0gyk9xo",
+    "orderId": "order_1767026844437_0i1jcx6",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T16:47:24.438Z",
+    "updatedAt": "2025-12-29T16:47:24.437Z"
+  },
+  {
+    "id": "orderItem_1767027003240_bhz1ofw",
+    "orderId": "order_1767027003240_ye6jw1w",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T16:50:03.253Z",
+    "updatedAt": "2025-12-29T16:50:03.241Z"
+  },
+  {
+    "id": "orderItem_1767027280708_jvwmx9l",
+    "orderId": "order_1767027280708_jqxe0jl",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T16:54:40.710Z",
+    "updatedAt": "2025-12-29T16:54:40.708Z"
+  },
+  {
+    "id": "orderItem_1767027697327_zeoi8yw",
+    "orderId": "order_1767027697327_h172f4r",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T17:01:37.329Z",
+    "updatedAt": "2025-12-29T17:01:37.327Z"
+  },
+  {
+    "id": "orderItem_1767027721437_xfipdav",
+    "orderId": "order_1767027721437_crudxng",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T17:02:01.438Z",
+    "updatedAt": "2025-12-29T17:02:01.437Z"
+  },
+  {
+    "id": "orderItem_1767027729746_chv5smh",
+    "orderId": "order_1767027729746_n6e4o54",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:02:09.748Z",
+    "updatedAt": "2025-12-29T17:02:09.746Z"
+  },
+  {
+    "id": "orderItem_1767027765095_ivf7ct0",
+    "orderId": "order_1767027765095_lojihoz",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T17:02:45.097Z",
+    "updatedAt": "2025-12-29T17:02:45.095Z"
+  },
+  {
+    "id": "orderItem_1767027853215_8s6nvzt",
+    "orderId": "order_1767027853215_7r3st65",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:04:13.216Z",
+    "updatedAt": "2025-12-29T17:04:13.215Z"
+  },
+  {
+    "id": "orderItem_1767027904452_kgg69we",
+    "orderId": "order_1767027904452_96h94kw",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:05:04.454Z",
+    "updatedAt": "2025-12-29T17:05:04.452Z"
+  },
+  {
+    "id": "orderItem_1767027926476_es3f7zh",
+    "orderId": "order_1767027926476_t4jfi60",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T17:05:26.478Z",
+    "updatedAt": "2025-12-29T17:05:26.476Z"
+  },
+  {
+    "id": "orderItem_1767027930770_14964yu",
+    "orderId": "order_1767027930769_307sx92",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T17:05:30.772Z",
+    "updatedAt": "2025-12-29T17:05:30.770Z"
+  },
+  {
+    "id": "orderItem_1767027961058_45a1u30",
+    "orderId": "order_1767027961058_8kaagsk",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:06:01.060Z",
+    "updatedAt": "2025-12-29T17:06:01.058Z"
+  },
+  {
+    "id": "orderItem_1767028149157_nqhogcn",
+    "orderId": "order_1767028149157_q8gmomm",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T17:09:09.160Z",
+    "updatedAt": "2025-12-29T17:09:09.157Z"
+  },
+  {
+    "id": "orderItem_1767028443935_21dmp50",
+    "orderId": "order_1767028443935_l9fnrfz",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:14:03.937Z",
+    "updatedAt": "2025-12-29T17:14:03.935Z"
+  },
+  {
+    "id": "orderItem_1767028633525_mins630",
+    "orderId": "order_1767028633525_nx31pmr",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T17:17:13.526Z",
+    "updatedAt": "2025-12-29T17:17:13.525Z"
+  },
+  {
+    "id": "orderItem_1767028717052_2qmacc2",
+    "orderId": "order_1767028717052_3alxk5t",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T17:18:37.054Z",
+    "updatedAt": "2025-12-29T17:18:37.052Z"
+  },
+  {
+    "id": "orderItem_1767028751064_736iyo2",
+    "orderId": "order_1767028751064_wo4v6ah",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:19:11.065Z",
+    "updatedAt": "2025-12-29T17:19:11.064Z"
+  },
+  {
+    "id": "orderItem_1767028792983_80i2nf5",
+    "orderId": "order_1767028792983_qc2ybbo",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:19:52.984Z",
+    "updatedAt": "2025-12-29T17:19:52.983Z"
+  },
+  {
+    "id": "orderItem_1767028828357_1ghz5rc",
+    "orderId": "order_1767028828357_euuhw9o",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T17:20:28.359Z",
+    "updatedAt": "2025-12-29T17:20:28.357Z"
+  },
+  {
+    "id": "orderItem_1767028836704_3uxgmit",
+    "orderId": "order_1767028836704_omvx5b5",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2025-12-29T17:20:36.706Z",
+    "updatedAt": "2025-12-29T17:20:36.704Z"
+  },
+  {
+    "id": "orderItem_1767029047071_ne0eh0z",
+    "orderId": "order_1767029047071_tyc5po0",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T17:24:07.074Z",
+    "updatedAt": "2025-12-29T17:24:07.071Z"
+  },
+  {
+    "id": "orderItem_1767029050029_oxclvyy",
+    "orderId": "order_1767029050029_2bepsqt",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:24:10.031Z",
+    "updatedAt": "2025-12-29T17:24:10.030Z"
+  },
+  {
+    "id": "orderItem_1767029298479_71ja6w1",
+    "orderId": "order_1767029298479_j45nzqu",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T17:28:18.481Z",
+    "updatedAt": "2025-12-29T17:28:18.479Z"
+  },
+  {
+    "id": "orderItem_1767029568003_1euk439",
+    "orderId": "order_1767029568003_u614yle",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T17:32:48.006Z",
+    "updatedAt": "2025-12-29T17:32:48.003Z"
+  },
+  {
+    "id": "orderItem_1767029660559_ctbpyh5",
+    "orderId": "order_1767029660559_b38avpt",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T17:34:20.560Z",
+    "updatedAt": "2025-12-29T17:34:20.559Z"
+  },
+  {
+    "id": "orderItem_1767029662975_bp4kpqk",
+    "orderId": "order_1767029662975_qlqmvy6",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T17:34:22.976Z",
+    "updatedAt": "2025-12-29T17:34:22.975Z"
+  },
+  {
+    "id": "orderItem_1767029689179_iynt744",
+    "orderId": "order_1767029689179_hkj5i68",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T17:34:49.183Z",
+    "updatedAt": "2025-12-29T17:34:49.179Z"
+  },
+  {
+    "id": "orderItem_1767029689179_di4d3ij",
+    "orderId": "order_1767029689179_hkj5i68",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:34:49.183Z",
+    "updatedAt": "2025-12-29T17:34:49.179Z"
+  },
+  {
+    "id": "orderItem_1767029697237_hgmhw31",
+    "orderId": "order_1767029697237_2sq7mmt",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T17:34:57.240Z",
+    "updatedAt": "2025-12-29T17:34:57.237Z"
+  },
+  {
+    "id": "orderItem_1767029697237_o5cdhxa",
+    "orderId": "order_1767029697237_2sq7mmt",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:34:57.240Z",
+    "updatedAt": "2025-12-29T17:34:57.237Z"
+  },
+  {
+    "id": "orderItem_1767029697237_gfccpl1",
+    "orderId": "order_1767029697237_2sq7mmt",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:34:57.240Z",
+    "updatedAt": "2025-12-29T17:34:57.237Z"
+  },
+  {
+    "id": "orderItem_1767029721566_bia9dr3",
+    "orderId": "order_1767029721566_2r6q5ck",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:35:21.568Z",
+    "updatedAt": "2025-12-29T17:35:21.566Z"
+  },
+  {
+    "id": "orderItem_1767029721566_1zefmmg",
+    "orderId": "order_1767029721566_2r6q5ck",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:35:21.568Z",
+    "updatedAt": "2025-12-29T17:35:21.566Z"
+  },
+  {
+    "id": "orderItem_1767029729759_y5z3pj6",
+    "orderId": "order_1767029729759_wapwxce",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:35:29.761Z",
+    "updatedAt": "2025-12-29T17:35:29.759Z"
+  },
+  {
+    "id": "orderItem_1767029729759_ivsrzu0",
+    "orderId": "order_1767029729759_wapwxce",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T17:35:29.761Z",
+    "updatedAt": "2025-12-29T17:35:29.759Z"
+  },
+  {
+    "id": "orderItem_1767029745320_1tdrt39",
+    "orderId": "order_1767029745320_n2uju63",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T17:35:45.321Z",
+    "updatedAt": "2025-12-29T17:35:45.320Z"
+  },
+  {
+    "id": "orderItem_1767029745320_dzbi9xb",
+    "orderId": "order_1767029745320_n2uju63",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:35:45.321Z",
+    "updatedAt": "2025-12-29T17:35:45.320Z"
+  },
+  {
+    "id": "orderItem_1767029789208_581m1sn",
+    "orderId": "order_1767029789208_7bgdww5",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T17:36:29.210Z",
+    "updatedAt": "2025-12-29T17:36:29.208Z"
+  },
+  {
+    "id": "orderItem_1767029800327_t6ammp6",
+    "orderId": "order_1767029800327_09spc10",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2025-12-29T17:36:40.329Z",
+    "updatedAt": "2025-12-29T17:36:40.327Z"
+  },
+  {
+    "id": "orderItem_1767029875730_yt6a42e",
+    "orderId": "order_1767029875730_ps2mvwe",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T17:37:55.731Z",
+    "updatedAt": "2025-12-29T17:37:55.730Z"
+  },
+  {
+    "id": "orderItem_1767029882232_ptadt9o",
+    "orderId": "order_1767029882232_h8isohq",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:38:02.234Z",
+    "updatedAt": "2025-12-29T17:38:02.232Z"
+  },
+  {
+    "id": "orderItem_1767030131471_sc8nv5g",
+    "orderId": "order_1767030131471_qtznb0b",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:42:11.472Z",
+    "updatedAt": "2025-12-29T17:42:11.471Z"
+  },
+  {
+    "id": "orderItem_1767030274421_hiba8gg",
+    "orderId": "order_1767030274421_sj38vpy",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:44:34.423Z",
+    "updatedAt": "2025-12-29T17:44:34.421Z"
+  },
+  {
+    "id": "orderItem_1767030554753_ewgn0hc",
+    "orderId": "order_1767030554753_bxa4gwn",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T17:49:14.756Z",
+    "updatedAt": "2025-12-29T17:49:14.753Z"
+  },
+  {
+    "id": "orderItem_1767030750580_x3atmk0",
+    "orderId": "order_1767030750580_u08ildt",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:52:30.581Z",
+    "updatedAt": "2025-12-29T17:52:30.580Z"
+  },
+  {
+    "id": "orderItem_1767030757869_z87p6ox",
+    "orderId": "order_1767030757869_9axmh9f",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:52:37.871Z",
+    "updatedAt": "2025-12-29T17:52:37.869Z"
+  },
+  {
+    "id": "orderItem_1767030827162_2gbno2b",
+    "orderId": "order_1767030827162_1k9ld8r",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:53:47.164Z",
+    "updatedAt": "2025-12-29T17:53:47.162Z"
+  },
+  {
+    "id": "orderItem_1767030837080_8cmppkw",
+    "orderId": "order_1767030837080_g7j4uhe",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T17:53:57.081Z",
+    "updatedAt": "2025-12-29T17:53:57.080Z"
+  },
+  {
+    "id": "orderItem_1767030920726_lrx0thi",
+    "orderId": "order_1767030920726_3hczwng",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T17:55:20.727Z",
+    "updatedAt": "2025-12-29T17:55:20.726Z"
+  },
+  {
+    "id": "orderItem_1767031040770_rswv4ys",
+    "orderId": "order_1767031040770_opq66sh",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T17:57:20.772Z",
+    "updatedAt": "2025-12-29T17:57:20.770Z"
+  },
+  {
+    "id": "orderItem_1767031116177_vnpemyz",
+    "orderId": "order_1767031116177_cmpo3va",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T17:58:36.179Z",
+    "updatedAt": "2025-12-29T17:58:36.177Z"
+  },
+  {
+    "id": "orderItem_1767031318323_90bjr82",
+    "orderId": "order_1767031318323_t3obpjj",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 2,
+    "price": 129,
+    "subtotal": 258,
+    "createdAt": "2025-12-29T18:01:58.325Z",
+    "updatedAt": "2025-12-29T18:01:58.323Z"
+  },
+  {
+    "id": "orderItem_1767031318323_dkggdlw",
+    "orderId": "order_1767031318323_t3obpjj",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T18:01:58.325Z",
+    "updatedAt": "2025-12-29T18:01:58.323Z"
+  },
+  {
+    "id": "orderItem_1767031318323_2bi0oxo",
+    "orderId": "order_1767031318323_t3obpjj",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T18:01:58.325Z",
+    "updatedAt": "2025-12-29T18:01:58.323Z"
+  },
+  {
+    "id": "orderItem_1767031318323_f7vpvih",
+    "orderId": "order_1767031318323_t3obpjj",
+    "menuItemId": "menu-dirty-matcha-latte-1766851878107",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T18:01:58.325Z",
+    "updatedAt": "2025-12-29T18:01:58.323Z"
+  },
+  {
+    "id": "orderItem_1767031318323_31xszey",
+    "orderId": "order_1767031318323_t3obpjj",
+    "menuItemId": "menu-caramel-macchiato-1766851878096",
+    "quantity": 2,
+    "price": 99,
+    "subtotal": 198,
+    "createdAt": "2025-12-29T18:01:58.325Z",
+    "updatedAt": "2025-12-29T18:01:58.323Z"
+  },
+  {
+    "id": "orderItem_1767031318323_vju97ko",
+    "orderId": "order_1767031318323_t3obpjj",
+    "menuItemId": "menu-beef-burger-1766851877984",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T18:01:58.325Z",
+    "updatedAt": "2025-12-29T18:01:58.323Z"
+  },
+  {
+    "id": "orderItem_1767031318323_210qxl8",
+    "orderId": "order_1767031318323_t3obpjj",
+    "menuItemId": "menu-cheesy-fries-1766851878006",
+    "quantity": 1,
+    "price": 89,
+    "subtotal": 89,
+    "createdAt": "2025-12-29T18:01:58.325Z",
+    "updatedAt": "2025-12-29T18:01:58.323Z"
+  },
+  {
+    "id": "orderItem_1767031323771_zblvxot",
+    "orderId": "order_1767031323771_0yrilj0",
+    "menuItemId": "menu-iced-americano-1766851878111",
+    "quantity": 1,
+    "price": 79,
+    "subtotal": 79,
+    "createdAt": "2025-12-29T18:02:03.773Z",
+    "updatedAt": "2025-12-29T18:02:03.771Z"
+  },
+  {
+    "id": "orderItem_1767031323771_rsn7wy5",
+    "orderId": "order_1767031323771_0yrilj0",
+    "menuItemId": "menu-dirty-matcha-latte-1766851878107",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T18:02:03.773Z",
+    "updatedAt": "2025-12-29T18:02:03.771Z"
+  },
+  {
+    "id": "orderItem_1767031432181_88n9dcd",
+    "orderId": "order_1767031432181_89sjw9a",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T18:03:52.182Z",
+    "updatedAt": "2025-12-29T18:03:52.181Z"
+  },
+  {
+    "id": "orderItem_1767031440557_ofo9b5q",
+    "orderId": "order_1767031440557_rho6l0m",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T18:04:00.558Z",
+    "updatedAt": "2025-12-29T18:04:00.557Z"
+  },
+  {
+    "id": "orderItem_1767031570639_fzvfc47",
+    "orderId": "order_1767031570639_1brxilb",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T18:06:10.642Z",
+    "updatedAt": "2025-12-29T18:06:10.639Z"
+  },
+  {
+    "id": "orderItem_1767031964729_bjtep5k",
+    "orderId": "order_1767031964729_z2g5910",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T18:12:44.731Z",
+    "updatedAt": "2025-12-29T18:12:44.729Z"
+  },
+  {
+    "id": "orderItem_1767032021230_cszoe1m",
+    "orderId": "order_1767032021230_i0nhoyd",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T18:13:41.231Z",
+    "updatedAt": "2025-12-29T18:13:41.230Z"
+  },
+  {
+    "id": "orderItem_1767032263430_29bsv0i",
+    "orderId": "order_1767032263430_munakxe",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T18:17:43.432Z",
+    "updatedAt": "2025-12-29T18:17:43.430Z"
+  },
+  {
+    "id": "orderItem_1767032272017_izrz8q9",
+    "orderId": "order_1767032272017_6fxz5w2",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T18:17:52.018Z",
+    "updatedAt": "2025-12-29T18:17:52.017Z"
+  },
+  {
+    "id": "orderItem_1767033251995_f0rzbie",
+    "orderId": "order_1767033251995_of1641u",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T18:34:11.996Z",
+    "updatedAt": "2025-12-29T18:34:11.995Z"
+  },
+  {
+    "id": "orderItem_1767033638061_v07l7ew",
+    "orderId": "order_1767033638061_qotcqw4",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T18:40:38.063Z",
+    "updatedAt": "2025-12-29T18:40:38.061Z"
+  },
+  {
+    "id": "orderItem_1767033644507_pqdgwfj",
+    "orderId": "order_1767033644507_m3i77ko",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T18:40:44.509Z",
+    "updatedAt": "2025-12-29T18:40:44.507Z"
+  },
+  {
+    "id": "orderItem_1767034300747_n5wi7f0",
+    "orderId": "order_1767034300747_a0yy4jd",
+    "menuItemId": "menu-burger-steak-1766851878198",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2025-12-29T18:51:40.749Z",
+    "updatedAt": "2025-12-29T18:51:40.747Z"
+  },
+  {
+    "id": "orderItem_1767034701518_0ptuds2",
+    "orderId": "order_1767034701518_ib3twsk",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T18:58:21.519Z",
+    "updatedAt": "2025-12-29T18:58:21.518Z"
+  },
+  {
+    "id": "orderItem_1767034746084_k3cmmzk",
+    "orderId": "order_1767034746084_fbz0vuk",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T18:59:06.086Z",
+    "updatedAt": "2025-12-29T18:59:06.084Z"
+  },
+  {
+    "id": "orderItem_1767034791436_rwdgonb",
+    "orderId": "order_1767034791436_lh51f0g",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T18:59:51.437Z",
+    "updatedAt": "2025-12-29T18:59:51.436Z"
+  },
+  {
+    "id": "orderItem_1767034881093_28rqe95",
+    "orderId": "order_1767034881093_vu0sun6",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T19:01:21.095Z",
+    "updatedAt": "2025-12-29T19:01:21.093Z"
+  },
+  {
+    "id": "orderItem_1767035086187_u36sw9g",
+    "orderId": "order_1767035086187_pagrnar",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T19:04:46.188Z",
+    "updatedAt": "2025-12-29T19:04:46.187Z"
+  },
+  {
+    "id": "orderItem_1767035198929_xt1jlly",
+    "orderId": "order_1767035198929_x7gh4ed",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T19:06:38.930Z",
+    "updatedAt": "2025-12-29T19:06:38.929Z"
+  },
+  {
+    "id": "orderItem_1767035257272_qq4ydra",
+    "orderId": "order_1767035257272_p9iyth0",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-29T19:07:37.273Z",
+    "updatedAt": "2025-12-29T19:07:37.272Z"
+  },
+  {
+    "id": "orderItem_1767035304700_j4ef78n",
+    "orderId": "order_1767035304700_5i2c0om",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-29T19:08:24.702Z",
+    "updatedAt": "2025-12-29T19:08:24.700Z"
+  },
+  {
+    "id": "orderItem_1767081392148_uqzhhcd",
+    "orderId": "order_1767081392148_c253c5o",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-30T07:56:32.160Z",
+    "updatedAt": "2025-12-30T07:56:32.148Z"
+  },
+  {
+    "id": "orderItem_1767082167097_rur0fzm",
+    "orderId": "order_1767082167097_gwvui5q",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-30T08:09:27.099Z",
+    "updatedAt": "2025-12-30T08:09:27.097Z"
+  },
+  {
+    "id": "orderItem_1767082286835_zumrl6w",
+    "orderId": "order_1767082286835_15a2r80",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-30T08:11:26.838Z",
+    "updatedAt": "2025-12-30T08:11:26.835Z"
+  },
+  {
+    "id": "orderItem_1767082286835_7m6wjlw",
+    "orderId": "order_1767082286835_15a2r80",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-30T08:11:26.838Z",
+    "updatedAt": "2025-12-30T08:11:26.835Z"
+  },
+  {
+    "id": "orderItem_1767082286835_f05fvpz",
+    "orderId": "order_1767082286835_15a2r80",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-30T08:11:26.838Z",
+    "updatedAt": "2025-12-30T08:11:26.835Z"
+  },
+  {
+    "id": "orderItem_1767082286835_k6huwko",
+    "orderId": "order_1767082286835_15a2r80",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2025-12-30T08:11:26.838Z",
+    "updatedAt": "2025-12-30T08:11:26.835Z"
+  },
+  {
+    "id": "orderItem_1767082286835_4whqqo3",
+    "orderId": "order_1767082286835_15a2r80",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2025-12-30T08:11:26.838Z",
+    "updatedAt": "2025-12-30T08:11:26.835Z"
+  },
+  {
+    "id": "orderItem_1767082360093_bosutu5",
+    "orderId": "order_1767082360093_dswg3oc",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-30T08:12:40.094Z",
+    "updatedAt": "2025-12-30T08:12:40.093Z"
+  },
+  {
+    "id": "orderItem_1767082360093_zmik1rh",
+    "orderId": "order_1767082360093_dswg3oc",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-30T08:12:40.094Z",
+    "updatedAt": "2025-12-30T08:12:40.093Z"
+  },
+  {
+    "id": "orderItem_1767082360093_jtlnpvp",
+    "orderId": "order_1767082360093_dswg3oc",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-30T08:12:40.094Z",
+    "updatedAt": "2025-12-30T08:12:40.093Z"
+  },
+  {
+    "id": "orderItem_1767082422070_69uar1u",
+    "orderId": "order_1767082422070_db5lpaj",
+    "menuItemId": "menu-iced-coffee-1766851878129",
+    "quantity": 1,
+    "price": 69,
+    "subtotal": 69,
+    "createdAt": "2025-12-30T08:13:42.072Z",
+    "updatedAt": "2025-12-30T08:13:42.070Z"
+  },
+  {
+    "id": "orderItem_1767082599890_nr3z394",
+    "orderId": "order_1767082599890_9uclluq",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-30T08:16:39.891Z",
+    "updatedAt": "2025-12-30T08:16:39.890Z"
+  },
+  {
+    "id": "orderItem_1767082730071_af1bc6q",
+    "orderId": "order_1767082730071_oo2r6qt",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-30T08:18:50.085Z",
+    "updatedAt": "2025-12-30T08:18:50.071Z"
+  },
+  {
+    "id": "orderItem_1767082800784_ex3hg13",
+    "orderId": "order_1767082800784_zoe40go",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-30T08:20:00.786Z",
+    "updatedAt": "2025-12-30T08:20:00.784Z"
+  },
+  {
+    "id": "orderItem_1767082863247_tyul4ft",
+    "orderId": "order_1767082863247_e0ra8bs",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-30T08:21:03.249Z",
+    "updatedAt": "2025-12-30T08:21:03.247Z"
+  },
+  {
+    "id": "orderItem_1767083018311_mwg8wfo",
+    "orderId": "order_1767083018311_w5qa4tc",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 6,
+    "price": 189,
+    "subtotal": 1134,
+    "createdAt": "2025-12-30T08:23:38.314Z",
+    "updatedAt": "2025-12-30T08:23:38.311Z"
+  },
+  {
+    "id": "orderItem_1767083840134_zbxrr3v",
+    "orderId": "order_1767083840134_h3i0jmn",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-30T08:37:20.136Z",
+    "updatedAt": "2025-12-30T08:37:20.134Z"
+  },
+  {
+    "id": "orderItem_1767084288161_p8m1qy0",
+    "orderId": "order_1767084288161_as7e0f1",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2025-12-30T08:44:48.163Z",
+    "updatedAt": "2025-12-30T08:44:48.161Z"
+  },
+  {
+    "id": "orderItem_1767084299322_ug80qgn",
+    "orderId": "order_1767084299322_oe542ib",
+    "menuItemId": "menu-cheesy-fries-1766851878006",
+    "quantity": 1,
+    "price": 89,
+    "subtotal": 89,
+    "createdAt": "2025-12-30T08:44:59.326Z",
+    "updatedAt": "2025-12-30T08:44:59.322Z"
+  },
+  {
+    "id": "orderItem_1767084383611_csmxih6",
+    "orderId": "order_1767084383611_qkyoi7d",
+    "menuItemId": "menu-cheesy-fries-1766851878006",
+    "quantity": 1,
+    "price": 89,
+    "subtotal": 89,
+    "createdAt": "2025-12-30T08:46:23.614Z",
+    "updatedAt": "2025-12-30T08:46:23.611Z"
+  },
+  {
+    "id": "orderItem_1767088212347_xfzyf9v",
+    "orderId": "order_1767088212347_6ziqf6t",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-30T09:50:12.349Z",
+    "updatedAt": "2025-12-30T09:50:12.347Z"
+  },
+  {
+    "id": "orderItem_1767088218178_j8f62v5",
+    "orderId": "order_1767088218178_un9pvvh",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2025-12-30T09:50:18.179Z",
+    "updatedAt": "2025-12-30T09:50:18.178Z"
+  },
+  {
+    "id": "orderItem_1767254809168_4rhjeto",
+    "orderId": "order_1767254809168_jnsfad6",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-01T08:06:49.171Z",
+    "updatedAt": "2026-01-01T08:06:49.168Z"
+  },
+  {
+    "id": "orderItem_1767254818244_ho6lbv1",
+    "orderId": "order_1767254818244_ddxdmz2",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-01T08:06:58.245Z",
+    "updatedAt": "2026-01-01T08:06:58.244Z"
+  },
+  {
+    "id": "orderItem_1767254866926_89a301t",
+    "orderId": "order_1767254866926_lfc73i3",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-01T08:07:46.928Z",
+    "updatedAt": "2026-01-01T08:07:46.926Z"
+  },
+  {
+    "id": "orderItem_1767254866926_hzqrzxr",
+    "orderId": "order_1767254866926_lfc73i3",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-01T08:07:46.928Z",
+    "updatedAt": "2026-01-01T08:07:46.926Z"
+  },
+  {
+    "id": "orderItem_1767254984063_qfrxyxp",
+    "orderId": "order_1767254984063_6sv0ek1",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-01T08:09:44.065Z",
+    "updatedAt": "2026-01-01T08:09:44.063Z"
+  },
+  {
+    "id": "orderItem_1767254992615_o4p9fhs",
+    "orderId": "order_1767254992615_18rry3u",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-01T08:09:52.617Z",
+    "updatedAt": "2026-01-01T08:09:52.615Z"
+  },
+  {
+    "id": "orderItem_1767255063898_pn6w0mi",
+    "orderId": "order_1767255063898_tjarqr2",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-01T08:11:03.899Z",
+    "updatedAt": "2026-01-01T08:11:03.898Z"
+  },
+  {
+    "id": "orderItem_1767255193642_2dyh38y",
+    "orderId": "order_1767255193642_kek74c0",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-01T08:13:13.643Z",
+    "updatedAt": "2026-01-01T08:13:13.642Z"
+  },
+  {
+    "id": "orderItem_1767255240029_2j82o13",
+    "orderId": "order_1767255240029_m9izn1s",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-01T08:14:00.032Z",
+    "updatedAt": "2026-01-01T08:14:00.029Z"
+  },
+  {
+    "id": "orderItem_1767255273973_fy1z21c",
+    "orderId": "order_1767255273973_uw01b8k",
+    "menuItemId": "menu-hot-chocolate-1766851878082",
+    "quantity": 1,
+    "price": 79,
+    "subtotal": 79,
+    "createdAt": "2026-01-01T08:14:33.974Z",
+    "updatedAt": "2026-01-01T08:14:33.973Z"
+  },
+  {
+    "id": "orderItem_1767255273973_qzuweqq",
+    "orderId": "order_1767255273973_uw01b8k",
+    "menuItemId": "menu-caramel-macchiato-1766851878096",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-01T08:14:33.974Z",
+    "updatedAt": "2026-01-01T08:14:33.973Z"
+  },
+  {
+    "id": "orderItem_1767255335970_9kkycgy",
+    "orderId": "order_1767255335969_pkbqyoq",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-01T08:15:35.971Z",
+    "updatedAt": "2026-01-01T08:15:35.970Z"
+  },
+  {
+    "id": "orderItem_1767255381120_1h6glq1",
+    "orderId": "order_1767255381120_35toymn",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-01T08:16:21.122Z",
+    "updatedAt": "2026-01-01T08:16:21.120Z"
+  },
+  {
+    "id": "orderItem_1767255501041_nb37z19",
+    "orderId": "order_1767255501041_pwlfj2m",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-01T08:18:21.043Z",
+    "updatedAt": "2026-01-01T08:18:21.041Z"
+  },
+  {
+    "id": "orderItem_1767255548418_oc7zk4e",
+    "orderId": "order_1767255548418_qftuo43",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-01T08:19:08.420Z",
+    "updatedAt": "2026-01-01T08:19:08.418Z"
+  },
+  {
+    "id": "orderItem_1767255843170_393p5lj",
+    "orderId": "order_1767255843170_5pl9dox",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-01T08:24:03.171Z",
+    "updatedAt": "2026-01-01T08:24:03.170Z"
+  },
+  {
+    "id": "orderItem_1767255851131_ypg2k0c",
+    "orderId": "order_1767255851131_w32iyxp",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-01T08:24:11.133Z",
+    "updatedAt": "2026-01-01T08:24:11.131Z"
+  },
+  {
+    "id": "orderItem_1767367856948_bgxmsmd",
+    "orderId": "order_1767367856948_ctr41e7",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-02T15:30:56.985Z",
+    "updatedAt": "2026-01-02T15:30:56.948Z"
+  },
+  {
+    "id": "orderItem_1767367995685_41n0yk2",
+    "orderId": "order_1767367995685_biyy6t2",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-02T15:33:15.690Z",
+    "updatedAt": "2026-01-02T15:33:15.685Z"
+  },
+  {
+    "id": "orderItem_1767367995685_k7qrbcq",
+    "orderId": "order_1767367995685_biyy6t2",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-02T15:33:15.690Z",
+    "updatedAt": "2026-01-02T15:33:15.685Z"
+  },
+  {
+    "id": "orderItem_1767367995685_raunbpa",
+    "orderId": "order_1767367995685_biyy6t2",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-02T15:33:15.690Z",
+    "updatedAt": "2026-01-02T15:33:15.685Z"
+  },
+  {
+    "id": "orderItem_1767367995685_dvpzalg",
+    "orderId": "order_1767367995685_biyy6t2",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-02T15:33:15.690Z",
+    "updatedAt": "2026-01-02T15:33:15.685Z"
+  },
+  {
+    "id": "orderItem_1767368054045_33o81xe",
+    "orderId": "order_1767368054045_o04mlkb",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-02T15:34:14.048Z",
+    "updatedAt": "2026-01-02T15:34:14.045Z"
+  },
+  {
+    "id": "orderItem_1767368054045_ndqz12p",
+    "orderId": "order_1767368054045_o04mlkb",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-02T15:34:14.048Z",
+    "updatedAt": "2026-01-02T15:34:14.045Z"
+  },
+  {
+    "id": "orderItem_1767368286600_ruxg5op",
+    "orderId": "order_1767368286600_v3y9r1f",
+    "menuItemId": "menu-iced-coffee-1766851878129",
+    "quantity": 1,
+    "price": 69,
+    "subtotal": 69,
+    "createdAt": "2026-01-02T15:38:06.604Z",
+    "updatedAt": "2026-01-02T15:38:06.600Z"
+  },
+  {
+    "id": "orderItem_1767368378174_tu9qrgn",
+    "orderId": "order_1767368378174_a8ytlfm",
+    "menuItemId": "menu-iced-coffee-1766851878129",
+    "quantity": 1,
+    "price": 69,
+    "subtotal": 69,
+    "createdAt": "2026-01-02T15:39:38.176Z",
+    "updatedAt": "2026-01-02T15:39:38.174Z"
+  },
+  {
+    "id": "orderItem_1767368416261_so7n7oy",
+    "orderId": "order_1767368416261_vlg4qjq",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-02T15:40:16.263Z",
+    "updatedAt": "2026-01-02T15:40:16.261Z"
+  },
+  {
+    "id": "orderItem_1767369424832_9cb0iaw",
+    "orderId": "order_1767369424832_2ru46f8",
+    "menuItemId": "menu-iced-coffee-1766851878129",
+    "quantity": 1,
+    "price": 69,
+    "subtotal": 69,
+    "createdAt": "2026-01-02T15:57:04.835Z",
+    "updatedAt": "2026-01-02T15:57:04.832Z"
+  },
+  {
+    "id": "orderItem_1767369490087_4b4dhim",
+    "orderId": "order_1767369490087_woaws3m",
+    "menuItemId": "menu-caramel-macchiato-1766851878096",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-02T15:58:10.090Z",
+    "updatedAt": "2026-01-02T15:58:10.087Z"
+  },
+  {
+    "id": "orderItem_1767431583393_omljg3v",
+    "orderId": "order_1767431583393_f024ocv",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-03T09:13:03.418Z",
+    "updatedAt": "2026-01-03T09:13:03.393Z"
+  },
+  {
+    "id": "orderItem_1767431719153_dxhoefy",
+    "orderId": "order_1767431719153_0svukkz",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T09:15:19.157Z",
+    "updatedAt": "2026-01-03T09:15:19.153Z"
+  },
+  {
+    "id": "orderItem_1767434039748_odjjqe2",
+    "orderId": "order_1767434039748_siqpr3l",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-03T09:53:59.751Z",
+    "updatedAt": "2026-01-03T09:53:59.748Z"
+  },
+  {
+    "id": "orderItem_1767434181587_meeydaj",
+    "orderId": "order_1767434181587_82rcaa1",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-03T09:56:21.590Z",
+    "updatedAt": "2026-01-03T09:56:21.587Z"
+  },
+  {
+    "id": "orderItem_1767434371503_9lsgu2r",
+    "orderId": "order_1767434371503_6z71wcr",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-03T09:59:31.508Z",
+    "updatedAt": "2026-01-03T09:59:31.503Z"
+  },
+  {
+    "id": "orderItem_1767434636241_xdfxoz5",
+    "orderId": "order_1767434636241_56pgz8z",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-03T10:03:56.250Z",
+    "updatedAt": "2026-01-03T10:03:56.241Z"
+  },
+  {
+    "id": "orderItem_1767434675972_8xfkiu7",
+    "orderId": "order_1767434675972_p8u3ket",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T10:04:35.976Z",
+    "updatedAt": "2026-01-03T10:04:35.972Z"
+  },
+  {
+    "id": "orderItem_1767434878792_2k105li",
+    "orderId": "order_1767434878792_3whnhlw",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T10:07:58.796Z",
+    "updatedAt": "2026-01-03T10:07:58.792Z"
+  },
+  {
+    "id": "orderItem_1767434884561_mzedre1",
+    "orderId": "order_1767434884561_2lbo8i4",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T10:08:04.564Z",
+    "updatedAt": "2026-01-03T10:08:04.561Z"
+  },
+  {
+    "id": "orderItem_1767434899513_2xddfm7",
+    "orderId": "order_1767434899513_qhek88k",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T10:08:19.516Z",
+    "updatedAt": "2026-01-03T10:08:19.513Z"
+  },
+  {
+    "id": "orderItem_1767434913460_8dg2khy",
+    "orderId": "order_1767434913460_i7lqch3",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T10:08:33.464Z",
+    "updatedAt": "2026-01-03T10:08:33.460Z"
+  },
+  {
+    "id": "orderItem_1767434998878_soyx5ag",
+    "orderId": "order_1767434998878_ud6uu05",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T10:09:58.881Z",
+    "updatedAt": "2026-01-03T10:09:58.878Z"
+  },
+  {
+    "id": "orderItem_1767435006360_488l79k",
+    "orderId": "order_1767435006360_j4qrgyy",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T10:10:06.362Z",
+    "updatedAt": "2026-01-03T10:10:06.360Z"
+  },
+  {
+    "id": "orderItem_1767435313587_upcpwog",
+    "orderId": "order_1767435313587_eufwg40",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T10:15:13.589Z",
+    "updatedAt": "2026-01-03T10:15:13.587Z"
+  },
+  {
+    "id": "orderItem_1767435323600_pqrjj2b",
+    "orderId": "order_1767435323600_6fcjw4z",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T10:15:23.605Z",
+    "updatedAt": "2026-01-03T10:15:23.600Z"
+  },
+  {
+    "id": "orderItem_1767435377990_3myef9v",
+    "orderId": "order_1767435377990_odk9lor",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T10:16:17.992Z",
+    "updatedAt": "2026-01-03T10:16:17.990Z"
+  },
+  {
+    "id": "orderItem_1767435616549_c2rpmlz",
+    "orderId": "order_1767435616549_uzws1fx",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T10:20:16.553Z",
+    "updatedAt": "2026-01-03T10:20:16.549Z"
+  },
+  {
+    "id": "orderItem_1767436241240_9j1otny",
+    "orderId": "order_1767436241240_zxw30co",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T10:30:41.242Z",
+    "updatedAt": "2026-01-03T10:30:41.240Z"
+  },
+  {
+    "id": "orderItem_1767436450607_ebree9z",
+    "orderId": "order_1767436450607_d8e5xnb",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T10:34:10.610Z",
+    "updatedAt": "2026-01-03T10:34:10.607Z"
+  },
+  {
+    "id": "orderItem_1767436580269_42qmb4m",
+    "orderId": "order_1767436580269_fd49ryz",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T10:36:20.276Z",
+    "updatedAt": "2026-01-03T10:36:20.269Z"
+  },
+  {
+    "id": "orderItem_1767436602521_s8xr9wj",
+    "orderId": "order_1767436602521_57decq2",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T10:36:42.524Z",
+    "updatedAt": "2026-01-03T10:36:42.521Z"
+  },
+  {
+    "id": "orderItem_1767436630922_c1xydw8",
+    "orderId": "order_1767436630922_z3qnnsv",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T10:37:10.924Z",
+    "updatedAt": "2026-01-03T10:37:10.922Z"
+  },
+  {
+    "id": "orderItem_1767436727736_2402a11",
+    "orderId": "order_1767436727736_pq3nqa9",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T10:38:47.739Z",
+    "updatedAt": "2026-01-03T10:38:47.736Z"
+  },
+  {
+    "id": "orderItem_1767436756078_8ohmjo9",
+    "orderId": "order_1767436756078_wsddn90",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T10:39:16.080Z",
+    "updatedAt": "2026-01-03T10:39:16.078Z"
+  },
+  {
+    "id": "orderItem_1767436783333_185csp2",
+    "orderId": "order_1767436783333_e4eyi4q",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T10:39:43.335Z",
+    "updatedAt": "2026-01-03T10:39:43.333Z"
+  },
+  {
+    "id": "orderItem_1767437286296_i2efy6l",
+    "orderId": "order_1767437286296_q84h0r4",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T10:48:06.300Z",
+    "updatedAt": "2026-01-03T10:48:06.296Z"
+  },
+  {
+    "id": "orderItem_1767437306412_jqacf9v",
+    "orderId": "order_1767437306412_xjrgdxl",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T10:48:26.416Z",
+    "updatedAt": "2026-01-03T10:48:26.412Z"
+  },
+  {
+    "id": "orderItem_1767437376995_as1xtpr",
+    "orderId": "order_1767437376995_85zhsow",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T10:49:36.998Z",
+    "updatedAt": "2026-01-03T10:49:36.995Z"
+  },
+  {
+    "id": "orderItem_1767437494184_b9x3iea",
+    "orderId": "order_1767437494184_sbzyplx",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T10:51:34.186Z",
+    "updatedAt": "2026-01-03T10:51:34.184Z"
+  },
+  {
+    "id": "orderItem_1767437498225_r3da4h8",
+    "orderId": "order_1767437498225_fo62uqq",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T10:51:38.228Z",
+    "updatedAt": "2026-01-03T10:51:38.225Z"
+  },
+  {
+    "id": "orderItem_1767437531046_qq7x7tf",
+    "orderId": "order_1767437531046_xliitz4",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-03T10:52:11.048Z",
+    "updatedAt": "2026-01-03T10:52:11.046Z"
+  },
+  {
+    "id": "orderItem_1767437599695_ghafs70",
+    "orderId": "order_1767437599695_8dcl3p0",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T10:53:19.698Z",
+    "updatedAt": "2026-01-03T10:53:19.695Z"
+  },
+  {
+    "id": "orderItem_1767437616601_gg3l1jp",
+    "orderId": "order_1767437616601_rnpgd03",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T10:53:36.604Z",
+    "updatedAt": "2026-01-03T10:53:36.601Z"
+  },
+  {
+    "id": "orderItem_1767437687712_mmmunac",
+    "orderId": "order_1767437687712_j63erw7",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T10:54:47.715Z",
+    "updatedAt": "2026-01-03T10:54:47.712Z"
+  },
+  {
+    "id": "orderItem_1767437755888_q6scuuw",
+    "orderId": "order_1767437755888_tolmef1",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T10:55:55.891Z",
+    "updatedAt": "2026-01-03T10:55:55.888Z"
+  },
+  {
+    "id": "orderItem_1767437899610_p36i8sz",
+    "orderId": "order_1767437899610_88qrf90",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T10:58:19.612Z",
+    "updatedAt": "2026-01-03T10:58:19.610Z"
+  },
+  {
+    "id": "orderItem_1767438426287_hx55jqd",
+    "orderId": "order_1767438426287_brzlj00",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T11:07:06.290Z",
+    "updatedAt": "2026-01-03T11:07:06.287Z"
+  },
+  {
+    "id": "orderItem_1767438517857_qbbk3oj",
+    "orderId": "order_1767438517857_58c7iak",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T11:08:37.862Z",
+    "updatedAt": "2026-01-03T11:08:37.857Z"
+  },
+  {
+    "id": "orderItem_1767438663768_n896eze",
+    "orderId": "order_1767438663768_6o0kryv",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T11:11:03.770Z",
+    "updatedAt": "2026-01-03T11:11:03.768Z"
+  },
+  {
+    "id": "orderItem_1767438673174_ge4mfpm",
+    "orderId": "order_1767438673174_yentope",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T11:11:13.177Z",
+    "updatedAt": "2026-01-03T11:11:13.174Z"
+  },
+  {
+    "id": "orderItem_1767438817345_7ky3aqp",
+    "orderId": "order_1767438817345_vgmn9qt",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T11:13:37.347Z",
+    "updatedAt": "2026-01-03T11:13:37.345Z"
+  },
+  {
+    "id": "orderItem_1767438847781_jq125ue",
+    "orderId": "order_1767438847781_sqiall7",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T11:14:07.785Z",
+    "updatedAt": "2026-01-03T11:14:07.781Z"
+  },
+  {
+    "id": "orderItem_1767438866380_vhdptyt",
+    "orderId": "order_1767438866380_zgr77t2",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T11:14:26.382Z",
+    "updatedAt": "2026-01-03T11:14:26.380Z"
+  },
+  {
+    "id": "orderItem_1767439041133_o8rn6tb",
+    "orderId": "order_1767439041133_96mcye2",
+    "menuItemId": "menu-iced-americano-1766851878111",
+    "quantity": 1,
+    "price": 79,
+    "subtotal": 79,
+    "createdAt": "2026-01-03T11:17:21.137Z",
+    "updatedAt": "2026-01-03T11:17:21.133Z"
+  },
+  {
+    "id": "orderItem_1767439080762_w8zxwih",
+    "orderId": "order_1767439080762_h7w4fkf",
+    "menuItemId": "menu-caramel-macchiato-1766851878096",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T11:18:00.772Z",
+    "updatedAt": "2026-01-03T11:18:00.762Z"
+  },
+  {
+    "id": "orderItem_1767439080762_rfhn1a9",
+    "orderId": "order_1767439080762_h7w4fkf",
+    "menuItemId": "menu-dirty-matcha-latte-1766851878107",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2026-01-03T11:18:00.772Z",
+    "updatedAt": "2026-01-03T11:18:00.762Z"
+  },
+  {
+    "id": "orderItem_1767439080762_xg01a4r",
+    "orderId": "order_1767439080762_h7w4fkf",
+    "menuItemId": "menu-iced-americano-1766851878111",
+    "quantity": 1,
+    "price": 79,
+    "subtotal": 79,
+    "createdAt": "2026-01-03T11:18:00.772Z",
+    "updatedAt": "2026-01-03T11:18:00.762Z"
+  },
+  {
+    "id": "orderItem_1767439080762_ggckxbv",
+    "orderId": "order_1767439080762_h7w4fkf",
+    "menuItemId": "menu-iced-coffee-1766851878129",
+    "quantity": 1,
+    "price": 69,
+    "subtotal": 69,
+    "createdAt": "2026-01-03T11:18:00.772Z",
+    "updatedAt": "2026-01-03T11:18:00.762Z"
+  },
+  {
+    "id": "orderItem_1767439080762_248dclg",
+    "orderId": "order_1767439080762_h7w4fkf",
+    "menuItemId": "menu-hot-chocolate-1766851878082",
+    "quantity": 1,
+    "price": 79,
+    "subtotal": 79,
+    "createdAt": "2026-01-03T11:18:00.772Z",
+    "updatedAt": "2026-01-03T11:18:00.762Z"
+  },
+  {
+    "id": "orderItem_1767439105834_hk27eua",
+    "orderId": "order_1767439105833_zstf7cx",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T11:18:25.839Z",
+    "updatedAt": "2026-01-03T11:18:25.834Z"
+  },
+  {
+    "id": "orderItem_1767439138748_0gasmw1",
+    "orderId": "order_1767439138748_g8m7jfb",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T11:18:58.753Z",
+    "updatedAt": "2026-01-03T11:18:58.748Z"
+  },
+  {
+    "id": "orderItem_1767439167507_acpxww3",
+    "orderId": "order_1767439167507_7mkm7eo",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T11:19:27.508Z",
+    "updatedAt": "2026-01-03T11:19:27.507Z"
+  },
+  {
+    "id": "orderItem_1767439227074_3v25tne",
+    "orderId": "order_1767439227074_l245qps",
+    "menuItemId": "menu-hot-chocolate-1766851878082",
+    "quantity": 1,
+    "price": 79,
+    "subtotal": 79,
+    "createdAt": "2026-01-03T11:20:27.080Z",
+    "updatedAt": "2026-01-03T11:20:27.074Z"
+  },
+  {
+    "id": "orderItem_1767439291756_rwq77kj",
+    "orderId": "order_1767439291756_0usfb9c",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 2,
+    "price": 99,
+    "subtotal": 198,
+    "createdAt": "2026-01-03T11:21:31.759Z",
+    "updatedAt": "2026-01-03T11:21:31.756Z"
+  },
+  {
+    "id": "orderItem_1767439324278_4mjxmbg",
+    "orderId": "order_1767439324278_7v0o388",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T11:22:04.282Z",
+    "updatedAt": "2026-01-03T11:22:04.278Z"
+  },
+  {
+    "id": "orderItem_1767439410625_wn8zag5",
+    "orderId": "order_1767439410625_6ytq2hk",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T11:23:30.628Z",
+    "updatedAt": "2026-01-03T11:23:30.625Z"
+  },
+  {
+    "id": "orderItem_1767439440968_j6398eb",
+    "orderId": "order_1767439440968_wzsu2yo",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T11:24:00.972Z",
+    "updatedAt": "2026-01-03T11:24:00.968Z"
+  },
+  {
+    "id": "orderItem_1767440651223_xtdt6og",
+    "orderId": "order_1767440651223_z3loyqw",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T11:44:11.228Z",
+    "updatedAt": "2026-01-03T11:44:11.223Z"
+  },
+  {
+    "id": "orderItem_1767440675595_nwggqir",
+    "orderId": "order_1767440675595_owxl0lk",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T11:44:35.598Z",
+    "updatedAt": "2026-01-03T11:44:35.595Z"
+  },
+  {
+    "id": "orderItem_1767441047902_8vgjdt4",
+    "orderId": "order_1767441047902_jqxqih1",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 2,
+    "price": 129,
+    "subtotal": 258,
+    "createdAt": "2026-01-03T11:50:47.905Z",
+    "updatedAt": "2026-01-03T11:50:47.902Z"
+  },
+  {
+    "id": "orderItem_1767441827619_zyu2msf",
+    "orderId": "order_1767441827619_feeurw9",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T12:03:47.623Z",
+    "updatedAt": "2026-01-03T12:03:47.619Z"
+  },
+  {
+    "id": "orderItem_1767441827619_w5g663d",
+    "orderId": "order_1767441827619_feeurw9",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T12:03:47.623Z",
+    "updatedAt": "2026-01-03T12:03:47.619Z"
+  },
+  {
+    "id": "orderItem_1767457751308_7f41x4y",
+    "orderId": "order_1767457751308_i3igsj5",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T16:29:11.348Z",
+    "updatedAt": "2026-01-03T16:29:11.308Z"
+  },
+  {
+    "id": "orderItem_1767457878459_c5eqhxh",
+    "orderId": "order_1767457878459_zpbzv5r",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T16:31:18.461Z",
+    "updatedAt": "2026-01-03T16:31:18.459Z"
+  },
+  {
+    "id": "orderItem_1767457882198_4zx4bu9",
+    "orderId": "order_1767457882197_ulnpm4w",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T16:31:22.202Z",
+    "updatedAt": "2026-01-03T16:31:22.198Z"
+  },
+  {
+    "id": "orderItem_1767458189782_38gohpj",
+    "orderId": "order_1767458189782_g0ek20d",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T16:36:29.787Z",
+    "updatedAt": "2026-01-03T16:36:29.782Z"
+  },
+  {
+    "id": "orderItem_1767458189782_en5frhb",
+    "orderId": "order_1767458189782_g0ek20d",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T16:36:29.787Z",
+    "updatedAt": "2026-01-03T16:36:29.782Z"
+  },
+  {
+    "id": "orderItem_1767458300622_ujqs9yv",
+    "orderId": "order_1767458300621_235cqhx",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T16:38:20.625Z",
+    "updatedAt": "2026-01-03T16:38:20.622Z"
+  },
+  {
+    "id": "orderItem_1767458300622_ylj925t",
+    "orderId": "order_1767458300621_235cqhx",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T16:38:20.625Z",
+    "updatedAt": "2026-01-03T16:38:20.622Z"
+  },
+  {
+    "id": "orderItem_1767458697384_7xppyij",
+    "orderId": "order_1767458697384_c0ysz4j",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T16:44:57.388Z",
+    "updatedAt": "2026-01-03T16:44:57.384Z"
+  },
+  {
+    "id": "orderItem_1767458719251_0i3oy4l",
+    "orderId": "order_1767458719251_bx0tcxr",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T16:45:19.254Z",
+    "updatedAt": "2026-01-03T16:45:19.251Z"
+  },
+  {
+    "id": "orderItem_1767459005144_mixajio",
+    "orderId": "order_1767459005144_b99el5c",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T16:50:05.147Z",
+    "updatedAt": "2026-01-03T16:50:05.144Z"
+  },
+  {
+    "id": "orderItem_1767459015978_sdxxcmj",
+    "orderId": "order_1767459015977_ucw1c7q",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T16:50:15.980Z",
+    "updatedAt": "2026-01-03T16:50:15.978Z"
+  },
+  {
+    "id": "orderItem_1767459054167_tskutxk",
+    "orderId": "order_1767459054167_2ys4hs3",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T16:50:54.171Z",
+    "updatedAt": "2026-01-03T16:50:54.167Z"
+  },
+  {
+    "id": "orderItem_1767459196116_ut4jca1",
+    "orderId": "order_1767459196116_j8viuup",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T16:53:16.118Z",
+    "updatedAt": "2026-01-03T16:53:16.116Z"
+  },
+  {
+    "id": "orderItem_1767459488120_vr2v67e",
+    "orderId": "order_1767459488120_q74fklo",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T16:58:08.123Z",
+    "updatedAt": "2026-01-03T16:58:08.120Z"
+  },
+  {
+    "id": "orderItem_1767459521231_ufgyv1b",
+    "orderId": "order_1767459521231_vbfqb6n",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T16:58:41.233Z",
+    "updatedAt": "2026-01-03T16:58:41.231Z"
+  },
+  {
+    "id": "orderItem_1767459527204_m7e0zfe",
+    "orderId": "order_1767459527204_72jqx6s",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T16:58:47.209Z",
+    "updatedAt": "2026-01-03T16:58:47.204Z"
+  },
+  {
+    "id": "orderItem_1767459533835_szxt47a",
+    "orderId": "order_1767459533834_qk4gt4e",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T16:58:53.838Z",
+    "updatedAt": "2026-01-03T16:58:53.835Z"
+  },
+  {
+    "id": "orderItem_1767459567505_7sznyy2",
+    "orderId": "order_1767459567505_s8eaofz",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T16:59:27.507Z",
+    "updatedAt": "2026-01-03T16:59:27.505Z"
+  },
+  {
+    "id": "orderItem_1767459693327_gvtttvw",
+    "orderId": "order_1767459693326_ltgu0fe",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T17:01:33.359Z",
+    "updatedAt": "2026-01-03T17:01:33.327Z"
+  },
+  {
+    "id": "orderItem_1767459706731_ihy9yuz",
+    "orderId": "order_1767459706731_cjztftn",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-03T17:01:46.733Z",
+    "updatedAt": "2026-01-03T17:01:46.731Z"
+  },
+  {
+    "id": "orderItem_1767459769987_6bhil9z",
+    "orderId": "order_1767459769987_mngjz49",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T17:02:49.991Z",
+    "updatedAt": "2026-01-03T17:02:49.987Z"
+  },
+  {
+    "id": "orderItem_1767459769987_apmkflf",
+    "orderId": "order_1767459769987_mngjz49",
+    "menuItemId": "menu-iced-americano-1766851878111",
+    "quantity": 1,
+    "price": 79,
+    "subtotal": 79,
+    "createdAt": "2026-01-03T17:02:49.991Z",
+    "updatedAt": "2026-01-03T17:02:49.987Z"
+  },
+  {
+    "id": "orderItem_1767459779080_kapfuzu",
+    "orderId": "order_1767459779080_17ojqdg",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T17:02:59.083Z",
+    "updatedAt": "2026-01-03T17:02:59.080Z"
+  },
+  {
+    "id": "orderItem_1767459927322_wmo1mun",
+    "orderId": "order_1767459927321_jeyrpo0",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T17:05:27.325Z",
+    "updatedAt": "2026-01-03T17:05:27.322Z"
+  },
+  {
+    "id": "orderItem_1767460013395_f0z19ku",
+    "orderId": "order_1767460013395_28bbvtr",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T17:06:53.397Z",
+    "updatedAt": "2026-01-03T17:06:53.395Z"
+  },
+  {
+    "id": "orderItem_1767460307556_j7yfd38",
+    "orderId": "order_1767460307556_fbzhtwc",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T17:11:47.596Z",
+    "updatedAt": "2026-01-03T17:11:47.556Z"
+  },
+  {
+    "id": "orderItem_1767460344379_uh8xpvj",
+    "orderId": "order_1767460344379_dxs7z6a",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T17:12:24.382Z",
+    "updatedAt": "2026-01-03T17:12:24.379Z"
+  },
+  {
+    "id": "orderItem_1767460366689_e28j89n",
+    "orderId": "order_1767460366689_irl7z6q",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T17:12:46.693Z",
+    "updatedAt": "2026-01-03T17:12:46.689Z"
+  },
+  {
+    "id": "orderItem_1767460373111_vn8ajpu",
+    "orderId": "order_1767460373111_09yeqeo",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T17:12:53.115Z",
+    "updatedAt": "2026-01-03T17:12:53.111Z"
+  },
+  {
+    "id": "orderItem_1767460431045_fud4mwx",
+    "orderId": "order_1767460431045_0y8w1fb",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T17:13:51.049Z",
+    "updatedAt": "2026-01-03T17:13:51.045Z"
+  },
+  {
+    "id": "orderItem_1767460444473_0ra9ydl",
+    "orderId": "order_1767460444473_6mu3zev",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T17:14:04.477Z",
+    "updatedAt": "2026-01-03T17:14:04.473Z"
+  },
+  {
+    "id": "orderItem_1767460460411_de86qvs",
+    "orderId": "order_1767460460411_2vrzjjq",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T17:14:20.414Z",
+    "updatedAt": "2026-01-03T17:14:20.411Z"
+  },
+  {
+    "id": "orderItem_1767460474335_67hxh3f",
+    "orderId": "order_1767460474335_luj4uwb",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T17:14:34.337Z",
+    "updatedAt": "2026-01-03T17:14:34.335Z"
+  },
+  {
+    "id": "orderItem_1767460483206_ci3dp20",
+    "orderId": "order_1767460483206_kqd60ft",
+    "menuItemId": "menu-dirty-matcha-latte-1766851878107",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2026-01-03T17:14:43.209Z",
+    "updatedAt": "2026-01-03T17:14:43.206Z"
+  },
+  {
+    "id": "orderItem_1767460498516_vhc90db",
+    "orderId": "order_1767460498516_cf13jw9",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T17:14:58.518Z",
+    "updatedAt": "2026-01-03T17:14:58.516Z"
+  },
+  {
+    "id": "orderItem_1767460534839_75umr62",
+    "orderId": "order_1767460534839_u8e9eii",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T17:15:34.841Z",
+    "updatedAt": "2026-01-03T17:15:34.839Z"
+  },
+  {
+    "id": "orderItem_1767460548226_069hrru",
+    "orderId": "order_1767460548226_5ljvrmv",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T17:15:48.229Z",
+    "updatedAt": "2026-01-03T17:15:48.226Z"
+  },
+  {
+    "id": "orderItem_1767460556227_362c178",
+    "orderId": "order_1767460556227_l4wgdao",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T17:15:56.230Z",
+    "updatedAt": "2026-01-03T17:15:56.227Z"
+  },
+  {
+    "id": "orderItem_1767460652654_1n1m61z",
+    "orderId": "order_1767460652654_bcmza4b",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-03T17:17:32.662Z",
+    "updatedAt": "2026-01-03T17:17:32.654Z"
+  },
+  {
+    "id": "orderItem_1767460735067_pn7gy6b",
+    "orderId": "order_1767460735067_wk124wb",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-03T17:18:55.069Z",
+    "updatedAt": "2026-01-03T17:18:55.067Z"
+  },
+  {
+    "id": "orderItem_1767460934605_c7ctiay",
+    "orderId": "order_1767460934605_u841moy",
+    "menuItemId": "menu-cheesy-fries-1766851878006",
+    "quantity": 1,
+    "price": 89,
+    "subtotal": 89,
+    "createdAt": "2026-01-03T17:22:14.607Z",
+    "updatedAt": "2026-01-03T17:22:14.605Z"
+  },
+  {
+    "id": "orderItem_1767526660240_c1p3em7",
+    "orderId": "order_1767526660240_brlkuf8",
+    "menuItemId": "menu-hot-coffee-with-milk-1766851878074",
+    "quantity": 1,
+    "price": 69,
+    "subtotal": 69,
+    "createdAt": "2026-01-04T11:37:40.253Z",
+    "updatedAt": "2026-01-04T11:37:40.240Z"
+  },
+  {
+    "id": "orderItem_1767526660240_njh4i6y",
+    "orderId": "order_1767526660240_brlkuf8",
+    "menuItemId": "menu-caramel-macchiato-1766851878096",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-04T11:37:40.253Z",
+    "updatedAt": "2026-01-04T11:37:40.240Z"
+  },
+  {
+    "id": "orderItem_1767526985268_ixmtc7k",
+    "orderId": "order_1767526985268_m4vpz3a",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-04T11:43:05.278Z",
+    "updatedAt": "2026-01-04T11:43:05.268Z"
+  },
+  {
+    "id": "orderItem_1767527387015_474luz2",
+    "orderId": "order_1767527387014_tvetfgr",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-04T11:49:47.021Z",
+    "updatedAt": "2026-01-04T11:49:47.015Z"
+  },
+  {
+    "id": "orderItem_1767527387015_fn3q8g1",
+    "orderId": "order_1767527387014_tvetfgr",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-04T11:49:47.021Z",
+    "updatedAt": "2026-01-04T11:49:47.015Z"
+  },
+  {
+    "id": "orderItem_1767527502951_67aojtf",
+    "orderId": "order_1767527502951_cvkeidv",
+    "menuItemId": "menu-iced-coffee-1766851878129",
+    "quantity": 1,
+    "price": 69,
+    "subtotal": 69,
+    "createdAt": "2026-01-04T11:51:42.955Z",
+    "updatedAt": "2026-01-04T11:51:42.951Z"
+  },
+  {
+    "id": "orderItem_1767527502951_tp7pfgb",
+    "orderId": "order_1767527502951_cvkeidv",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-04T11:51:42.955Z",
+    "updatedAt": "2026-01-04T11:51:42.951Z"
+  },
+  {
+    "id": "orderItem_1767527533186_0ih6job",
+    "orderId": "order_1767527533186_dmu6zx5",
+    "menuItemId": "menu-pork-sisig-1766851878188",
+    "quantity": 2,
+    "price": 169,
+    "subtotal": 338,
+    "createdAt": "2026-01-04T11:52:13.189Z",
+    "updatedAt": "2026-01-04T11:52:13.186Z"
+  },
+  {
+    "id": "orderItem_1767527750933_rij7dio",
+    "orderId": "order_1767527750933_o8loo3k",
+    "menuItemId": "menu-iced-coffee-1766851878129",
+    "quantity": 1,
+    "price": 69,
+    "subtotal": 69,
+    "createdAt": "2026-01-04T11:55:50.936Z",
+    "updatedAt": "2026-01-04T11:55:50.933Z"
+  },
+  {
+    "id": "orderItem_1767527750933_a79j9sy",
+    "orderId": "order_1767527750933_o8loo3k",
+    "menuItemId": "menu-hot-chocolate-1766851878082",
+    "quantity": 1,
+    "price": 79,
+    "subtotal": 79,
+    "createdAt": "2026-01-04T11:55:50.936Z",
+    "updatedAt": "2026-01-04T11:55:50.933Z"
+  },
+  {
+    "id": "orderItem_1767527788199_6wlfmnv",
+    "orderId": "order_1767527788199_81idxb1",
+    "menuItemId": "menu-lumpia-shanghai-1766851878051",
+    "quantity": 1,
+    "price": 79,
+    "subtotal": 79,
+    "createdAt": "2026-01-04T11:56:28.201Z",
+    "updatedAt": "2026-01-04T11:56:28.199Z"
+  },
+  {
+    "id": "orderItem_1767527788199_6ldcsvq",
+    "orderId": "order_1767527788199_81idxb1",
+    "menuItemId": "menu-cheesy-fries-1766851878006",
+    "quantity": 1,
+    "price": 89,
+    "subtotal": 89,
+    "createdAt": "2026-01-04T11:56:28.201Z",
+    "updatedAt": "2026-01-04T11:56:28.199Z"
+  },
+  {
+    "id": "orderItem_1767527811374_hei01qi",
+    "orderId": "order_1767527811374_7hy4mgp",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-04T11:56:51.382Z",
+    "updatedAt": "2026-01-04T11:56:51.374Z"
+  },
+  {
+    "id": "orderItem_1767527820577_c8ed0a4",
+    "orderId": "order_1767527820577_hvc0m8w",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-04T11:57:00.582Z",
+    "updatedAt": "2026-01-04T11:57:00.577Z"
+  },
+  {
+    "id": "orderItem_1767527820577_w2kl8c1",
+    "orderId": "order_1767527820577_hvc0m8w",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-04T11:57:00.582Z",
+    "updatedAt": "2026-01-04T11:57:00.577Z"
+  },
+  {
+    "id": "orderItem_1767527878460_lrix6cp",
+    "orderId": "order_1767527878460_4n6yi8q",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-04T11:57:58.463Z",
+    "updatedAt": "2026-01-04T11:57:58.460Z"
+  },
+  {
+    "id": "orderItem_1767527878460_gaii2w8",
+    "orderId": "order_1767527878460_4n6yi8q",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-04T11:57:58.463Z",
+    "updatedAt": "2026-01-04T11:57:58.460Z"
+  },
+  {
+    "id": "orderItem_1767527918381_9qd5r8o",
+    "orderId": "order_1767527918381_hlko894",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-04T11:58:38.383Z",
+    "updatedAt": "2026-01-04T11:58:38.381Z"
+  },
+  {
+    "id": "orderItem_1767531071324_jfy3pey",
+    "orderId": "order_1767531071323_h46s249",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-04T12:51:11.342Z",
+    "updatedAt": "2026-01-04T12:51:11.324Z"
+  },
+  {
+    "id": "orderItem_1767531071324_ql79fi0",
+    "orderId": "order_1767531071323_h46s249",
+    "menuItemId": "menu-boneless-bangus-1766851878172",
+    "quantity": 1,
+    "price": 179,
+    "subtotal": 179,
+    "createdAt": "2026-01-04T12:51:11.342Z",
+    "updatedAt": "2026-01-04T12:51:11.324Z"
+  },
+  {
+    "id": "orderItem_1767533147102_pcf2phm",
+    "orderId": "order_1767533147102_1nkuvfz",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-04T13:25:47.114Z",
+    "updatedAt": "2026-01-04T13:25:47.102Z"
+  },
+  {
+    "id": "orderItem_1767533166656_xsm3gnw",
+    "orderId": "order_1767533166656_r7c7mkc",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-04T13:26:06.664Z",
+    "updatedAt": "2026-01-04T13:26:06.656Z"
+  },
+  {
+    "id": "orderItem_1767534256163_r3gushi",
+    "orderId": "order_1767534256162_o2ln97u",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-04T13:44:16.170Z",
+    "updatedAt": "2026-01-04T13:44:16.163Z"
+  },
+  {
+    "id": "orderItem_1767583022922_5pu0mj3",
+    "orderId": "order_1767583022922_fd4b6fd",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-05T03:17:02.931Z",
+    "updatedAt": "2026-01-05T03:17:02.922Z"
+  },
+  {
+    "id": "orderItem_1767583031158_bbgabeg",
+    "orderId": "order_1767583031158_ta8aik1",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-05T03:17:11.159Z",
+    "updatedAt": "2026-01-05T03:17:11.158Z"
+  },
+  {
+    "id": "orderItem_1767583078477_qt7i3rw",
+    "orderId": "order_1767583078477_s275hpv",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-05T03:17:58.479Z",
+    "updatedAt": "2026-01-05T03:17:58.477Z"
+  },
+  {
+    "id": "orderItem_1767583265950_7gksyt4",
+    "orderId": "order_1767583265950_fkfl0op",
+    "menuItemId": "menu-caramel-macchiato-1766851878096",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-05T03:21:05.952Z",
+    "updatedAt": "2026-01-05T03:21:05.950Z"
+  },
+  {
+    "id": "orderItem_1767583655284_wj5m5oy",
+    "orderId": "order_1767583655284_wsx8xge",
+    "menuItemId": "menu-cheesy-fries-1766851878006",
+    "quantity": 3,
+    "price": 89,
+    "subtotal": 267,
+    "createdAt": "2026-01-05T03:27:35.287Z",
+    "updatedAt": "2026-01-05T03:27:35.284Z"
+  },
+  {
+    "id": "orderItem_1767583655284_tnst08d",
+    "orderId": "order_1767583655284_wsx8xge",
+    "menuItemId": "menu-bacon-pepperoni-1766851877797",
+    "quantity": 2,
+    "price": 299,
+    "subtotal": 598,
+    "createdAt": "2026-01-05T03:27:35.287Z",
+    "updatedAt": "2026-01-05T03:27:35.284Z"
+  },
+  {
+    "id": "orderItem_1767583655284_c0xkayv",
+    "orderId": "order_1767583655284_wsx8xge",
+    "menuItemId": "menu-beef-burger-1766851877984",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-05T03:27:35.287Z",
+    "updatedAt": "2026-01-05T03:27:35.284Z"
+  },
+  {
+    "id": "orderItem_1767583655284_djmzrxp",
+    "orderId": "order_1767583655284_wsx8xge",
+    "menuItemId": "menu-hungarian-w-fries-1766851878184",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-05T03:27:35.287Z",
+    "updatedAt": "2026-01-05T03:27:35.284Z"
+  },
+  {
+    "id": "orderItem_1767583655284_s33fxpt",
+    "orderId": "order_1767583655284_wsx8xge",
+    "menuItemId": "menu-meaty-fries-1766851878032",
+    "quantity": 1,
+    "price": 119,
+    "subtotal": 119,
+    "createdAt": "2026-01-05T03:27:35.287Z",
+    "updatedAt": "2026-01-05T03:27:35.284Z"
+  },
+  {
+    "id": "orderItem_1767583655284_nflsitn",
+    "orderId": "order_1767583655284_wsx8xge",
+    "menuItemId": "menu-chicken-burger-1766851877992",
+    "quantity": 2,
+    "price": 119,
+    "subtotal": 238,
+    "createdAt": "2026-01-05T03:27:35.287Z",
+    "updatedAt": "2026-01-05T03:27:35.284Z"
+  },
+  {
+    "id": "orderItem_1767583655284_vee9hb9",
+    "orderId": "order_1767583655284_wsx8xge",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 3,
+    "price": 129,
+    "subtotal": 387,
+    "createdAt": "2026-01-05T03:27:35.287Z",
+    "updatedAt": "2026-01-05T03:27:35.284Z"
+  },
+  {
+    "id": "orderItem_1767583733985_98ijj9r",
+    "orderId": "order_1767583733985_xojl4le",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-05T03:28:53.986Z",
+    "updatedAt": "2026-01-05T03:28:53.985Z"
+  },
+  {
+    "id": "orderItem_1767705084764_lbmp1dk",
+    "orderId": "order_1767705084764_07895jh",
+    "menuItemId": "menu-ham--cheese-hawaiian-1766851877979",
+    "quantity": 3,
+    "price": 289,
+    "subtotal": 867,
+    "createdAt": "2026-01-06T13:11:24.779Z",
+    "updatedAt": "2026-01-06T13:11:24.764Z"
+  },
+  {
+    "id": "orderItem_1767705084764_arv94mh",
+    "orderId": "order_1767705084764_07895jh",
+    "menuItemId": "menu-chicharon-bulaklak-1766851878176",
+    "quantity": 1,
+    "price": 199,
+    "subtotal": 199,
+    "createdAt": "2026-01-06T13:11:24.779Z",
+    "updatedAt": "2026-01-06T13:11:24.764Z"
+  },
+  {
+    "id": "orderItem_1767705084764_ecm13e2",
+    "orderId": "order_1767705084764_07895jh",
+    "menuItemId": "menu-iced-americano-1766851878111",
+    "quantity": 2,
+    "price": 79,
+    "subtotal": 158,
+    "createdAt": "2026-01-06T13:11:24.779Z",
+    "updatedAt": "2026-01-06T13:11:24.764Z"
+  },
+  {
+    "id": "orderItem_1767705084764_wy3yirl",
+    "orderId": "order_1767705084764_07895jh",
+    "menuItemId": "menu-pork-sisig-1766851878188",
+    "quantity": 1,
+    "price": 169,
+    "subtotal": 169,
+    "createdAt": "2026-01-06T13:11:24.779Z",
+    "updatedAt": "2026-01-06T13:11:24.764Z"
+  },
+  {
+    "id": "orderItem_1767705141012_pozwt2c",
+    "orderId": "order_1767705141012_tq4gi64",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-06T13:12:21.014Z",
+    "updatedAt": "2026-01-06T13:12:21.012Z"
+  },
+  {
+    "id": "orderItem_1767858424399_598vsk6",
+    "orderId": "order_1767858424399_iqjcrra",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-08T07:47:04.411Z",
+    "updatedAt": "2026-01-08T07:47:04.399Z"
+  },
+  {
+    "id": "orderItem_1767858424399_xebrxoz",
+    "orderId": "order_1767858424399_iqjcrra",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-08T07:47:04.411Z",
+    "updatedAt": "2026-01-08T07:47:04.399Z"
+  },
+  {
+    "id": "orderItem_1767858424399_nj4kctq",
+    "orderId": "order_1767858424399_iqjcrra",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-08T07:47:04.411Z",
+    "updatedAt": "2026-01-08T07:47:04.399Z"
+  },
+  {
+    "id": "orderItem_1767858459165_0396s20",
+    "orderId": "order_1767858459165_ql0coj5",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-08T07:47:39.168Z",
+    "updatedAt": "2026-01-08T07:47:39.165Z"
+  },
+  {
+    "id": "orderItem_1767859200431_bb2yx5b",
+    "orderId": "order_1767859200431_4zg4jl0",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 1,
+    "price": 189,
+    "subtotal": 189,
+    "createdAt": "2026-01-08T08:00:00.433Z",
+    "updatedAt": "2026-01-08T08:00:00.431Z"
+  },
+  {
+    "id": "orderItem_1767859200431_jnq2alv",
+    "orderId": "order_1767859200431_4zg4jl0",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-08T08:00:00.433Z",
+    "updatedAt": "2026-01-08T08:00:00.431Z"
+  },
+  {
+    "id": "orderItem_1767859200431_ug4iu97",
+    "orderId": "order_1767859200431_4zg4jl0",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-08T08:00:00.433Z",
+    "updatedAt": "2026-01-08T08:00:00.431Z"
+  },
+  {
+    "id": "orderItem_1767859791720_lsua6io",
+    "orderId": "order_1767859791720_vopawnd",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-08T08:09:51.724Z",
+    "updatedAt": "2026-01-08T08:09:51.720Z"
+  },
+  {
+    "id": "orderItem_1767859791720_870jvrj",
+    "orderId": "order_1767859791720_vopawnd",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-08T08:09:51.724Z",
+    "updatedAt": "2026-01-08T08:09:51.720Z"
+  },
+  {
+    "id": "orderItem_1767859791720_nl9izz5",
+    "orderId": "order_1767859791720_vopawnd",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-08T08:09:51.724Z",
+    "updatedAt": "2026-01-08T08:09:51.720Z"
+  },
+  {
+    "id": "orderItem_1767965813447_jzyiu2b",
+    "orderId": "order_1767965813447_iwp12c6",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-09T13:36:53.459Z",
+    "updatedAt": "2026-01-09T13:36:53.447Z"
+  },
+  {
+    "id": "orderItem_1767970812987_c3ni5x6",
+    "orderId": "order_1767970812987_b7cbggh",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-09T15:00:12.997Z",
+    "updatedAt": "2026-01-09T15:00:12.987Z"
+  },
+  {
+    "id": "orderItem_1767970824934_t7n9kqg",
+    "orderId": "order_1767970824934_dg8phgb",
+    "menuItemId": "menu-beef-tapa-1766851878166",
+    "quantity": 4,
+    "price": 189,
+    "subtotal": 756,
+    "createdAt": "2026-01-09T15:00:24.936Z",
+    "updatedAt": "2026-01-09T15:00:24.934Z"
+  },
+  {
+    "id": "orderItem_1767972372077_rg7we5l",
+    "orderId": "order_1767972372077_roag1sn",
+    "menuItemId": "19036497-1b31-4767-91d1-ebb42301a51a",
+    "quantity": 1,
+    "price": 1,
+    "subtotal": 1,
+    "createdAt": "2026-01-09T15:26:12.081Z",
+    "updatedAt": "2026-01-09T15:26:12.077Z"
+  },
+  {
+    "id": "orderItem_1768036592606_1xn3r74",
+    "orderId": "order_1768036592606_mz1wikb",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-10T09:16:32.623Z",
+    "updatedAt": "2026-01-10T09:16:32.606Z"
+  },
+  {
+    "id": "orderItem_1768036592606_rnj72yi",
+    "orderId": "order_1768036592606_mz1wikb",
+    "menuItemId": "menu-blueberry-smoothie-1766851878156",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-10T09:16:32.623Z",
+    "updatedAt": "2026-01-10T09:16:32.606Z"
+  },
+  {
+    "id": "orderItem_1768036646620_dk9kqja",
+    "orderId": "order_1768036646620_qb2y2db",
+    "menuItemId": "menu-salted-caramel-1766851878145",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-10T09:17:26.622Z",
+    "updatedAt": "2026-01-10T09:17:26.620Z"
+  },
+  {
+    "id": "orderItem_1768036646620_2akjgd0",
+    "orderId": "order_1768036646620_qb2y2db",
+    "menuItemId": "menu-spanish-latte-1766851878150",
+    "quantity": 1,
+    "price": 99,
+    "subtotal": 99,
+    "createdAt": "2026-01-10T09:17:26.622Z",
+    "updatedAt": "2026-01-10T09:17:26.620Z"
+  },
+  {
+    "id": "orderItem_1768037341435_1nyqtt9",
+    "orderId": "order_1768037341435_zfdtdgl",
+    "menuItemId": "menu-strawberry-smoothie-1766851878162",
+    "quantity": 1,
+    "price": 129,
+    "subtotal": 129,
+    "createdAt": "2026-01-10T09:29:01.438Z",
+    "updatedAt": "2026-01-10T09:29:01.435Z"
+  }
+]

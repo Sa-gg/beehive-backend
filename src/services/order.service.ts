@@ -446,4 +446,59 @@ export class OrderService {
     );
     return results;
   }
+
+  // ============================================
+  // TAB ORDER METHODS (Item-level status management)
+  // ============================================
+
+  /**
+   * Add items to an existing tab order
+   * This allows adding more items to an unpaid order without creating a linked order
+   */
+  async addItemsToOrder(orderId: string, items: Array<{ menuItemId: string; quantity: number; price: number }>) {
+    // Validate order exists and is unpaid (can only add to tab orders)
+    const order = await this.getOrderById(orderId);
+    if (order.paymentStatus !== 'UNPAID') {
+      throw new Error('Can only add items to unpaid orders (tab orders)');
+    }
+
+    // Validate items
+    if (!items || items.length === 0) {
+      throw new Error('Items array is required');
+    }
+
+    for (const item of items) {
+      if (item.quantity <= 0) {
+        throw new Error('Item quantity must be greater than 0');
+      }
+    }
+
+    // Add items to the order
+    await this.orderRepository.addItemsToOrder(orderId, items);
+    
+    // Return the updated order
+    return this.getOrderById(orderId);
+  }
+
+  /**
+   * Update individual order item status
+   */
+  async updateOrderItemStatus(orderItemId: string, status: 'PREPARING' | 'COMPLETED' | 'VOIDED') {
+    return this.orderRepository.updateOrderItemStatus(orderItemId, status);
+  }
+
+  /**
+   * Update all order items status at once
+   */
+  async updateAllOrderItemsStatus(orderId: string, status: 'PREPARING' | 'COMPLETED' | 'VOIDED') {
+    return this.orderRepository.updateAllOrderItemsStatus(orderId, status);
+  }
+
+  /**
+   * Void a single order item in a tab order
+   * This will recalculate the order totals
+   */
+  async voidOrderItem(orderItemId: string, orderId: string) {
+    return this.orderRepository.voidOrderItem(orderItemId, orderId);
+  }
 }

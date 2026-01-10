@@ -267,4 +267,86 @@ export class OrderController {
       res.status(400).json({ error: error.message });
     }
   }
+
+  // ============================================
+  // TAB ORDER ENDPOINTS (Item-level status management)
+  // ============================================
+
+  // Add items to an existing tab order (without creating a new linked order)
+  async addItemsToTab(req: Request, res: Response) {
+    try {
+      const { items } = req.body;
+      if (!items || !Array.isArray(items) || items.length === 0) {
+        return res.status(400).json({ error: 'Items array is required' });
+      }
+      
+      const order = await this.orderService.addItemsToOrder(req.params.id, items);
+      
+      // Emit real-time event for order update
+      orderEventEmitter.broadcastOrderUpdate(order);
+      
+      res.json(order);
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+  // Update individual order item status (preparing/completed/voided)
+  async updateOrderItemStatus(req: Request, res: Response) {
+    try {
+      const { status } = req.body;
+      if (!status || !['PREPARING', 'COMPLETED', 'VOIDED'].includes(status)) {
+        return res.status(400).json({ error: 'Valid status (PREPARING, COMPLETED, VOIDED) is required' });
+      }
+      
+      const orderItem = await this.orderService.updateOrderItemStatus(req.params.itemId, status);
+      
+      // Get the updated order to broadcast
+      const order = await this.orderService.getOrderById(req.params.id);
+      if (order) {
+        orderEventEmitter.broadcastOrderUpdate(order);
+      }
+      
+      res.json(orderItem);
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+  // Mark all items in a tab order as completed
+  async markAllItemsCompleted(req: Request, res: Response) {
+    try {
+      await this.orderService.updateAllOrderItemsStatus(req.params.id, 'COMPLETED');
+      
+      // Get the updated order
+      const order = await this.orderService.getOrderById(req.params.id);
+      if (order) {
+        orderEventEmitter.broadcastOrderUpdate(order);
+      }
+      
+      res.json(order);
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+  // Void a single order item in a tab order (manager required)
+  async voidOrderItem(req: Request, res: Response) {
+    try {
+      const { reason, authorizedBy } = req.body;
+      if (!reason) {
+        return res.status(400).json({ error: 'Reason is required for voiding an item' });
+      }
+      if (!authorizedBy) {
+        return res.status(400).json({ error: 'Manager authorization is required' });
+      }
+      
+      const order = await this.orderService.voidOrderItem(req.params.itemId, req.params.id);
+      
+      orderEventEmitter.broadcastOrderUpdate(order);
+      res.json(order);
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  }
 }

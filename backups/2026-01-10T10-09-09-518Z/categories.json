@@ -1,0 +1,92 @@
+[
+  {
+    "id": "cat-pizza-57991e57",
+    "name": "PIZZA",
+    "displayName": "Pizza",
+    "description": null,
+    "sortOrder": 0,
+    "isActive": true,
+    "createdAt": "2026-01-09T21:59:07.523Z",
+    "updatedAt": "2026-01-09T21:59:07.523Z"
+  },
+  {
+    "id": "cat-hot_drinks-a131a103",
+    "name": "HOT_DRINKS",
+    "displayName": "Hot Drinks",
+    "description": null,
+    "sortOrder": 2,
+    "isActive": true,
+    "createdAt": "2026-01-09T21:59:07.523Z",
+    "updatedAt": "2026-01-09T21:59:07.523Z"
+  },
+  {
+    "id": "cat-cold_drinks-1835add3",
+    "name": "COLD_DRINKS",
+    "displayName": "Cold Drinks",
+    "description": null,
+    "sortOrder": 3,
+    "isActive": true,
+    "createdAt": "2026-01-09T21:59:07.523Z",
+    "updatedAt": "2026-01-09T21:59:07.523Z"
+  },
+  {
+    "id": "cat-smoothie-73b7077d",
+    "name": "SMOOTHIE",
+    "displayName": "Smoothie",
+    "description": null,
+    "sortOrder": 4,
+    "isActive": true,
+    "createdAt": "2026-01-09T21:59:07.523Z",
+    "updatedAt": "2026-01-09T21:59:07.523Z"
+  },
+  {
+    "id": "cat-platter-54ff7feb",
+    "name": "PLATTER",
+    "displayName": "Platter",
+    "description": null,
+    "sortOrder": 5,
+    "isActive": true,
+    "createdAt": "2026-01-09T21:59:07.523Z",
+    "updatedAt": "2026-01-09T21:59:07.523Z"
+  },
+  {
+    "id": "cat-savers-c1764908",
+    "name": "SAVERS",
+    "displayName": "Savers",
+    "description": null,
+    "sortOrder": 6,
+    "isActive": true,
+    "createdAt": "2026-01-09T21:59:07.523Z",
+    "updatedAt": "2026-01-09T21:59:07.523Z"
+  },
+  {
+    "id": "cat-value_meal-a865e467",
+    "name": "VALUE_MEAL",
+    "displayName": "Value Meal",
+    "description": null,
+    "sortOrder": 7,
+    "isActive": true,
+    "createdAt": "2026-01-09T21:59:07.523Z",
+    "updatedAt": "2026-01-09T21:59:07.523Z"
+  },
+  {
+    "id": "cat-try-16d4e004",
+    "name": "TRY",
+    "displayName": "try",
+    "description": "try",
+    "sortOrder": 8,
+    "isActive": true,
+    "createdAt": "2026-01-09T15:25:01.729Z",
+    "updatedAt": "2026-01-09T15:25:01.728Z"
+  },
+  {
+    "id": "cat-appetizer-9df02c98",
+    "name": "APPETIZERS",
+    "displayName": "Appetizers",
+    "description": null,
+    "sortOrder": 1,
+    "isActive": true,
+    "createdAt": "2026-01-09T21:59:07.523Z",
+    "updatedAt": "2026-01-09T17:08:26.298Z"
+  }
+]

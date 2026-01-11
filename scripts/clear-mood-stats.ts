@@ -18,17 +18,12 @@ async function clearMoodStats() {
   const prisma = new PrismaClient({ adapter });
 
   try {
-    console.log('🔄 Clearing moodOrderStats column...\n');
+    console.log('🔄 Clearing menu_item_mood_stats table...\n');
 
-    // Update all menu items to set moodOrderStats to null
-    const result = await prisma.menu_items.updateMany({
-      data: {
-        moodOrderStats: null,
-        updatedAt: new Date()
-      }
-    });
+    // Delete all records from the mood stats table
+    const result = await prisma.menu_item_mood_stats.deleteMany({});
 
-    console.log(`✅ Successfully cleared moodOrderStats for ${result.count} menu items\n`);
+    console.log(`✅ Successfully cleared ${result.count} mood stat records\n`);
     console.log('💡 Fresh tracking will start from the next customer mood selection!');
     
   } catch (error) {

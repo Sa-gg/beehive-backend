@@ -4,4 +4,5 @@ node_modules
 
 /generated/prisma
 
-/dist/generated
+# Ignore all compiled/build output
+/dist

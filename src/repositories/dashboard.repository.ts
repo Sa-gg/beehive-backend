@@ -14,7 +14,34 @@ export class DashboardRepository {
     const startOfLastMonth = new Date(startOfToday);
     startOfLastMonth.setDate(startOfLastMonth.getDate() - 30);
 
-    // Get today's orders
+    // Get today's PAID orders for sales calculation
+    const todayPaidOrders = await this.prisma.orders.findMany({
+      where: {
+        createdAt: {
+          gte: startOfToday,
+        },
+        paymentStatus: 'PAID',
+        status: {
+          not: 'CANCELLED',
+        },
+      },
+    });
+
+    // Get yesterday's PAID orders for comparison
+    const yesterdayPaidOrders = await this.prisma.orders.findMany({
+      where: {
+        createdAt: {
+          gte: startOfYesterday,
+          lt: startOfToday,
+        },
+        paymentStatus: 'PAID',
+        status: {
+          not: 'CANCELLED',
+        },
+      },
+    });
+
+    // Get today's orders (all statuses except cancelled) for orders count
     const todayOrders = await this.prisma.orders.findMany({
       where: {
         createdAt: {
@@ -39,22 +66,9 @@ export class DashboardRepository {
       },
     });
 
-    // Get last week's orders for comparison
-    const lastWeekOrders = await this.prisma.orders.findMany({
-      where: {
-        createdAt: {
-          gte: startOfLastWeek,
-          lt: startOfToday,
-        },
-        status: {
-          in: ['PENDING', 'PREPARING', 'READY', 'COMPLETED'],
-        },
-      },
-    });
-
-    // Calculate total sales today
-    const totalSales = todayOrders.reduce((sum: number, order: any) => sum + Number(order.total), 0);
-    const yesterdaySales = yesterdayOrders.reduce((sum: number, order: any) => sum + Number(order.total), 0);
+    // Calculate total sales today (only PAID orders)
+    const totalSales = todayPaidOrders.reduce((sum: number, order: any) => sum + Number(order.totalAmount), 0);
+    const yesterdaySales = yesterdayPaidOrders.reduce((sum: number, order: any) => sum + Number(order.totalAmount), 0);
 
     // Calculate sales change
     const salesChange = yesterdaySales > 0 

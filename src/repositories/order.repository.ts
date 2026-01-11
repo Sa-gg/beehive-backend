@@ -276,10 +276,14 @@ export class OrderRepository {
     });
   }
 
-  // Update all order items status (mark all as complete for tab orders)
+  // Update all order items status (mark all as complete for tab orders, except voided items)
   async updateAllOrderItemsStatus(orderId: string, status: 'PREPARING' | 'COMPLETED' | 'VOIDED') {
     return this.prisma.order_items.updateMany({
-      where: { orderId },
+      where: { 
+        orderId,
+        // Don't update items that are already VOIDED when marking as COMPLETED
+        ...(status === 'COMPLETED' ? { status: { not: 'VOIDED' } } : {})
+      },
       data: { 
         status,
         updatedAt: new Date()

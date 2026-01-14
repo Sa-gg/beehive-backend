@@ -593,6 +593,108 @@ export class RecipeService {
 
     return result;
   }
+
+  /**
+   * Update menu items' outOfStock status based on ingredient availability
+   * Called after stock transactions to automatically mark items in/out of stock
+   * 
+   * @param inventoryItemId - The inventory item that was updated (optional, for targeted check)
+   * @param autoOutOfStock - If true, mark items as out of stock when maxServings = 0
+   * @param autoInStock - If true, mark items as in-stock when maxServings >= 1
+   * @returns Object containing arrays of menu items that were marked out of stock and in stock
+   */
+  async updateMenuItemsStockStatus(
+    inventoryItemId?: string,
+    autoOutOfStock: boolean = false,
+    autoInStock: boolean = false
+  ): Promise<{
+    markedOutOfStock: Array<{ id: string; name: string }>;
+    markedInStock: Array<{ id: string; name: string }>;
+  }> {
+    const markedOutOfStock: Array<{ id: string; name: string }> = [];
+    const markedInStock: Array<{ id: string; name: string }> = [];
+
+    // If neither setting is enabled, return early
+    if (!autoOutOfStock && !autoInStock) {
+      return { markedOutOfStock, markedInStock };
+    }
+
+    // Get all max servings for menu items
+    const allMaxServings = await this.calculateAllMenuItemServings();
+
+    // Get menu items to check
+    let menuItemsToCheck: Array<{ id: string; name: string; outOfStock: boolean }>;
+
+    if (inventoryItemId) {
+      // Only check menu items that use this specific ingredient
+      const menuItemsWithIngredient = await prisma.menu_item_ingredients.findMany({
+        where: { inventoryItemId },
+        select: {
+          menu_item: {
+            select: {
+              id: true,
+              name: true,
+              outOfStock: true,
+            },
+          },
+        },
+      });
+      menuItemsToCheck = menuItemsWithIngredient.map(ing => ({
+        id: ing.menu_item.id,
+        name: ing.menu_item.name,
+        outOfStock: ing.menu_item.outOfStock ?? false,
+      }));
+    } else {
+      // Check all menu items with recipes
+      const allMenuItems = await prisma.menu_items.findMany({
+        where: {
+          menu_item_ingredients: {
+            some: {}, // Only items with at least one ingredient
+          },
+        },
+        select: {
+          id: true,
+          name: true,
+          outOfStock: true,
+        },
+      });
+      menuItemsToCheck = allMenuItems.map(item => ({
+        id: item.id,
+        name: item.name,
+        outOfStock: item.outOfStock ?? false,
+      }));
+    }
+
+    // Process each menu item
+    for (const menuItem of menuItemsToCheck) {
+      const maxServings = allMaxServings.get(menuItem.id);
+      
+      // Skip items without recipes (maxServings = -1 means unlimited/no recipe)
+      if (maxServings === undefined || maxServings === -1) {
+        continue;
+      }
+
+      // Auto mark OUT OF STOCK: if maxServings = 0 and item is not already marked out of stock
+      if (autoOutOfStock && maxServings === 0 && !menuItem.outOfStock) {
+        await prisma.menu_items.update({
+          where: { id: menuItem.id },
+          data: { outOfStock: true, updatedAt: new Date() },
+        });
+        markedOutOfStock.push({ id: menuItem.id, name: menuItem.name });
+      }
+
+      // Auto mark IN STOCK: if maxServings >= 1 and item is currently marked out of stock
+      if (autoInStock && maxServings >= 1 && menuItem.outOfStock) {
+        await prisma.menu_items.update({
+          where: { id: menuItem.id },
+          data: { outOfStock: false, updatedAt: new Date() },
+        });
+        markedInStock.push({ id: menuItem.id, name: menuItem.name });
+      }
+    }
+
+    return { markedOutOfStock, markedInStock };
+  }
 }
 
 export const recipeService = new RecipeService();

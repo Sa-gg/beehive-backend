@@ -61,7 +61,7 @@ import { DashboardController } from './src/controllers/dashboard.controller.js';
 import { createDashboardRoutes } from './src/routes/dashboard.routes.js';
 
 // Import Settings architecture layers
-import { SettingsRepository } from './src/repositories/settings.repository.js';
+import { SettingsRepository, settingsRepository } from './src/repositories/settings.repository.js';
 import { SettingsService } from './src/services/settings.service.js';
 import { SettingsController } from './src/controllers/settings.controller.js';
 import { createSettingsRoutes } from './src/routes/settings.routes.js';
@@ -106,7 +106,7 @@ const uploadService = new UploadService(fileStorageRepository);
 const uploadController = new UploadController(uploadService);
 
 // Initialize Settings architecture layers (needs to be before Order)
-const settingsRepository = new SettingsRepository();
+// Use singleton settingsRepository to share state across services
 const settingsService = new SettingsService(settingsRepository);
 const settingsController = new SettingsController(settingsService);
 

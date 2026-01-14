@@ -25,6 +25,23 @@ class SettingsService {
   updateManagerPin(pin: string): void {
     this.settingsRepository.setManagerPin(pin);
   }
+  
+  // Auto-stock settings methods
+  getAutoOutOfStockWhenIngredientsRunOut(): boolean {
+    return this.settingsRepository.getAutoOutOfStockWhenIngredientsRunOut();
+  }
+  
+  setAutoOutOfStockWhenIngredientsRunOut(value: boolean): void {
+    this.settingsRepository.setAutoOutOfStockWhenIngredientsRunOut(value);
+  }
+  
+  getAutoMarkInStockWhenAvailable(): boolean {
+    return this.settingsRepository.getAutoMarkInStockWhenAvailable();
+  }
+  
+  setAutoMarkInStockWhenAvailable(value: boolean): void {
+    this.settingsRepository.setAutoMarkInStockWhenAvailable(value);
+  }
 }
 
 export { SettingsService };

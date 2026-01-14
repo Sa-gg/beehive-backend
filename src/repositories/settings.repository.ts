@@ -7,7 +7,9 @@ class SettingsRepository {
     openTime: '08:00',
     closeTime: '22:00',
     lastResetDate: null,
-    managerPin: '1234' // Default manager PIN
+    managerPin: '1234', // Default manager PIN
+    autoOutOfStockWhenIngredientsRunOut: false, // Default OFF
+    autoMarkInStockWhenAvailable: false // Default OFF
   };
   
   // Flag to force reset on next order
@@ -58,6 +60,26 @@ class SettingsRepository {
   validateManagerPin(pin: string): boolean {
     return this.settings.managerPin === pin;
   }
+  
+  // Auto-stock settings getters and setters
+  getAutoOutOfStockWhenIngredientsRunOut(): boolean {
+    return this.settings.autoOutOfStockWhenIngredientsRunOut ?? false;
+  }
+  
+  setAutoOutOfStockWhenIngredientsRunOut(value: boolean): void {
+    this.settings.autoOutOfStockWhenIngredientsRunOut = value;
+  }
+  
+  getAutoMarkInStockWhenAvailable(): boolean {
+    return this.settings.autoMarkInStockWhenAvailable ?? false;
+  }
+  
+  setAutoMarkInStockWhenAvailable(value: boolean): void {
+    this.settings.autoMarkInStockWhenAvailable = value;
+  }
 }
+
+// Export a singleton instance to ensure settings are shared across the application
+export const settingsRepository = new SettingsRepository();
 
 export { SettingsRepository };

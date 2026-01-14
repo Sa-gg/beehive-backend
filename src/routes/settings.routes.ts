@@ -9,6 +9,11 @@ export const createSettingsRoutes = (settingsController: SettingsController) => 
   router.post('/force-reset', settingsController.forceResetOrderNumbers);
   router.post('/validate-pin', settingsController.validateManagerPin);
   router.post('/update-pin', settingsController.updateManagerPin);
+  
+  // Auto-stock settings endpoints
+  router.get('/auto-stock', settingsController.getAutoStockSettings);
+  router.patch('/auto-stock', settingsController.updateAutoStockSettings);
+  router.post('/auto-stock/trigger', settingsController.triggerStockStatusUpdate);
 
   return router;
 };

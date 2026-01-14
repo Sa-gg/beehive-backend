@@ -6,6 +6,8 @@ import {
   stock_transaction_reason, 
   inventory_status 
 } from '../../generated/prisma/enums.js';
+import { recipeService } from './recipe.service.js';
+import { settingsRepository } from '../repositories/settings.repository.js';
 
 const { Pool } = pg;
 const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
@@ -120,6 +122,27 @@ export class StockTransactionService {
       return { transaction, inventoryItem: updatedItem, warning };
     });
 
+    // After successful stock-in, check if any menu items should be auto-marked as in-stock
+    // This runs outside the transaction to avoid blocking the stock update
+    try {
+      const autoOutOfStock = settingsRepository.getAutoOutOfStockWhenIngredientsRunOut();
+      const autoInStock = settingsRepository.getAutoMarkInStockWhenAvailable();
+      
+      if (autoOutOfStock || autoInStock) {
+        const stockUpdates = await recipeService.updateMenuItemsStockStatus(
+          inventoryItemId,
+          autoOutOfStock,
+          autoInStock
+        );
+        
+        // Add stock updates info to result
+        (result as any).menuItemUpdates = stockUpdates;
+      }
+    } catch (error) {
+      // Log but don't fail the transaction if auto-stock update fails
+      console.error('Failed to auto-update menu item stock status:', error);
+    }
+
     return result;
   }
 
@@ -223,6 +246,27 @@ export class StockTransactionService {
 
       return { transaction, inventoryItem: updatedItem, discrepancy, warning };
     });
+
+    // After successful stock-out, check if any menu items should be auto-marked as out-of-stock
+    // This runs outside the transaction to avoid blocking the stock update
+    try {
+      const autoOutOfStock = settingsRepository.getAutoOutOfStockWhenIngredientsRunOut();
+      const autoInStock = settingsRepository.getAutoMarkInStockWhenAvailable();
+      
+      if (autoOutOfStock || autoInStock) {
+        const stockUpdates = await recipeService.updateMenuItemsStockStatus(
+          inventoryItemId,
+          autoOutOfStock,
+          autoInStock
+        );
+        
+        // Add stock updates info to result
+        (result as any).menuItemUpdates = stockUpdates;
+      }
+    } catch (error) {
+      // Log but don't fail the transaction if auto-stock update fails
+      console.error('Failed to auto-update menu item stock status:', error);
+    }
 
     return result;
   }
@@ -369,6 +413,27 @@ export class StockTransactionService {
 
       return { transaction, inventoryItem: updatedItem, difference };
     });
+
+    // After successful stock adjustment, check if any menu items should be auto-updated
+    // This runs outside the transaction to avoid blocking the stock update
+    try {
+      const autoOutOfStock = settingsRepository.getAutoOutOfStockWhenIngredientsRunOut();
+      const autoInStock = settingsRepository.getAutoMarkInStockWhenAvailable();
+      
+      if (autoOutOfStock || autoInStock) {
+        const stockUpdates = await recipeService.updateMenuItemsStockStatus(
+          inventoryItemId,
+          autoOutOfStock,
+          autoInStock
+        );
+        
+        // Add stock updates info to result
+        (result as any).menuItemUpdates = stockUpdates;
+      }
+    } catch (error) {
+      // Log but don't fail the transaction if auto-stock update fails
+      console.error('Failed to auto-update menu item stock status:', error);
+    }
 
     return result;
   }

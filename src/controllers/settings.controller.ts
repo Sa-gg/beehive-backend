@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { SettingsService } from '../services/settings.service.js';
 import { SettingsDTO } from '../types/settings.types.js';
+import { recipeService } from '../services/recipe.service.js';
 
 class SettingsController {
   constructor(private settingsService: SettingsService) {}
@@ -83,6 +84,73 @@ class SettingsController {
     } catch (error) {
       console.error('Error updating manager PIN:', error);
       res.status(500).json({ error: 'Failed to update manager PIN' });
+    }
+  };
+
+  // Get auto-stock settings
+  getAutoStockSettings = async (req: Request, res: Response) => {
+    try {
+      res.json({
+        autoOutOfStockWhenIngredientsRunOut: this.settingsService.getAutoOutOfStockWhenIngredientsRunOut(),
+        autoMarkInStockWhenAvailable: this.settingsService.getAutoMarkInStockWhenAvailable()
+      });
+    } catch (error) {
+      console.error('Error getting auto-stock settings:', error);
+      res.status(500).json({ error: 'Failed to get auto-stock settings' });
+    }
+  };
+
+  // Update auto-stock settings
+  updateAutoStockSettings = async (req: Request, res: Response) => {
+    try {
+      const { autoOutOfStockWhenIngredientsRunOut, autoMarkInStockWhenAvailable } = req.body;
+      
+      if (typeof autoOutOfStockWhenIngredientsRunOut === 'boolean') {
+        this.settingsService.setAutoOutOfStockWhenIngredientsRunOut(autoOutOfStockWhenIngredientsRunOut);
+      }
+      
+      if (typeof autoMarkInStockWhenAvailable === 'boolean') {
+        this.settingsService.setAutoMarkInStockWhenAvailable(autoMarkInStockWhenAvailable);
+      }
+      
+      res.json({
+        success: true,
+        autoOutOfStockWhenIngredientsRunOut: this.settingsService.getAutoOutOfStockWhenIngredientsRunOut(),
+        autoMarkInStockWhenAvailable: this.settingsService.getAutoMarkInStockWhenAvailable()
+      });
+    } catch (error) {
+      console.error('Error updating auto-stock settings:', error);
+      res.status(500).json({ error: 'Failed to update auto-stock settings' });
+    }
+  };
+
+  // Manually trigger stock status update for all menu items
+  triggerStockStatusUpdate = async (req: Request, res: Response) => {
+    try {
+      const autoOutOfStock = this.settingsService.getAutoOutOfStockWhenIngredientsRunOut();
+      const autoInStock = this.settingsService.getAutoMarkInStockWhenAvailable();
+      
+      if (!autoOutOfStock && !autoInStock) {
+        return res.status(400).json({ 
+          error: 'No auto-stock settings enabled. Enable at least one setting to trigger update.' 
+        });
+      }
+      
+      const result = await recipeService.updateMenuItemsStockStatus(
+        undefined, // Check all menu items
+        autoOutOfStock,
+        autoInStock
+      );
+      
+      res.json({
+        success: true,
+        message: `Updated ${result.markedOutOfStock.length + result.markedInStock.length} menu items`,
+        markedOutOfStock: result.markedOutOfStock,
+        markedInStock: result.markedInStock
+      });
+    } catch (error) {
+      console.error('Error triggering stock status update:', error);
+      res.status(500).json({ error: 'Failed to update stock status' });
     }
   };
 }

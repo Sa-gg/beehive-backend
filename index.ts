@@ -78,6 +78,9 @@ import moodSettingsRoutes from './src/routes/moodSettings.routes.js';
 // Import Category routes
 import { createCategoryRoutes } from './src/routes/category.routes.js';
 
+// Import Add-ons & Variants routes
+import { createAddonRoutes } from './src/routes/addon.routes.js';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -204,7 +207,8 @@ app.get('/', (req: Request, res: Response) => {
       recipes: '/api/recipes',
       settings: '/api/settings',
       moodSettings: '/api/mood-settings',
-      categories: '/api/categories'
+      categories: '/api/categories',
+      addons: '/api/addons'
     }
   });
 });
@@ -250,6 +254,9 @@ app.use('/api/mood-settings', moodSettingsRoutes);
 
 // Categories API Routes
 app.use('/api/categories', createCategoryRoutes(prisma));
+
+// Add-ons & Variants API Routes
+app.use('/api/addons', createAddonRoutes(prisma));
 
 // Start server
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;

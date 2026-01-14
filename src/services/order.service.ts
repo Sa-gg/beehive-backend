@@ -455,7 +455,19 @@ export class OrderService {
    * Add items to an existing tab order
    * This allows adding more items to an unpaid order without creating a linked order
    */
-  async addItemsToOrder(orderId: string, items: Array<{ menuItemId: string; quantity: number; price: number }>) {
+  async addItemsToOrder(orderId: string, items: Array<{ 
+    menuItemId: string; 
+    quantity: number; 
+    price: number;
+    variantId?: string;
+    variantPriceDelta?: number;
+    notes?: string;
+    addons?: Array<{
+      addonItemId: string;
+      quantity: number;
+      unitPrice: number;
+    }>;
+  }>) {
     // Validate order exists and is unpaid (can only add to tab orders)
     const order = await this.getOrderById(orderId);
     if (order.paymentStatus !== 'UNPAID') {

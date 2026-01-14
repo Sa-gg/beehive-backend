@@ -5,8 +5,18 @@ export interface OrderItemDTO {
   quantity: number;
   price: number;
   subtotal: number;
+  variantId?: string | null;     // NEW: Selected variant
+  notes?: string | null;          // NEW: Special instructions
   createdAt: string;
   updatedAt: string;
+  // NEW: Selected add-ons for this item
+  order_item_addons?: Array<{
+    id: string;
+    addonItemId: string;
+    quantity: number;
+    unitPrice: number;
+    subtotal: number;
+  }>;
 }
 
 export type PaymentStatus = 'UNPAID' | 'PAID' | 'REFUNDED' | 'COMPLIMENTARY' | 'WRITTEN_OFF' | 'VOIDED';
@@ -42,6 +52,21 @@ export interface OrderDTO {
   order_items: OrderItemDTO[];
 }
 
+// NEW: Order item with variants and add-ons for creating orders
+export interface CreateOrderItemWithAddons {
+  menuItemId: string;
+  quantity: number;
+  price: number;
+  variantId?: string;           // Selected variant ID
+  variantPriceDelta?: number;   // Variant price adjustment
+  notes?: string;               // Special instructions
+  addons?: Array<{
+    addonItemId: string;
+    quantity: number;
+    unitPrice: number;
+  }>;
+}
+
 export interface CreateOrderDTO {
   customerName?: string;
   tableNumber?: string;
@@ -57,6 +82,14 @@ export interface CreateOrderDTO {
     menuItemId: string;
     quantity: number;
     price: number;
+    variantId?: string;         // NEW: Selected variant
+    variantPriceDelta?: number; // NEW: Variant price adjustment
+    notes?: string;             // NEW: Special instructions
+    addons?: Array<{            // NEW: Selected add-ons
+      addonItemId: string;
+      quantity: number;
+      unitPrice: number;
+    }>;
   }>;
   paymentMethod?: string;
 }

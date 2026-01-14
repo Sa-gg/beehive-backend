@@ -79,6 +79,8 @@ export class MenuItemRepository {
         prepTime: data.prepTime ?? 5,
         nutrients: data.nutrients,
         moodBenefits: data.moodBenefits,
+        itemType: data.itemType ?? 'BASE',
+        showInMenu: data.showInMenu ?? false,
         updatedAt: new Date()
       },
       include: {

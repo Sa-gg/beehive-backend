@@ -10,6 +10,8 @@ export interface CreateMenuItemDTO {
   prepTime?: number;
   nutrients?: string;
   moodBenefits?: string;
+  itemType?: 'BASE' | 'ADDON' | 'DRINK';  // NEW: defaults to BASE
+  showInMenu?: boolean;  // For ADDON items: whether to also show in regular menu
 }
 
 export interface UpdateMenuItemDTO {
@@ -24,6 +26,8 @@ export interface UpdateMenuItemDTO {
   prepTime?: number;
   nutrients?: string;
   moodBenefits?: string;
+  itemType?: 'BASE' | 'ADDON' | 'DRINK';  // NEW
+  showInMenu?: boolean;  // For ADDON items: whether to also show in regular menu
 }
 
 export interface MenuItemFilters {
@@ -31,6 +35,8 @@ export interface MenuItemFilters {
   available?: boolean;
   featured?: boolean;
   search?: string;
+  itemType?: 'BASE' | 'ADDON' | 'DRINK';  // NEW: filter by item type
+  excludeAddons?: boolean;                 // NEW: exclude ADDON items from results
 }
 
 export interface MenuItemResponse {
@@ -51,6 +57,8 @@ export interface MenuItemResponse {
   prepTime: number | null;
   nutrients: string | null;
   moodBenefits: string | null;
+  itemType: 'BASE' | 'ADDON' | 'DRINK';  // NEW
+  showInMenu: boolean;  // For ADDON items: whether to also show in regular menu
   createdAt: Date;
   updatedAt: Date;
 }

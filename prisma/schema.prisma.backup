@@ -7,9 +7,6 @@ datasource db {
   provider = "postgresql"
 }
 
-// ============================================================================
-// USERS (Standalone - no relationships)
-// ============================================================================
 model users {
   id            String    @id
   email         String    @unique
@@ -29,10 +26,6 @@ model users {
   @@index([cardNumber])
 }
 
-// ============================================================================
-// CATEGORIES & MENU ITEMS
-// ============================================================================
-
 model categories {
   id          String       @id @db.VarChar(255)
   name        String       @unique @db.VarChar(255)
@@ -42,9 +35,6 @@ model categories {
   isActive    Boolean?     @default(true)
   createdAt   DateTime?    @default(now()) @db.Timestamp(6)
   updatedAt   DateTime?    @default(now()) @db.Timestamp(6)
-
-  // Relationships:
-  // categories 1 -------- 0..* menu_items (One category has zero to many menu items)
   menu_items  menu_items[]
 
   @@index([name])
@@ -67,29 +57,19 @@ model menu_items {
   createdAt             DateTime                @default(now())
   updatedAt             DateTime
   categoryId            String                  @db.VarChar(255)
+  // NEW: Item type for filtering (BASE items only in mood system)
   itemType              menu_item_type          @default(BASE)
+  // NEW: For ADDON items - whether to also show in regular menu (false = only as add-on)
   showInMenu            Boolean                 @default(false)
-
-  // Relationships:
-  // menu_items *..1 -------- 1 categories (Each menu item belongs to exactly one category)
-  category              categories              @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "menu_items_categoryid_fkey")
-
-  // menu_items 1 -------- 0..* order_items (One menu item can appear in zero to many order items)
-  order_items           order_items[]
-
-  // menu_items 1 -------- 0..* menu_item_ingredients (One menu item can have zero to many ingredients)
   menu_item_ingredients menu_item_ingredients[]
-
-  // menu_items 1 -------- 0..* menu_item_mood_stats (One menu item can have zero to many mood stats)
   menu_item_mood_stats  menu_item_mood_stats[]
-
-  // menu_items 1 -------- 0..* menu_item_variants (One menu item can have zero to many variants)
+  category              categories              @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "menu_items_categoryid_fkey")
+  order_items           order_items[]
+  // NEW: Variants for this item (e.g., Small/Medium/Large)
   variants              menu_item_variants[]
-
-  // menu_items (as base) 1 -------- 0..* menu_item_addons (One base item can allow zero to many add-ons)
+  // NEW: Add-ons allowed for this base item
   allowed_addons        menu_item_addons[]      @relation("BaseItemAddons")
-
-  // menu_items (as addon) 1 -------- 0..* menu_item_addons (One addon item can be allowed for zero to many base items)
+  // NEW: When this item IS an add-on, which base items allow it
   addon_for_items       menu_item_addons[]      @relation("AddonItem")
 
   @@index([available])
@@ -97,10 +77,6 @@ model menu_items {
   @@index([categoryId], map: "menu_items_categoryid_idx")
   @@index([itemType])
 }
-
-// ============================================================================
-// ORDERS & ORDER ITEMS
-// ============================================================================
 
 model order_items {
   id         String            @id
@@ -112,20 +88,15 @@ model order_items {
   status     order_item_status @default(PREPARING)
   createdAt  DateTime          @default(now())
   updatedAt  DateTime
+  // NEW: Selected variant for this order item (null = default/no variant)
   variantId  String?
+  // NEW: Notes/special instructions for this item
   notes      String?
-
-  // Relationships:
-  // order_items *..1 -------- 1 orders (Each order item belongs to exactly one order)
-  orders     orders            @relation(fields: [orderId], references: [id], onDelete: Cascade)
-
-  // order_items *..1 -------- 1 menu_items (Each order item references exactly one menu item)
   menu_items menu_items        @relation(fields: [menuItemId], references: [id])
-
-  // order_items *..1 -------- 0..1 menu_item_variants (Each order item may have zero or one variant)
+  orders     orders            @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  // NEW: Selected variant relation
   variant    menu_item_variants? @relation(fields: [variantId], references: [id])
-
-  // order_items 1 -------- 0..* order_item_addons (One order item can have zero to many add-ons)
+  // NEW: Add-ons selected for this order item
   order_item_addons order_item_addons[]
 
   @@index([menuItemId])
@@ -163,9 +134,6 @@ model orders {
   changeAmount      Float?
   deliveryFee       Float          @default(0)
   serviceFee        Float          @default(0)
-
-  // Relationships:
-  // orders 1 -------- 1..* order_items (One order has one to many order items)
   order_items       order_items[]
 
   @@index([createdAt])
@@ -177,40 +145,27 @@ model orders {
   @@index([paymentStatus])
 }
 
-// ============================================================================
-// INVENTORY & STOCK
-// ============================================================================
-
 model inventory_items {
-  id                   String                  @id
-  name                 String
-  category             inventory_category
-  currentStock         Float
-  minStock             Float
-  maxStock             Float
-  unit                 String
-  costPerUnit          Float
-  supplier             String
-  status               inventory_status        @default(IN_STOCK)
-  lastRestocked        DateTime                @default(now())
-  createdAt            DateTime                @default(now())
-  updatedAt            DateTime
-  restockFrequencyDays Int?                    @default(7)
-
-  // Relationships:
-  // inventory_items 1 -------- 0..* menu_item_ingredients (One inventory item can be ingredient in zero to many menu items)
+  id                    String                  @id
+  name                  String
+  category              inventory_category
+  currentStock          Float
+  minStock              Float
+  maxStock              Float
+  unit                  String
+  costPerUnit           Float
+  supplier              String
+  status                inventory_status        @default(IN_STOCK)
+  lastRestocked         DateTime                @default(now())
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime
+  restockFrequencyDays  Int?                    @default(7)
   menu_item_ingredients menu_item_ingredients[]
-
-  // inventory_items 1 -------- 0..* stock_transactions (One inventory item can have zero to many transactions)
   stock_transactions    stock_transactions[]
 
   @@index([category])
   @@index([status])
 }
-
-// ============================================================================
-// EXPENSES (Standalone - no relationships)
-// ============================================================================
 
 model expenses {
   id          String            @id
@@ -238,9 +193,6 @@ model stock_transactions {
   userId          String?
   notes           String?
   createdAt       DateTime                 @default(now())
-
-  // Relationships:
-  // stock_transactions *..1 -------- 1 inventory_items (Each transaction belongs to exactly one inventory item)
   inventory_item  inventory_items          @relation(fields: [inventoryItemId], references: [id], onDelete: Cascade)
 
   @@index([inventoryItemId])
@@ -250,7 +202,6 @@ model stock_transactions {
   @@index([createdAt])
 }
 
-// Junction table: menu_items *..* inventory_items (Many-to-many through menu_item_ingredients)
 model menu_item_ingredients {
   id              String          @id
   menuItemId      String
@@ -258,22 +209,13 @@ model menu_item_ingredients {
   quantity        Float
   createdAt       DateTime        @default(now())
   updatedAt       DateTime
-
-  // Relationships:
-  // menu_item_ingredients *..1 -------- 1 menu_items (Each ingredient record belongs to exactly one menu item)
-  menu_item       menu_items      @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
-
-  // menu_item_ingredients *..1 -------- 1 inventory_items (Each ingredient record references exactly one inventory item)
   inventory_item  inventory_items @relation(fields: [inventoryItemId], references: [id], onDelete: Cascade)
+  menu_item       menu_items      @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
 
   @@unique([menuItemId, inventoryItemId])
   @@index([menuItemId])
   @@index([inventoryItemId])
 }
-
-// ============================================================================
-// MOOD SYSTEM
-// ============================================================================
 
 model mood_settings {
   id                      String    @id
@@ -296,7 +238,6 @@ model mood_settings {
   @@index([isActive])
 }
 
-// Standalone configuration table (no relationships)
 model mood_feedback_config {
   id                      String   @id @default("default")
   baselineThreshold       Int      @default(50)
@@ -327,7 +268,6 @@ model mood_feedback_config {
   showRankingNumbers      Boolean  @default(false)
 }
 
-// Standalone stats table (no FK relationships, just references mood enum)
 model mood_order_stats {
   id              String    @id
   mood            mood_type @unique
@@ -357,9 +297,6 @@ model menu_item_mood_stats {
   moodWorse     Int        @default(0)
   createdAt     DateTime   @default(now())
   updatedAt     DateTime
-
-  // Relationships:
-  // menu_item_mood_stats *..1 -------- 1 menu_items (Each mood stat record belongs to exactly one menu item)
   menu_items    menu_items @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
 
   @@unique([menuItemId, mood])
@@ -368,26 +305,22 @@ model menu_item_mood_stats {
 }
 
 // ============================================================================
-// ADD-ONS & VARIANTS SUPPORT
+// ADD-ONS & VARIANTS SUPPORT (Additive - does not break existing functionality)
 // ============================================================================
 
 // Variants for a menu item (e.g., Small/Medium/Large, Hot/Iced)
+// Only affects price via priceDelta, base item ingredients always deduct
 model menu_item_variants {
   id          String        @id
   menuItemId  String
-  name        String
-  priceDelta  Float         @default(0)
+  name        String        // e.g., "Small", "Medium", "Large", "Hot", "Iced"
+  priceDelta  Float         @default(0) // Price adjustment (+/- from base price)
   isDefault   Boolean       @default(false)
   sortOrder   Int           @default(0)
   isActive    Boolean       @default(true)
   createdAt   DateTime      @default(now())
   updatedAt   DateTime
-
-  // Relationships:
-  // menu_item_variants *..1 -------- 1 menu_items (Each variant belongs to exactly one menu item)
   menu_item   menu_items    @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
-
-  // menu_item_variants 1 -------- 0..* order_items (One variant can be selected in zero to many order items)
   order_items order_items[]
 
   @@unique([menuItemId, name])
@@ -395,23 +328,18 @@ model menu_item_variants {
   @@index([isActive])
 }
 
-// Junction table: menu_items (base) *..* menu_items (addon)
 // Links base menu items to their allowed add-ons
+// Add-ons are themselves menu_items with itemType = ADDON
 model menu_item_addons {
   id           String     @id
-  baseItemId   String
-  addonItemId  String
-  maxQuantity  Int        @default(5)
+  baseItemId   String     // The base menu item
+  addonItemId  String     // The add-on menu item (must have itemType = ADDON)
+  maxQuantity  Int        @default(5) // Max quantity of this add-on per order item
   sortOrder    Int        @default(0)
   isActive     Boolean    @default(true)
   createdAt    DateTime   @default(now())
   updatedAt    DateTime
-
-  // Relationships:
-  // menu_item_addons *..1 -------- 1 menu_items (base) (Each addon link belongs to exactly one base item)
   base_item    menu_items @relation("BaseItemAddons", fields: [baseItemId], references: [id], onDelete: Cascade)
-
-  // menu_item_addons *..1 -------- 1 menu_items (addon) (Each addon link references exactly one addon item)
   addon_item   menu_items @relation("AddonItem", fields: [addonItemId], references: [id], onDelete: Cascade)
 
   @@unique([baseItemId, addonItemId])
@@ -421,17 +349,15 @@ model menu_item_addons {
 }
 
 // Stores selected add-ons for each order item
+// Allows quantity tracking per add-on (e.g., 2x extra egg)
 model order_item_addons {
   id          String      @id
   orderItemId String
-  addonItemId String
+  addonItemId String      // References the add-on menu_item
   quantity    Int         @default(1)
-  unitPrice   Float
-  subtotal    Float
+  unitPrice   Float       // Price at time of order (add-on's menu_item.price)
+  subtotal    Float       // quantity * unitPrice
   createdAt   DateTime    @default(now())
-
-  // Relationships:
-  // order_item_addons *..1 -------- 1 order_items (Each order addon belongs to exactly one order item)
   order_item  order_items @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
 
   @@unique([orderItemId, addonItemId])
@@ -439,8 +365,6 @@ model order_item_addons {
   @@index([addonItemId])
 }
 
-// ============================================================================
-// ENUMS
 // ============================================================================
 
 enum order_type {

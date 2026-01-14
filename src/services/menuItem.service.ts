@@ -174,6 +174,8 @@ export class MenuItemService {
       prepTime: item.prepTime,
       nutrients: item.nutrients,
       moodBenefits: item.moodBenefits,
+      itemType: item.itemType || 'BASE',  // Default to BASE for existing items
+      showInMenu: item.showInMenu ?? false,  // For ADDON items: whether to show in regular menu
       createdAt: item.createdAt,
       updatedAt: item.updatedAt
     };

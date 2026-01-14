@@ -17,9 +17,18 @@ export class OrderRepository {
               select: {
                 name: true,
                 category: true,
-                image: true
+                image: true,
+                itemType: true  // NEW: Include item type
               }
-            }
+            },
+            variant: {          // NEW: Include selected variant
+              select: {
+                id: true,
+                name: true,
+                priceDelta: true
+              }
+            },
+            order_item_addons: true  // NEW: Include selected add-ons
           }
         }
       },
@@ -37,9 +46,18 @@ export class OrderRepository {
               select: {
                 name: true,
                 category: true,
-                image: true
+                image: true,
+                itemType: true  // NEW: Include item type
               }
-            }
+            },
+            variant: {          // NEW: Include selected variant
+              select: {
+                id: true,
+                name: true,
+                priceDelta: true
+              }
+            },
+            order_item_addons: true  // NEW: Include selected add-ons
           }
         }
       }
@@ -56,9 +74,18 @@ export class OrderRepository {
               select: {
                 name: true,
                 category: true,
-                image: true
+                image: true,
+                itemType: true  // NEW: Include item type
               }
-            }
+            },
+            variant: {          // NEW: Include selected variant
+              select: {
+                id: true,
+                name: true,
+                priceDelta: true
+              }
+            },
+            order_item_addons: true  // NEW: Include selected add-ons
           }
         }
       }
@@ -96,8 +123,20 @@ export class OrderRepository {
     
     const orderNumber = `ORD-${datePrefix}-${String(nextOrderNum).padStart(5, '0')}`;
 
-    // Calculate totals - tax is already included in menu item prices
-    const subtotal = data.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    // Calculate totals including variants and add-ons
+    // Formula: SUM((basePrice + variantDelta + addonTotal) * quantity)
+    const subtotal = data.items.reduce((sum, item) => {
+      // Calculate add-on total for this item
+      const addonTotal = (item.addons || []).reduce(
+        (aSum, addon) => aSum + (addon.unitPrice * addon.quantity),
+        0
+      );
+      // Unit price = base price + variant delta + addon total
+      const variantDelta = item.variantPriceDelta || 0;
+      const unitPrice = item.price + variantDelta + addonTotal;
+      return sum + (unitPrice * item.quantity);
+    }, 0);
+    
     const tax = 0; // Tax is included in item prices
     const deliveryFee = data.deliveryFee || 0;
     const serviceFee = data.serviceFee || 0;
@@ -105,8 +144,9 @@ export class OrderRepository {
     const totalAmount = subtotal + deliveryFee + serviceFee - discountAmount;
 
     // Track mood-based orders if mood context is provided
+    // NOTE: Only track BASE menu items, NOT add-ons
     if (data.moodContext) {
-      // Get all menu item IDs from the order
+      // Get all menu item IDs from the order (base items only)
       const menuItemIds = data.items.map(item => item.menuItemId);
       
       // Import mood settings repository
@@ -116,11 +156,12 @@ export class OrderRepository {
       // Increment overall mood order stats (for analytics dashboard)
       await moodRepo.incrementMoodOrdered(data.moodContext.toUpperCase() as any);
       
-      // Increment per-item ordered stats
+      // Increment per-item ordered stats (only for base items, not add-ons)
       await moodRepo.incrementItemsOrdered(menuItemIds, data.moodContext.toUpperCase() as any);
     }
 
-    return this.prisma.orders.create({
+    // Create order with items
+    const order = await this.prisma.orders.create({
       data: {
         id: `order_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
         orderNumber,
@@ -129,10 +170,6 @@ export class OrderRepository {
         orderType: data.orderType || 'DINE_IN',
         moodContext: data.moodContext || null,
         linkedOrderId: data.linkedOrderId || null,
-        // createdBy logic:
-        // - If deviceId is present (phone/customer order), set to 'GUEST' for guest customers
-        // - If createdBy is provided (e.g., cashier name), use that value
-        // - If neither, it's a POS walk-in order (handled by caller)
         createdBy: data.createdBy || (data.deviceId ? 'GUEST' : null),
         deviceId: data.deviceId || null,
         subtotal,
@@ -146,18 +183,62 @@ export class OrderRepository {
         paymentStatus: 'UNPAID',
         updatedAt: new Date(),
         order_items: {
-          create: data.items.map(item => ({
-            id: `orderItem_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
-            menuItemId: item.menuItemId,
-            quantity: item.quantity,
-            price: item.price,
-            subtotal: item.price * item.quantity,
-            updatedAt: new Date()
-          }))
+          create: data.items.map(item => {
+            // Calculate item subtotal including variant delta and add-ons
+            const addonTotal = (item.addons || []).reduce(
+              (aSum, addon) => aSum + (addon.unitPrice * addon.quantity),
+              0
+            );
+            const variantDelta = item.variantPriceDelta || 0;
+            const unitPrice = item.price + variantDelta + addonTotal;
+            
+            return {
+              id: `orderItem_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
+              menuItemId: item.menuItemId,
+              quantity: item.quantity,
+              price: item.price,  // Base price (without variant delta)
+              subtotal: unitPrice * item.quantity,
+              variantId: item.variantId || null,  // NEW: Selected variant
+              notes: item.notes || null,          // NEW: Special instructions
+              updatedAt: new Date()
+            };
+          })
         }
       },
       include: {
         order_items: true
+      }
+    });
+
+    // Create order item add-ons separately (Prisma nested create limitation)
+    for (const item of data.items) {
+      if (item.addons && item.addons.length > 0) {
+        // Find the corresponding order item
+        const orderItem = order.order_items.find(oi => oi.menuItemId === item.menuItemId);
+        if (orderItem) {
+          await this.prisma.order_item_addons.createMany({
+            data: item.addons.map(addon => ({
+              id: `orderItemAddon_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
+              orderItemId: orderItem.id,
+              addonItemId: addon.addonItemId,
+              quantity: addon.quantity,
+              unitPrice: addon.unitPrice,
+              subtotal: addon.unitPrice * addon.quantity
+            }))
+          });
+        }
+      }
+    }
+
+    // Return order with add-ons included
+    return this.prisma.orders.findUnique({
+      where: { id: order.id },
+      include: {
+        order_items: {
+          include: {
+            order_item_addons: true
+          }
+        }
       }
     });
   }
@@ -292,32 +373,75 @@ export class OrderRepository {
   }
 
   // Add items to an existing order (for tab orders - adding to the tab)
-  async addItemsToOrder(orderId: string, items: Array<{ menuItemId: string; quantity: number; price: number }>) {
+  async addItemsToOrder(orderId: string, items: Array<{ 
+    menuItemId: string; 
+    quantity: number; 
+    price: number;
+    variantId?: string;
+    variantPriceDelta?: number;
+    notes?: string;
+    addons?: Array<{
+      addonItemId: string;
+      quantity: number;
+      unitPrice: number;
+    }>;
+  }>) {
     // Get current order to recalculate totals
     const order = await this.findById(orderId);
     if (!order) {
       throw new Error('Order not found');
     }
 
-    // Calculate new item subtotals
-    const newItemsSubtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    // Calculate new item subtotals including variants and addons
+    const newItemsSubtotal = items.reduce((sum, item) => {
+      const addonTotal = (item.addons || []).reduce(
+        (aSum, addon) => aSum + (addon.unitPrice * addon.quantity), 0
+      );
+      const variantDelta = item.variantPriceDelta || 0;
+      const unitPrice = item.price + variantDelta + addonTotal;
+      return sum + (unitPrice * item.quantity);
+    }, 0);
     
     // Create new order items with PREPARING status
     const newItems = await Promise.all(
-      items.map(item => 
-        this.prisma.order_items.create({
+      items.map(async item => {
+        const addonTotal = (item.addons || []).reduce(
+          (aSum, addon) => aSum + (addon.unitPrice * addon.quantity), 0
+        );
+        const variantDelta = item.variantPriceDelta || 0;
+        const unitPrice = item.price + variantDelta + addonTotal;
+        
+        const orderItem = await this.prisma.order_items.create({
           data: {
             id: `orderItem_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
             orderId,
             menuItemId: item.menuItemId,
             quantity: item.quantity,
             price: item.price,
-            subtotal: item.price * item.quantity,
+            subtotal: unitPrice * item.quantity,
+            variantId: item.variantId || null,
+            notes: item.notes || null,
             status: 'PREPARING',
             updatedAt: new Date()
           }
-        })
-      )
+        });
+        
+        // Create order item addons if present
+        if (item.addons && item.addons.length > 0) {
+          await this.prisma.order_item_addons.createMany({
+            data: item.addons.map(addon => ({
+              id: `orderItemAddon_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
+              orderItemId: orderItem.id,
+              addonItemId: addon.addonItemId,
+              quantity: addon.quantity,
+              unitPrice: addon.unitPrice,
+              subtotal: addon.unitPrice * addon.quantity
+            }))
+          });
+        }
+        
+        return orderItem;
+      })
     );
 
     // Recalculate order totals

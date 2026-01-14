@@ -8,6 +8,8 @@ import {
   getTransaction,
   updateTransactionMetadata,
   getTransactionAuditLogs,
+  bulkStockIn,
+  bulkStockOut,
 } from '../controllers/stockTransaction.controller.js';
 
 const router = Router();
@@ -16,6 +18,11 @@ const router = Router();
 router.post('/in', stockIn);
 router.post('/out', stockOut);
 router.post('/adjust', adjustStock);
+
+// Bulk stock transactions
+router.post('/bulk/in', bulkStockIn);
+router.post('/bulk/out', bulkStockOut);
+
 router.get('/history/:inventoryItemId', getTransactionHistory);
 router.get('/', getAllTransactions);
 

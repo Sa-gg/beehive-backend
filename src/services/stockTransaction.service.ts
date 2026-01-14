@@ -564,6 +564,146 @@ export class StockTransactionService {
     });
     return logs;
   }
+
+  /**
+   * Bulk Stock-In: Add inventory to multiple items at once
+   * - Creates IN transactions for each item
+   * - Shares referenceId, receiptImage across all transactions
+   * - Returns summary of successful and failed operations
+   */
+  async bulkStockIn(params: {
+    items: Array<{ inventoryItemId: string; quantity: number }>;
+    referenceId?: string;
+    receiptImage?: string;
+    userId?: string;
+    notes?: string;
+  }): Promise<{
+    successful: Array<{ inventoryItemId: string; itemName: string; quantity: number; newStock: number }>;
+    failed: Array<{ inventoryItemId: string; itemName?: string; error: string }>;
+    totalAdded: number;
+  }> {
+    const { items, referenceId, receiptImage, userId, notes } = params;
+    const successful: Array<{ inventoryItemId: string; itemName: string; quantity: number; newStock: number }> = [];
+    const failed: Array<{ inventoryItemId: string; itemName?: string; error: string }> = [];
+    let totalAdded = 0;
+
+    // Process each item sequentially to avoid race conditions
+    for (const item of items) {
+      try {
+        const result = await this.stockIn({
+          inventoryItemId: item.inventoryItemId,
+          quantity: item.quantity,
+          reason: 'PURCHASE',
+          referenceId,
+          receiptImage,
+          userId,
+          notes,
+        });
+
+        successful.push({
+          inventoryItemId: item.inventoryItemId,
+          itemName: result.inventoryItem.name,
+          quantity: item.quantity,
+          newStock: result.inventoryItem.currentStock,
+        });
+        totalAdded += item.quantity;
+      } catch (error: any) {
+        // Try to get item name for better error reporting
+        let itemName: string | undefined;
+        try {
+          const inventoryItem = await prisma.inventory_items.findUnique({
+            where: { id: item.inventoryItemId },
+            select: { name: true },
+          });
+          itemName = inventoryItem?.name;
+        } catch {
+          // Ignore if we can't get the name
+        }
+
+        failed.push({
+          inventoryItemId: item.inventoryItemId,
+          itemName,
+          error: error.message || 'Unknown error',
+        });
+      }
+    }
+
+    return { successful, failed, totalAdded };
+  }
+
+  /**
+   * Bulk Stock-Out: Remove inventory from multiple items at once
+   * - Creates OUT transactions for each item
+   * - Shares referenceId, receiptImage, reason across all transactions
+   * - Returns summary of successful and failed operations
+   */
+  async bulkStockOut(params: {
+    items: Array<{ inventoryItemId: string; quantity: number }>;
+    reason: stock_transaction_reason;
+    referenceId?: string;
+    receiptImage?: string;
+    userId?: string;
+    notes?: string;
+  }): Promise<{
+    successful: Array<{ inventoryItemId: string; itemName: string; quantity: number; newStock: number }>;
+    failed: Array<{ inventoryItemId: string; itemName?: string; error: string }>;
+    totalRemoved: number;
+    discrepancies: number;
+  }> {
+    const { items, reason, referenceId, receiptImage, userId, notes } = params;
+    const successful: Array<{ inventoryItemId: string; itemName: string; quantity: number; newStock: number }> = [];
+    const failed: Array<{ inventoryItemId: string; itemName?: string; error: string }> = [];
+    let totalRemoved = 0;
+    let discrepancies = 0;
+
+    // Process each item sequentially to avoid race conditions
+    for (const item of items) {
+      try {
+        const result = await this.stockOut({
+          inventoryItemId: item.inventoryItemId,
+          quantity: item.quantity,
+          reason,
+          referenceId,
+          receiptImage,
+          userId,
+          notes,
+          allowNegative: true, // Allow negative stock for bulk operations (will record discrepancy)
+        });
+
+        successful.push({
+          inventoryItemId: item.inventoryItemId,
+          itemName: result.inventoryItem.name,
+          quantity: item.quantity,
+          newStock: result.inventoryItem.currentStock,
+        });
+        totalRemoved += item.quantity;
+
+        if (result.discrepancy) {
+          discrepancies++;
+        }
+      } catch (error: any) {
+        // Try to get item name for better error reporting
+        let itemName: string | undefined;
+        try {
+          const inventoryItem = await prisma.inventory_items.findUnique({
+            where: { id: item.inventoryItemId },
+            select: { name: true },
+          });
+          itemName = inventoryItem?.name;
+        } catch {
+          // Ignore if we can't get the name
+        }
+
+        failed.push({
+          inventoryItemId: item.inventoryItemId,
+          itemName,
+          error: error.message || 'Unknown error',
+        });
+      }
+    }
+
+    return { successful, failed, totalRemoved, discrepancies };
+  }
 }
 
 export const stockTransactionService = new StockTransactionService();

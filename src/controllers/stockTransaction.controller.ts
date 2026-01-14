@@ -252,3 +252,105 @@ export const getTransactionAuditLogs = async (req: Request, res: Response) => {
     });
   }
 };
+
+/**
+ * Bulk Stock-In: Add inventory to multiple items at once
+ * POST /api/stock-transactions/bulk/in
+ */
+export const bulkStockIn = async (req: Request, res: Response) => {
+  try {
+    const { items, referenceId, receiptImage, userId, notes } = req.body;
+
+    if (!items || !Array.isArray(items) || items.length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'items array is required and must not be empty',
+      });
+    }
+
+    // Validate each item
+    for (const item of items) {
+      if (!item.inventoryItemId || !item.quantity) {
+        return res.status(400).json({
+          success: false,
+          error: 'Each item must have inventoryItemId and quantity',
+        });
+      }
+    }
+
+    const results = await stockTransactionService.bulkStockIn({
+      items,
+      referenceId,
+      receiptImage,
+      userId,
+      notes,
+    });
+
+    res.status(200).json({
+      success: true,
+      data: results,
+      message: `Successfully added stock to ${results.successful.length} items`,
+    });
+  } catch (error: any) {
+    console.error('Bulk stock-in error:', error);
+    res.status(400).json({
+      success: false,
+      error: error.message || 'Failed to bulk add stock',
+    });
+  }
+};
+
+/**
+ * Bulk Stock-Out: Remove inventory from multiple items at once
+ * POST /api/stock-transactions/bulk/out
+ */
+export const bulkStockOut = async (req: Request, res: Response) => {
+  try {
+    const { items, reason, referenceId, receiptImage, userId, notes } = req.body;
+
+    if (!items || !Array.isArray(items) || items.length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'items array is required and must not be empty',
+      });
+    }
+
+    if (!reason) {
+      return res.status(400).json({
+        success: false,
+        error: 'reason is required for stock-out',
+      });
+    }
+
+    // Validate each item
+    for (const item of items) {
+      if (!item.inventoryItemId || !item.quantity) {
+        return res.status(400).json({
+          success: false,
+          error: 'Each item must have inventoryItemId and quantity',
+        });
+      }
+    }
+
+    const results = await stockTransactionService.bulkStockOut({
+      items,
+      reason,
+      referenceId,
+      receiptImage,
+      userId,
+      notes,
+    });
+
+    res.status(200).json({
+      success: true,
+      data: results,
+      message: `Successfully removed stock from ${results.successful.length} items`,
+    });
+  } catch (error: any) {
+    console.error('Bulk stock-out error:', error);
+    res.status(400).json({
+      success: false,
+      error: error.message || 'Failed to bulk remove stock',
+    });
+  }
+};

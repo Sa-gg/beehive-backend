@@ -104,6 +104,24 @@ export class MenuItemService {
     return { count: result.count };
   }
 
+  async toggleOutOfStock(id: string): Promise<MenuItemResponse> {
+    const item = await this.repository.findById(id);
+    if (!item) {
+      throw new Error('Menu item not found');
+    }
+
+    const updatedItem = await this.repository.update(id, { 
+      outOfStock: !(item as any).outOfStock 
+    });
+
+    return this.mapToResponse(updatedItem);
+  }
+
+  async bulkUpdateOutOfStock(ids: string[], outOfStock: boolean): Promise<{ count: number }> {
+    const result = await this.repository.bulkUpdateOutOfStock(ids, outOfStock);
+    return { count: result.count };
+  }
+
   async getMenuItemsByCategory(categoryId: string): Promise<MenuItemResponse[]> {
     const items = await this.repository.getByCategory(categoryId);
     return items.map(item => this.mapToResponse(item));
@@ -176,6 +194,8 @@ export class MenuItemService {
       moodBenefits: item.moodBenefits,
       itemType: item.itemType || 'BASE',  // Default to BASE for existing items
       showInMenu: item.showInMenu ?? false,  // For ADDON items: whether to show in regular menu
+      outOfStock: item.outOfStock ?? false,  // Whether product is marked as out of stock
+      archived: item.archived ?? false,      // Whether product is archived (soft deleted)
       createdAt: item.createdAt,
       updatedAt: item.updatedAt
     };

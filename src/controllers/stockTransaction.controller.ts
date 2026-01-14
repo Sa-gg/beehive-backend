@@ -8,7 +8,7 @@ import { stock_transaction_type, stock_transaction_reason } from '../../generate
  */
 export const stockIn = async (req: Request, res: Response) => {
   try {
-    const { inventoryItemId, quantity, reason, referenceId, userId, notes } = req.body;
+    const { inventoryItemId, quantity, reason, referenceId, receiptImage, userId, notes } = req.body;
 
     if (!inventoryItemId || !quantity) {
       return res.status(400).json({
@@ -22,6 +22,7 @@ export const stockIn = async (req: Request, res: Response) => {
       quantity: parseFloat(quantity),
       reason: reason || 'PURCHASE',
       referenceId,
+      receiptImage,
       userId,
       notes,
     });
@@ -46,7 +47,7 @@ export const stockIn = async (req: Request, res: Response) => {
  */
 export const stockOut = async (req: Request, res: Response) => {
   try {
-    const { inventoryItemId, quantity, reason, referenceId, userId, notes } = req.body;
+    const { inventoryItemId, quantity, reason, referenceId, receiptImage, userId, notes } = req.body;
 
     if (!inventoryItemId || !quantity || !reason) {
       return res.status(400).json({
@@ -60,6 +61,7 @@ export const stockOut = async (req: Request, res: Response) => {
       quantity: parseFloat(quantity),
       reason,
       referenceId,
+      receiptImage,
       userId,
       notes,
     });
@@ -167,6 +169,86 @@ export const getAllTransactions = async (req: Request, res: Response) => {
     res.status(400).json({
       success: false,
       error: error.message || 'Failed to get transactions',
+    });
+  }
+};
+
+/**
+ * Get a single transaction by ID
+ * GET /api/stock-transactions/:transactionId
+ */
+export const getTransaction = async (req: Request, res: Response) => {
+  try {
+    const { transactionId } = req.params;
+
+    const transaction = await stockTransactionService.getTransaction(transactionId);
+
+    res.status(200).json({
+      success: true,
+      data: transaction,
+    });
+  } catch (error: any) {
+    console.error('Get transaction error:', error);
+    res.status(404).json({
+      success: false,
+      error: error.message || 'Transaction not found',
+    });
+  }
+};
+
+/**
+ * Update transaction metadata (notes, referenceId, receiptImage)
+ * PATCH /api/stock-transactions/:transactionId/metadata
+ * Note: This does NOT change inventory quantities - only metadata
+ */
+export const updateTransactionMetadata = async (req: Request, res: Response) => {
+  try {
+    const { transactionId } = req.params;
+    const { notes, referenceId, receiptImage, userId } = req.body;
+
+    const result = await stockTransactionService.updateTransactionMetadata(transactionId, {
+      notes,
+      referenceId,
+      receiptImage,
+      userId,
+    });
+
+    res.status(200).json({
+      success: true,
+      data: result.transaction,
+      auditLogs: result.auditLogs,
+      message: result.auditLogs.length > 0 
+        ? 'Metadata updated. Inventory quantity unchanged.' 
+        : 'No changes detected.',
+    });
+  } catch (error: any) {
+    console.error('Update transaction metadata error:', error);
+    res.status(400).json({
+      success: false,
+      error: error.message || 'Failed to update transaction metadata',
+    });
+  }
+};
+
+/**
+ * Get audit logs for a transaction
+ * GET /api/stock-transactions/:transactionId/audit-logs
+ */
+export const getTransactionAuditLogs = async (req: Request, res: Response) => {
+  try {
+    const { transactionId } = req.params;
+
+    const logs = await stockTransactionService.getTransactionAuditLogs(transactionId);
+
+    res.status(200).json({
+      success: true,
+      data: logs,
+    });
+  } catch (error: any) {
+    console.error('Get transaction audit logs error:', error);
+    res.status(400).json({
+      success: false,
+      error: error.message || 'Failed to get audit logs',
     });
   }
 };

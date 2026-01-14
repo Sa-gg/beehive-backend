@@ -605,10 +605,17 @@ export class MoodSettingsRepository {
   }
 
   // Get all item stats for a specific mood (includes ALL menu items, not just those with stats)
+  // EXCLUDES ADDON items - they are extras, not main menu items for mood recommendations
+  // Also excludes archived and out of stock items
   async getMoodItemStats(mood: mood_type) {
-    // Get all available menu items first
+    // Get all available menu items first - EXCLUDE ADDON items, archived, and out of stock
     const allMenuItems = await this.prisma.menu_items.findMany({
-      where: { available: true },
+      where: { 
+        available: true,
+        archived: false,      // Exclude archived (soft deleted) items
+        outOfStock: false,    // Exclude out of stock items
+        itemType: { not: 'ADDON' }  // Exclude addon items from mood recommendations
+      },
       select: { 
         id: true, 
         name: true, 

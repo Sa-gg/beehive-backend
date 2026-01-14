@@ -28,6 +28,8 @@ export interface UpdateMenuItemDTO {
   moodBenefits?: string;
   itemType?: 'BASE' | 'ADDON' | 'DRINK';  // NEW
   showInMenu?: boolean;  // For ADDON items: whether to also show in regular menu
+  outOfStock?: boolean;  // Whether product is out of stock (ingredients ran out)
+  archived?: boolean;    // Whether product is archived (soft deleted)
 }
 
 export interface MenuItemFilters {
@@ -59,6 +61,8 @@ export interface MenuItemResponse {
   moodBenefits: string | null;
   itemType: 'BASE' | 'ADDON' | 'DRINK';  // NEW
   showInMenu: boolean;  // For ADDON items: whether to also show in regular menu
+  outOfStock: boolean;  // Whether product is out of stock (ingredients ran out)
+  archived: boolean;    // Whether product is archived (soft deleted)
   createdAt: Date;
   updatedAt: Date;
 }

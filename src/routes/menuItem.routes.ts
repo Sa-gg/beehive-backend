@@ -29,9 +29,11 @@ export function createMenuItemRoutes(controller: MenuItemController): Router {
   // Toggle operations
   router.patch('/:id/availability', controller.toggleAvailability);
   router.patch('/:id/featured', controller.toggleFeatured);
+  router.patch('/:id/out-of-stock', controller.toggleOutOfStock);
 
   // Bulk operations
   router.post('/bulk/availability', controller.bulkUpdateAvailability);
+  router.post('/bulk/out-of-stock', controller.bulkUpdateOutOfStock);
 
   return router;
 }

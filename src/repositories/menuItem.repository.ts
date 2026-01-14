@@ -10,7 +10,9 @@ export class MenuItemRepository {
   }
 
   async findAll(filters?: MenuItemFilters) {
-    const where: any = {};
+    const where: any = {
+      archived: false // Never show archived items
+    };
 
     if (filters?.categoryId) {
       where.categoryId = filters.categoryId;
@@ -115,18 +117,38 @@ export class MenuItemRepository {
   }
 
   async delete(id: string) {
-    return this.prisma.menu_items.delete({
-      where: { id }
+    // Soft delete - archive the item instead of deleting
+    return this.prisma.menu_items.update({
+      where: { id },
+      data: {
+        archived: true,
+        available: false,
+        updatedAt: new Date()
+      }
     });
   }
 
   async bulkUpdateAvailability(ids: string[], available: boolean) {
     return this.prisma.menu_items.updateMany({
       where: {
-        id: { in: ids }
+        id: { in: ids },
+        archived: false
       },
       data: {
         available,
+        updatedAt: new Date()
+      }
+    });
+  }
+
+  async bulkUpdateOutOfStock(ids: string[], outOfStock: boolean) {
+    return this.prisma.menu_items.updateMany({
+      where: {
+        id: { in: ids },
+        archived: false
+      },
+      data: {
+        outOfStock,
         updatedAt: new Date()
       }
     });
@@ -136,7 +158,9 @@ export class MenuItemRepository {
     return this.prisma.menu_items.findMany({
       where: { 
         categoryId: categoryId,
-        available: true 
+        available: true,
+        archived: false,
+        outOfStock: false
       },
       include: {
         category: {
@@ -157,7 +181,9 @@ export class MenuItemRepository {
         category: {
           name: categoryName
         },
-        available: true 
+        available: true,
+        archived: false,
+        outOfStock: false
       },
       include: {
         category: {
@@ -176,7 +202,9 @@ export class MenuItemRepository {
     return this.prisma.menu_items.findMany({
       where: { 
         featured: true,
-        available: true
+        available: true,
+        archived: false,
+        outOfStock: false
       },
       include: {
         category: {
@@ -197,7 +225,8 @@ export class MenuItemRepository {
         name: {
           contains: searchTerm,
           mode: 'insensitive'
-        }
+        },
+        archived: false
       },
       include: {
         category: {
@@ -213,7 +242,9 @@ export class MenuItemRepository {
   }
 
   async count(filters?: MenuItemFilters) {
-    const where: any = {};
+    const where: any = {
+      archived: false
+    };
 
     if (filters?.categoryId) {
       where.categoryId = filters.categoryId;

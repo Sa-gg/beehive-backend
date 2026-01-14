@@ -38,7 +38,7 @@ export interface UpdateInventoryItemDTO {
 
 export interface InventoryFilters {
   category?: string;
-  status?: 'IN_STOCK' | 'LOW_STOCK' | 'OUT_OF_STOCK';
+  status?: 'IN_STOCK' | 'LOW_STOCK' | 'OUT_OF_STOCK' | 'DISCREPANCY';
   search?: string;
 }
 

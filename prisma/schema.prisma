@@ -69,6 +69,8 @@ model menu_items {
   categoryId            String                  @db.VarChar(255)
   itemType              menu_item_type          @default(BASE)
   showInMenu            Boolean                 @default(false)
+  archived              Boolean                 @default(false)
+  outOfStock            Boolean                 @default(false)
 
   // Relationships:
   // menu_items *..1 -------- 1 categories (Each menu item belongs to exactly one category)
@@ -196,6 +198,7 @@ model inventory_items {
   createdAt            DateTime                @default(now())
   updatedAt            DateTime
   restockFrequencyDays Int?                    @default(7)
+  archived             Boolean                 @default(false)
 
   // Relationships:
   // inventory_items 1 -------- 0..* menu_item_ingredients (One inventory item can be ingredient in zero to many menu items)
@@ -206,6 +209,7 @@ model inventory_items {
 
   @@index([category])
   @@index([status])
+  @@index([archived])
 }
 
 // ============================================================================
@@ -229,15 +233,19 @@ model expenses {
 }
 
 model stock_transactions {
-  id              String                   @id
+  id              String                     @id
   inventoryItemId String
   type            stock_transaction_type
   reason          stock_transaction_reason
   quantity        Float
+  balanceBefore   Float?                     // Stock balance before this transaction
+  balanceAfter    Float?                     // Stock balance after this transaction
+  status          stock_transaction_status   @default(NORMAL)
   referenceId     String?
+  receiptImage    String?                    // Optional receipt image URL
   userId          String?
   notes           String?
-  createdAt       DateTime                 @default(now())
+  createdAt       DateTime                   @default(now())
 
   // Relationships:
   // stock_transactions *..1 -------- 1 inventory_items (Each transaction belongs to exactly one inventory item)
@@ -246,6 +254,7 @@ model stock_transactions {
   @@index([inventoryItemId])
   @@index([type])
   @@index([reason])
+  @@index([status])
   @@index([referenceId])
   @@index([createdAt])
 }
@@ -485,6 +494,7 @@ enum inventory_status {
   IN_STOCK
   LOW_STOCK
   OUT_OF_STOCK
+  DISCREPANCY
 }
 
 enum expense_category {
@@ -508,6 +518,28 @@ enum stock_transaction_type {
   OUT
 }
 
+// ============================================================================
+// STOCK TRANSACTION METADATA AUDIT LOG
+// ============================================================================
+// Tracks changes to metadata (receipt, reference, notes) without affecting immutable transaction data
+
+model stock_transaction_metadata_audit {
+  id                   String   @id
+  stockTransactionId   String
+  field                String   // 'referenceId', 'receiptImage', 'notes'
+  oldValue             String?
+  newValue             String?
+  changedBy            String?  // User who made the change
+  changedAt            DateTime @default(now())
+
+  @@index([stockTransactionId])
+  @@index([changedAt])
+}
+
+// ============================================================================
+// ENUMS
+// ============================================================================
+
 enum stock_transaction_reason {
   PURCHASE
   ORDER
@@ -515,6 +547,14 @@ enum stock_transaction_reason {
   ADJUSTMENT
   RECONCILIATION
   VOID
+  CREATED
+  EDITED
+  DELETED
+}
+
+enum stock_transaction_status {
+  NORMAL
+  DISCREPANCY
 }
 
 enum mood_type {

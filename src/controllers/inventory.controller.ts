@@ -66,9 +66,13 @@ export class InventoryController {
   deleteItem = async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      await this.inventoryService.deleteItem(id);
+      const { reason } = req.body;
+      await this.inventoryService.deleteItem(id, reason);
       res.status(204).send();
     } catch (error: any) {
+      if (error.message === 'Inventory item not found') {
+        return res.status(404).json({ error: error.message });
+      }
       res.status(500).json({ error: error.message });
     }
   };

@@ -120,7 +120,7 @@ export class RecipeService {
    * Get all menu items that use a specific inventory item
    */
   async getMenuItemsUsingIngredient(inventoryItemId: string) {
-    return prisma.menu_item_ingredients.findMany({
+    const ingredients = await prisma.menu_item_ingredients.findMany({
       where: { inventoryItemId },
       include: {
         menu_item: {
@@ -138,6 +138,9 @@ export class RecipeService {
         },
       },
     });
+    
+    // Return just the menu items (flattened from the nested structure)
+    return ingredients.map(ing => ing.menu_item);
   }
 
   /**
@@ -362,7 +365,9 @@ export class RecipeService {
       if (ingredient.quantity > 0) {
         const reserved = reservedIngredients.get(ingredient.inventory_item.id) || 0;
         const availableStock = Math.max(0, ingredient.inventory_item.currentStock - reserved);
-        const servingsFromIngredient = Math.floor(availableStock / ingredient.quantity);
+        // Round to 6 decimal places to handle floating-point precision issues (e.g., 4.8/0.2 = 23.999... should be 24)
+        const rawServings = Math.round((availableStock / ingredient.quantity) * 1000000) / 1000000;
+        const servingsFromIngredient = Math.floor(rawServings);
         maxServings = Math.min(maxServings, servingsFromIngredient);
       }
     }
@@ -464,7 +469,9 @@ export class RecipeService {
       let maxServings = Infinity;
       for (const ing of ingredients) {
         if (ing.quantity > 0) {
-          const servingsFromIng = Math.floor(ing.stock / ing.quantity);
+          // Round to 6 decimal places to handle floating-point precision issues
+          const rawServings = Math.round((ing.stock / ing.quantity) * 1000000) / 1000000;
+          const servingsFromIng = Math.floor(rawServings);
           maxServings = Math.min(maxServings, servingsFromIng);
         }
       }
@@ -575,7 +582,9 @@ export class RecipeService {
       let maxServings = Infinity;
       for (const ing of ingredients) {
         if (ing.quantity > 0) {
-          const servingsFromIng = Math.floor(ing.stock / ing.quantity);
+          // Round to 6 decimal places to handle floating-point precision issues
+          const rawServings = Math.round((ing.stock / ing.quantity) * 1000000) / 1000000;
+          const servingsFromIng = Math.floor(rawServings);
           maxServings = Math.min(maxServings, servingsFromIng);
         }
       }

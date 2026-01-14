@@ -31,10 +31,7 @@ export class InventoryService {
   }
 
   async createItem(data: CreateInventoryItemDTO): Promise<InventoryResponse> {
-    // Validation
-    if (data.currentStock < 0) {
-      throw new Error('Current stock cannot be negative');
-    }
+    // Validation - allow negative stock for discrepancy tracking
     if (data.minStock < 0) {
       throw new Error('Minimum stock cannot be negative');
     }
@@ -55,10 +52,7 @@ export class InventoryService {
   }
 
   async updateItem(id: string, data: UpdateInventoryItemDTO): Promise<InventoryResponse> {
-    // Validation
-    if (data.currentStock !== undefined && data.currentStock < 0) {
-      throw new Error('Current stock cannot be negative');
-    }
+    // Validation - allow negative stock for discrepancy tracking
     if (data.minStock !== undefined && data.minStock < 0) {
       throw new Error('Minimum stock cannot be negative');
     }
@@ -78,15 +72,12 @@ export class InventoryService {
     };
   }
 
-  async deleteItem(id: string): Promise<void> {
-    await this.inventoryRepository.delete(id);
+  async deleteItem(id: string, reason?: string): Promise<void> {
+    await this.inventoryRepository.delete(id, reason);
   }
 
   async updateStock(id: string, newStock: number): Promise<InventoryResponse> {
-    if (newStock < 0) {
-      throw new Error('Stock cannot be negative');
-    }
-
+    // Allow negative stock for discrepancy tracking
     const item = await this.inventoryRepository.updateStock(id, newStock);
     return {
       ...item,

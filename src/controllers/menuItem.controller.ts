@@ -169,7 +169,7 @@ export class MenuItemController {
       res.status(200).json({
         success: true,
         data: item,
-        message: `Menu item ${item.available ? 'enabled' : 'disabled'} successfully`
+        message: `Product marked as ${item.available ? 'available' : 'unavailable'}`
       });
     } catch (error: any) {
       console.error('Error toggling availability:', error);
@@ -184,6 +184,36 @@ export class MenuItemController {
       res.status(400).json({
         success: false,
         error: 'Failed to toggle availability',
+        message: error.message
+      });
+    }
+  };
+
+  // PATCH /api/menu-items/:id/out-of-stock
+  toggleOutOfStock = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+
+      const item = await this.service.toggleOutOfStock(id);
+
+      res.status(200).json({
+        success: true,
+        data: item,
+        message: `Product marked as ${item.outOfStock ? 'out of stock' : 'in stock'}`
+      });
+    } catch (error: any) {
+      console.error('Error toggling out of stock:', error);
+
+      if (error.message === 'Menu item not found') {
+        return res.status(404).json({
+          success: false,
+          error: error.message
+        });
+      }
+
+      res.status(400).json({
+        success: false,
+        error: 'Failed to toggle out of stock',
         message: error.message
       });
     }
@@ -250,6 +280,42 @@ export class MenuItemController {
       res.status(400).json({
         success: false,
         error: 'Failed to bulk update availability',
+        message: error.message
+      });
+    }
+  };
+
+  // POST /api/menu-items/bulk/out-of-stock
+  bulkUpdateOutOfStock = async (req: Request, res: Response) => {
+    try {
+      const { ids, outOfStock } = req.body;
+
+      if (!Array.isArray(ids) || ids.length === 0) {
+        return res.status(400).json({
+          success: false,
+          error: 'ids must be a non-empty array'
+        });
+      }
+
+      if (typeof outOfStock !== 'boolean') {
+        return res.status(400).json({
+          success: false,
+          error: 'outOfStock must be a boolean'
+        });
+      }
+
+      const result = await this.service.bulkUpdateOutOfStock(ids, outOfStock);
+
+      res.status(200).json({
+        success: true,
+        data: result,
+        message: `Marked ${result.count} products as ${outOfStock ? 'out of stock' : 'in stock'}`
+      });
+    } catch (error: any) {
+      console.error('Error bulk updating out of stock:', error);
+      res.status(400).json({
+        success: false,
+        error: 'Failed to bulk update out of stock',
         message: error.message
       });
     }

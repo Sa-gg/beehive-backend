@@ -299,39 +299,51 @@ export class OrderService {
             inventoryItemId: recipe.inventoryItemId,
             inventoryItemName: recipe.inventory_item.name,
             unit: recipe.inventory_item.unit,
-            totalRequired: recipe.quantity * orderItem.quantity,
+            // Round to 2 decimal places to avoid floating point precision issues
+            totalRequired: Math.round(recipe.quantity * orderItem.quantity * 100) / 100,
           });
         }
       }
     }
 
     // Deduct inventory for each required ingredient
+    // allowNegative: true - allows orders to go through even if stock is insufficient
+    // This records a RECONCILIATION transaction to track the discrepancy
     const deductionResults: Array<{
       success: boolean;
       inventoryItem: string;
       quantity: number;
       error?: string;
+      discrepancy?: number;
     }> = [];
 
     for (const [_, requirement] of inventoryRequirements) {
       try {
-        await stockTransactionService.stockOut({
+        const result = await stockTransactionService.stockOut({
           inventoryItemId: requirement.inventoryItemId,
           quantity: requirement.totalRequired,
           reason: 'ORDER',
           referenceId: orderId,
           notes: `Auto-deducted for order ${order.orderNumber}`,
+          allowNegative: true, // Allow orders to exceed stock, record discrepancy
         });
 
         deductionResults.push({
           success: true,
           inventoryItem: requirement.inventoryItemName,
           quantity: requirement.totalRequired,
+          discrepancy: result.discrepancy,
         });
 
-        console.log(
-          `✓ Deducted ${requirement.totalRequired} ${requirement.unit} of ${requirement.inventoryItemName} for order ${order.orderNumber}`
-        );
+        if (result.discrepancy) {
+          console.log(
+            `⚠ Deducted ${requirement.totalRequired} ${requirement.unit} of ${requirement.inventoryItemName} for order ${order.orderNumber} (DISCREPANCY: ${result.discrepancy} ${requirement.unit} used beyond recorded stock)`
+          );
+        } else {
+          console.log(
+            `✓ Deducted ${requirement.totalRequired} ${requirement.unit} of ${requirement.inventoryItemName} for order ${order.orderNumber}`
+          );
+        }
       } catch (error: any) {
         deductionResults.push({
           success: false,

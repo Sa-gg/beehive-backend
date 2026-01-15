@@ -11,11 +11,12 @@ export interface MenuItemIngredientDTO {
   menuItemId: string;
   inventoryItemId: string;
   quantity: number;
+  variantId?: string | null;  // Optional: if provided, applies to specific variant only
 }
 
 export class RecipeService {
   /**
-   * Add an ingredient to a menu item recipe
+   * Add an ingredient to a menu item recipe (or variant-specific recipe)
    */
   async addIngredient(data: MenuItemIngredientDTO) {
     // Validate quantity
@@ -39,63 +40,117 @@ export class RecipeService {
       throw new Error(`Inventory item ${data.inventoryItemId} not found`);
     }
 
-    // Create or update ingredient
-    return prisma.menu_item_ingredients.upsert({
+    // If variantId is provided, verify it exists and belongs to this menu item
+    if (data.variantId) {
+      const variant = await prisma.menu_item_variants.findUnique({
+        where: { id: data.variantId },
+      });
+      if (!variant) {
+        throw new Error(`Variant ${data.variantId} not found`);
+      }
+      if (variant.menuItemId !== data.menuItemId) {
+        throw new Error(`Variant ${data.variantId} does not belong to menu item ${data.menuItemId}`);
+      }
+    }
+
+    // Create or update ingredient (with variant support)
+    // Note: Prisma doesn't support null in composite unique constraint for upsert,
+    // so we need to use findFirst + create/update instead
+    const variantId = data.variantId || null;
+    
+    // Check if ingredient already exists
+    const existingIngredient = await prisma.menu_item_ingredients.findFirst({
       where: {
-        menuItemId_inventoryItemId: {
-          menuItemId: data.menuItemId,
-          inventoryItemId: data.inventoryItemId,
-        },
-      },
-      create: {
-        id: `mii_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         menuItemId: data.menuItemId,
         inventoryItemId: data.inventoryItemId,
-        quantity: data.quantity,
-        updatedAt: new Date(),
-      },
-      update: {
-        quantity: data.quantity,
-        updatedAt: new Date(),
-      },
-      include: {
-        menu_item: {
-          select: {
-            name: true,
-            category: true,
-          },
-        },
-        inventory_item: {
-          select: {
-            name: true,
-            unit: true,
-            currentStock: true,
-          },
-        },
+        variantId: variantId,
       },
     });
+
+    const includeOptions = {
+      menu_item: {
+        select: {
+          name: true,
+          category: true,
+        },
+      },
+      inventory_item: {
+        select: {
+          name: true,
+          unit: true,
+          currentStock: true,
+        },
+      },
+      variant: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    };
+
+    if (existingIngredient) {
+      // Update existing ingredient
+      return prisma.menu_item_ingredients.update({
+        where: { id: existingIngredient.id },
+        data: {
+          quantity: data.quantity,
+          updatedAt: new Date(),
+        },
+        include: includeOptions,
+      });
+    } else {
+      // Create new ingredient
+      return prisma.menu_item_ingredients.create({
+        data: {
+          id: `mii_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+          menuItemId: data.menuItemId,
+          inventoryItemId: data.inventoryItemId,
+          variantId: variantId,
+          quantity: data.quantity,
+          updatedAt: new Date(),
+        },
+        include: includeOptions,
+      });
+    }
   }
 
   /**
-   * Remove an ingredient from a menu item recipe
+   * Remove an ingredient from a menu item recipe (or variant-specific recipe)
    */
-  async removeIngredient(menuItemId: string, inventoryItemId: string) {
+  async removeIngredient(menuItemId: string, inventoryItemId: string, variantId?: string | null) {
+    const variantIdValue = variantId || null;
+    
     await prisma.menu_item_ingredients.delete({
       where: {
-        menuItemId_inventoryItemId: {
+        menuItemId_inventoryItemId_variantId: {
           menuItemId,
           inventoryItemId,
+          variantId: variantIdValue,
         },
       },
     });
   }
 
   /**
-   * Get all ingredients for a menu item
+   * Get all ingredients for a menu item (optionally filtered by variant)
+   * If variantId is provided, returns only variant-specific ingredients
+   * If variantId is null/undefined, returns base product ingredients (where variantId is null)
+   * If includeAll is true, returns all ingredients regardless of variant
    */
-  async getRecipe(menuItemId: string) {
+  async getRecipe(menuItemId: string, variantId?: string | null, includeAll?: boolean) {
+    let whereClause: any = { menuItemId };
+    
+    if (!includeAll) {
+      if (variantId) {
+        whereClause.variantId = variantId;
+      } else {
+        whereClause.variantId = null;
+      }
+    }
+    
     return prisma.menu_item_ingredients.findMany({
-      where: { menuItemId },
+      where: whereClause,
       include: {
         inventory_item: {
           select: {
@@ -105,6 +160,13 @@ export class RecipeService {
             currentStock: true,
             minStock: true,
             status: true,
+            category: true,
+          },
+        },
+        variant: {
+          select: {
+            id: true,
+            name: true,
           },
         },
       },
@@ -114,6 +176,67 @@ export class RecipeService {
         },
       },
     });
+  }
+
+  /**
+   * Get effective recipe for a menu item with optional variant
+   * Returns base ingredients + variant-specific ingredients (variant overrides base)
+   */
+  async getEffectiveRecipe(menuItemId: string, variantId?: string | null) {
+    // Get base ingredients (variantId = null)
+    const baseIngredients = await prisma.menu_item_ingredients.findMany({
+      where: { 
+        menuItemId,
+        variantId: null,
+      },
+      include: {
+        inventory_item: {
+          select: {
+            id: true,
+            name: true,
+            unit: true,
+            currentStock: true,
+            minStock: true,
+            status: true,
+            category: true,
+          },
+        },
+      },
+    });
+
+    if (!variantId) {
+      return baseIngredients;
+    }
+
+    // Get variant-specific ingredients
+    const variantIngredients = await prisma.menu_item_ingredients.findMany({
+      where: { 
+        menuItemId,
+        variantId,
+      },
+      include: {
+        inventory_item: {
+          select: {
+            id: true,
+            name: true,
+            unit: true,
+            currentStock: true,
+            minStock: true,
+            status: true,
+            category: true,
+          },
+        },
+      },
+    });
+
+    // Merge: variant ingredients override base ingredients with same inventory item
+    const variantInventoryIds = new Set(variantIngredients.map(vi => vi.inventoryItemId));
+    
+    // Base ingredients that are NOT overridden by variant
+    const nonOverriddenBase = baseIngredients.filter(bi => !variantInventoryIds.has(bi.inventoryItemId));
+    
+    // Combine: non-overridden base + all variant ingredients
+    return [...nonOverriddenBase, ...variantIngredients];
   }
 
   /**

@@ -260,24 +260,30 @@ model stock_transactions {
 }
 
 // Junction table: menu_items *..* inventory_items (Many-to-many through menu_item_ingredients)
+// Supports both base product components and variant-specific components
 model menu_item_ingredients {
-  id              String          @id
+  id              String               @id
   menuItemId      String
   inventoryItemId String
+  variantId       String?              // Optional: if null, applies to base product; if set, applies only to specific variant
   quantity        Float
-  createdAt       DateTime        @default(now())
+  createdAt       DateTime             @default(now())
   updatedAt       DateTime
 
   // Relationships:
   // menu_item_ingredients *..1 -------- 1 menu_items (Each ingredient record belongs to exactly one menu item)
-  menu_item       menu_items      @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+  menu_item       menu_items           @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
 
   // menu_item_ingredients *..1 -------- 1 inventory_items (Each ingredient record references exactly one inventory item)
-  inventory_item  inventory_items @relation(fields: [inventoryItemId], references: [id], onDelete: Cascade)
+  inventory_item  inventory_items      @relation(fields: [inventoryItemId], references: [id], onDelete: Cascade)
 
-  @@unique([menuItemId, inventoryItemId])
+  // menu_item_ingredients *..1 -------- 0..1 menu_item_variants (Each ingredient can optionally belong to a specific variant)
+  variant         menu_item_variants?  @relation(fields: [variantId], references: [id], onDelete: Cascade)
+
+  @@unique([menuItemId, inventoryItemId, variantId])
   @@index([menuItemId])
   @@index([inventoryItemId])
+  @@index([variantId])
 }
 
 // ============================================================================
@@ -398,6 +404,9 @@ model menu_item_variants {
 
   // menu_item_variants 1 -------- 0..* order_items (One variant can be selected in zero to many order items)
   order_items order_items[]
+
+  // menu_item_variants 1 -------- 0..* menu_item_ingredients (One variant can have zero to many specific ingredients)
+  menu_item_ingredients menu_item_ingredients[]
 
   @@unique([menuItemId, name])
   @@index([menuItemId])

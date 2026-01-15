@@ -252,6 +252,7 @@ export class OrderService {
         order_items: {
           include: {
             menu_items: true,
+            variant: true,
           },
         },
       },
@@ -264,7 +265,7 @@ export class OrderService {
     // Get all menu item IDs from the order
     const menuItemIds = order.order_items.map((item) => item.menuItemId);
 
-    // Get recipes for all menu items in the order
+    // Get all recipes (base + variant-specific) for menu items in the order
     const recipes = await prisma.menu_item_ingredients.findMany({
       where: {
         menuItemId: { in: menuItemIds },
@@ -272,10 +273,12 @@ export class OrderService {
       include: {
         inventory_item: true,
         menu_item: true,
+        variant: true,
       },
     });
 
     // Group recipes by inventory item and calculate total required quantity
+    // Using effective recipe logic: variant-specific overrides base
     const inventoryRequirements = new Map<string, {
       inventoryItemId: string;
       inventoryItemName: string;
@@ -284,11 +287,24 @@ export class OrderService {
     }>();
 
     for (const orderItem of order.order_items) {
-      const menuItemRecipes = recipes.filter(
-        (recipe) => recipe.menuItemId === orderItem.menuItemId
+      // Get base recipes (variantId = null) and variant-specific recipes
+      const baseRecipes = recipes.filter(
+        (recipe) => recipe.menuItemId === orderItem.menuItemId && recipe.variantId === null
       );
+      const variantRecipes = orderItem.variantId
+        ? recipes.filter(
+            (recipe) => recipe.menuItemId === orderItem.menuItemId && recipe.variantId === orderItem.variantId
+          )
+        : [];
 
-      for (const recipe of menuItemRecipes) {
+      // Build effective recipe: variant overrides base for same inventory item
+      const variantInventoryIds = new Set(variantRecipes.map(r => r.inventoryItemId));
+      const effectiveRecipes = [
+        ...baseRecipes.filter(r => !variantInventoryIds.has(r.inventoryItemId)),
+        ...variantRecipes,
+      ];
+
+      for (const recipe of effectiveRecipes) {
         const key = recipe.inventoryItemId;
         const existingReq = inventoryRequirements.get(key);
 

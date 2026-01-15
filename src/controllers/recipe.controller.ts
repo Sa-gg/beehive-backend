@@ -2,12 +2,12 @@ import { Request, Response } from 'express';
 import { recipeService } from '../services/recipe.service.js';
 
 /**
- * Add ingredient to menu item recipe
+ * Add ingredient to menu item recipe (supports variant-specific recipes)
  * POST /api/recipes/ingredients
  */
 export const addIngredient = async (req: Request, res: Response) => {
   try {
-    const { menuItemId, inventoryItemId, quantity } = req.body;
+    const { menuItemId, inventoryItemId, quantity, variantId } = req.body;
 
     if (!menuItemId || !inventoryItemId || !quantity) {
       return res.status(400).json({
@@ -20,6 +20,7 @@ export const addIngredient = async (req: Request, res: Response) => {
       menuItemId,
       inventoryItemId,
       quantity: parseFloat(quantity),
+      variantId: variantId || null,
     });
 
     res.status(200).json({
@@ -37,12 +38,12 @@ export const addIngredient = async (req: Request, res: Response) => {
 };
 
 /**
- * Remove ingredient from menu item recipe
+ * Remove ingredient from menu item recipe (supports variant-specific recipes)
  * DELETE /api/recipes/ingredients
  */
 export const removeIngredient = async (req: Request, res: Response) => {
   try {
-    const { menuItemId, inventoryItemId } = req.body;
+    const { menuItemId, inventoryItemId, variantId } = req.body;
 
     if (!menuItemId || !inventoryItemId) {
       return res.status(400).json({
@@ -51,7 +52,7 @@ export const removeIngredient = async (req: Request, res: Response) => {
       });
     }
 
-    await recipeService.removeIngredient(menuItemId, inventoryItemId);
+    await recipeService.removeIngredient(menuItemId, inventoryItemId, variantId || null);
 
     res.status(200).json({
       success: true,
@@ -67,14 +68,22 @@ export const removeIngredient = async (req: Request, res: Response) => {
 };
 
 /**
- * Get recipe for a menu item
+ * Get recipe for a menu item (supports variant-specific recipes)
  * GET /api/recipes/:menuItemId
+ * Query params:
+ *   - variantId: string (optional) - get ingredients for specific variant
+ *   - includeAll: boolean (optional) - include all ingredients regardless of variant
  */
 export const getRecipe = async (req: Request, res: Response) => {
   try {
     const { menuItemId } = req.params;
+    const { variantId, includeAll } = req.query;
 
-    const recipe = await recipeService.getRecipe(menuItemId);
+    const recipe = await recipeService.getRecipe(
+      menuItemId, 
+      variantId as string | undefined,
+      includeAll === 'true'
+    );
 
     res.status(200).json({
       success: true,
@@ -85,6 +94,35 @@ export const getRecipe = async (req: Request, res: Response) => {
     res.status(400).json({
       success: false,
       error: error.message || 'Failed to get recipe',
+    });
+  }
+};
+
+/**
+ * Get effective recipe for a menu item (base + variant overrides)
+ * GET /api/recipes/:menuItemId/effective
+ * Query params:
+ *   - variantId: string (optional) - get effective recipe for specific variant
+ */
+export const getEffectiveRecipe = async (req: Request, res: Response) => {
+  try {
+    const { menuItemId } = req.params;
+    const { variantId } = req.query;
+
+    const recipe = await recipeService.getEffectiveRecipe(
+      menuItemId, 
+      variantId as string | undefined
+    );
+
+    res.status(200).json({
+      success: true,
+      data: recipe,
+    });
+  } catch (error: any) {
+    console.error('Get effective recipe error:', error);
+    res.status(400).json({
+      success: false,
+      error: error.message || 'Failed to get effective recipe',
     });
   }
 };

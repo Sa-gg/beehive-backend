@@ -818,6 +818,206 @@ export class RecipeService {
 
     return { markedOutOfStock, markedInStock };
   }
+
+  /**
+   * Calculate max servings for a specific variant using effective recipe logic
+   * WITH cart items subtracted from available stock (like getMaxServingsWithCart but for variants)
+   * Returns: Record<variantId | 'base', number>
+   */
+  async calculateVariantServingsWithCart(
+    menuItemId: string,
+    cartItems: Array<{ menuItemId: string; variantId?: string | null; quantity: number }>
+  ): Promise<Record<string, number>> {
+    const result: Record<string, number> = {};
+    
+    // Get all variants for this menu item
+    const variants = await prisma.menu_item_variants.findMany({
+      where: { menuItemId, isActive: true },
+      select: { id: true, name: true },
+    });
+
+    // Get PREPARING orders to calculate reserved ingredients
+    const preparingOrders = await prisma.orders.findMany({
+      where: { status: 'PREPARING' },
+      include: {
+        order_items: {
+          select: { menuItemId: true, variantId: true, quantity: true },
+        },
+      },
+    });
+
+    // Calculate reserved ingredients from PREPARING orders
+    const reservedIngredients = new Map<string, number>(); // inventoryItemId -> reserved qty
+    
+    for (const order of preparingOrders) {
+      for (const item of order.order_items) {
+        if (item.menuItemId) {
+          const effectiveRecipe = await this.getEffectiveRecipe(item.menuItemId, item.variantId);
+          for (const ing of effectiveRecipe) {
+            const current = reservedIngredients.get(ing.inventoryItemId) || 0;
+            reservedIngredients.set(ing.inventoryItemId, current + (ing.quantity * item.quantity));
+          }
+        }
+      }
+    }
+
+    // Calculate reserved ingredients from cart items
+    for (const cartItem of cartItems) {
+      if (cartItem.menuItemId) {
+        const effectiveRecipe = await this.getEffectiveRecipe(cartItem.menuItemId, cartItem.variantId);
+        for (const ing of effectiveRecipe) {
+          const current = reservedIngredients.get(ing.inventoryItemId) || 0;
+          reservedIngredients.set(ing.inventoryItemId, current + (ing.quantity * cartItem.quantity));
+        }
+      }
+    }
+
+    // Get all inventory items for current stock lookup
+    const inventoryItems = await prisma.inventory_items.findMany({
+      select: { id: true, currentStock: true },
+    });
+    const inventoryStock = new Map(inventoryItems.map(i => [i.id, i.currentStock]));
+
+    // Helper to calculate max servings from a recipe
+    const calculateServingsFromRecipe = (recipe: Array<{ inventoryItemId: string; quantity: number }>) => {
+      if (recipe.length === 0) return -1;
+      
+      let maxServings = Infinity;
+      for (const ing of recipe) {
+        if (ing.quantity > 0) {
+          const currentStock = inventoryStock.get(ing.inventoryItemId) || 0;
+          const reserved = reservedIngredients.get(ing.inventoryItemId) || 0;
+          const available = Math.max(0, currentStock - reserved);
+          const rawServings = Math.round((available / ing.quantity) * 1000000) / 1000000;
+          const servingsFromIng = Math.floor(rawServings);
+          maxServings = Math.min(maxServings, servingsFromIng);
+        }
+      }
+      return maxServings === Infinity ? -1 : maxServings;
+    };
+
+    // Calculate for base product
+    const baseRecipe = await this.getEffectiveRecipe(menuItemId, null);
+    result['base'] = calculateServingsFromRecipe(baseRecipe);
+
+    // Calculate for each variant
+    for (const variant of variants) {
+      const variantRecipe = await this.getEffectiveRecipe(menuItemId, variant.id);
+      result[variant.id] = calculateServingsFromRecipe(variantRecipe);
+    }
+
+    return result;
+  }
+
+  /**
+   * Calculate max servings for a specific variant using effective recipe logic
+   * Returns: Record<variantId | 'base', number>
+   */
+  async calculateVariantServings(menuItemId: string): Promise<Record<string, number>> {
+    const result: Record<string, number> = {};
+    
+    // Get all variants for this menu item
+    const variants = await prisma.menu_item_variants.findMany({
+      where: { menuItemId, isActive: true },
+      select: { id: true, name: true },
+    });
+
+    // Get PREPARING orders to calculate reserved ingredients
+    const preparingOrders = await prisma.orders.findMany({
+      where: { status: 'PREPARING' },
+      include: {
+        order_items: {
+          select: { menuItemId: true, variantId: true, quantity: true },
+        },
+      },
+    });
+
+    // Calculate reserved ingredients from PREPARING orders (per variant)
+    const reservedByMenuItemVariant = new Map<string, number>(); // key: `${menuItemId}:${variantId || 'base'}`
+    for (const order of preparingOrders) {
+      for (const item of order.order_items) {
+        const key = `${item.menuItemId}:${item.variantId || 'base'}`;
+        const current = reservedByMenuItemVariant.get(key) || 0;
+        reservedByMenuItemVariant.set(key, current + item.quantity);
+      }
+    }
+
+    // Calculate reserved ingredients globally
+    const reservedIngredients = new Map<string, number>(); // inventoryItemId -> reserved qty
+    
+    // For each preparing order item, get its effective recipe and reserve ingredients
+    for (const order of preparingOrders) {
+      for (const item of order.order_items) {
+        if (item.menuItemId) {
+          const effectiveRecipe = await this.getEffectiveRecipe(item.menuItemId, item.variantId);
+          for (const ing of effectiveRecipe) {
+            const current = reservedIngredients.get(ing.inventoryItemId) || 0;
+            reservedIngredients.set(ing.inventoryItemId, current + (ing.quantity * item.quantity));
+          }
+        }
+      }
+    }
+
+    // Get all inventory items for current stock lookup
+    const inventoryItems = await prisma.inventory_items.findMany({
+      select: { id: true, currentStock: true },
+    });
+    const inventoryStock = new Map(inventoryItems.map(i => [i.id, i.currentStock]));
+
+    // Helper to calculate max servings from a recipe
+    const calculateServingsFromRecipe = (recipe: Array<{ inventoryItemId: string; quantity: number }>) => {
+      if (recipe.length === 0) return -1;
+      
+      let maxServings = Infinity;
+      for (const ing of recipe) {
+        if (ing.quantity > 0) {
+          const currentStock = inventoryStock.get(ing.inventoryItemId) || 0;
+          const reserved = reservedIngredients.get(ing.inventoryItemId) || 0;
+          const available = Math.max(0, currentStock - reserved);
+          const rawServings = Math.round((available / ing.quantity) * 1000000) / 1000000;
+          const servingsFromIng = Math.floor(rawServings);
+          maxServings = Math.min(maxServings, servingsFromIng);
+        }
+      }
+      return maxServings === Infinity ? -1 : maxServings;
+    };
+
+    // Calculate for base product
+    const baseRecipe = await this.getEffectiveRecipe(menuItemId, null);
+    result['base'] = calculateServingsFromRecipe(baseRecipe);
+
+    // Calculate for each variant
+    for (const variant of variants) {
+      const variantRecipe = await this.getEffectiveRecipe(menuItemId, variant.id);
+      result[variant.id] = calculateServingsFromRecipe(variantRecipe);
+    }
+
+    return result;
+  }
+
+  /**
+   * Calculate variant servings for ALL menu items that have variants
+   * Returns: Record<menuItemId, Record<variantId | 'base', number>>
+   */
+  async calculateAllVariantServings(): Promise<Record<string, Record<string, number>>> {
+    // Get all menu items that have variants
+    const menuItemsWithVariants = await prisma.menu_items.findMany({
+      where: {
+        variants: {
+          some: { isActive: true }
+        }
+      },
+      select: { id: true },
+    });
+
+    const result: Record<string, Record<string, number>> = {};
+    
+    for (const item of menuItemsWithVariants) {
+      result[item.id] = await this.calculateVariantServings(item.id);
+    }
+
+    return result;
+  }
 }
 
 export const recipeService = new RecipeService();

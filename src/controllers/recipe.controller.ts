@@ -333,3 +333,77 @@ export const getMaxServingsWithCart = async (req: Request, res: Response) => {
     });
   }
 };
+
+/**
+ * Get variant-specific max servings for a menu item
+ * GET /api/recipes/:menuItemId/variant-servings
+ */
+export const getVariantServings = async (req: Request, res: Response) => {
+  try {
+    const { menuItemId } = req.params;
+    const variantServings = await recipeService.calculateVariantServings(menuItemId);
+
+    res.status(200).json({
+      success: true,
+      data: variantServings,
+    });
+  } catch (error: any) {
+    console.error('Get variant servings error:', error);
+    res.status(400).json({
+      success: false,
+      error: error.message || 'Failed to calculate variant servings',
+    });
+  }
+};
+
+/**
+ * Get variant-specific max servings for ALL menu items that have variants
+ * GET /api/recipes/all-variant-servings
+ */
+export const getAllVariantServings = async (req: Request, res: Response) => {
+  try {
+    const allVariantServings = await recipeService.calculateAllVariantServings();
+
+    res.status(200).json({
+      success: true,
+      data: allVariantServings,
+    });
+  } catch (error: any) {
+    console.error('Get all variant servings error:', error);
+    res.status(400).json({
+      success: false,
+      error: error.message || 'Failed to calculate all variant servings',
+    });
+  }
+};
+
+/**
+ * Get variant-specific max servings WITH cart items considered
+ * POST /api/recipes/:menuItemId/variant-servings-with-cart
+ */
+export const getVariantServingsWithCart = async (req: Request, res: Response) => {
+  try {
+    const { menuItemId } = req.params;
+    const { cartItems } = req.body;
+    
+    if (!Array.isArray(cartItems)) {
+      return res.status(400).json({
+        success: false,
+        error: 'cartItems must be an array',
+      });
+    }
+
+    const variantServings = await recipeService.calculateVariantServingsWithCart(menuItemId, cartItems);
+
+    res.status(200).json({
+      success: true,
+      data: variantServings,
+    });
+  } catch (error: any) {
+    console.error('Get variant servings with cart error:', error);
+    res.status(400).json({
+      success: false,
+      error: error.message || 'Failed to calculate variant servings with cart',
+    });
+  }
+};

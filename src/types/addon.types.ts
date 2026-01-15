@@ -29,6 +29,7 @@ export interface UpdateVariantDTO {
   isDefault?: boolean;
   sortOrder?: number;
   isActive?: boolean;
+  outOfStock?: boolean;
 }
 
 export interface VariantResponse {

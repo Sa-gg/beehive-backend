@@ -81,6 +81,12 @@ import { createCategoryRoutes } from './src/routes/category.routes.js';
 // Import Add-ons & Variants routes
 import { createAddonRoutes } from './src/routes/addon.routes.js';
 
+// Import Loyalty architecture layers
+import { LoyaltyRepository } from './src/repositories/loyalty.repository.js';
+import { LoyaltyService } from './src/services/loyalty.service.js';
+import { LoyaltyController } from './src/controllers/loyalty.controller.js';
+import { createLoyaltyRoutes } from './src/routes/loyalty.routes.js';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -168,6 +174,11 @@ const dashboardRepository = new DashboardRepository(prisma);
 const dashboardService = new DashboardService(dashboardRepository);
 const dashboardController = new DashboardController(dashboardService);
 
+// Initialize Loyalty architecture layers
+const loyaltyRepository = new LoyaltyRepository(prisma);
+const loyaltyService = new LoyaltyService(loyaltyRepository);
+const loyaltyController = new LoyaltyController(loyaltyService);
+
 const app = express();
 
 // Middleware
@@ -208,7 +219,8 @@ app.get('/', (req: Request, res: Response) => {
       settings: '/api/settings',
       moodSettings: '/api/mood-settings',
       categories: '/api/categories',
-      addons: '/api/addons'
+      addons: '/api/addons',
+      loyalty: '/api/loyalty'
     }
   });
 });
@@ -257,6 +269,9 @@ app.use('/api/categories', createCategoryRoutes(prisma));
 
 // Add-ons & Variants API Routes
 app.use('/api/addons', createAddonRoutes(prisma));
+
+// Loyalty API Routes (using layered architecture)
+app.use('/api/loyalty', createLoyaltyRoutes(loyaltyController));
 
 // Start server
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;

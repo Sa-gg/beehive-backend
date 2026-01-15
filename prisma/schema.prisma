@@ -395,6 +395,7 @@ model menu_item_variants {
   isDefault   Boolean       @default(false)
   sortOrder   Int           @default(0)
   isActive    Boolean       @default(true)
+  outOfStock  Boolean       @default(false)
   createdAt   DateTime      @default(now())
   updatedAt   DateTime
 
@@ -525,6 +526,70 @@ enum expense_frequency {
 enum stock_transaction_type {
   IN
   OUT
+}
+
+// ============================================================================
+// LOYALTY SYSTEM
+// ============================================================================
+
+// Tracks customer loyalty stamps - one record per customer identifier
+model customer_loyalty {
+  id              String    @id
+  // Customer identifier - can be phone, email, or deviceId for guests
+  customerPhone   String?   @unique
+  customerEmail   String?   @unique
+  deviceId        String?   @unique
+  customerName    String?
+  // Stamp tracking
+  currentStamps   Int       @default(0)  // 0-9 stamps (resets after reward)
+  totalStamps     Int       @default(0)  // Lifetime total stamps earned
+  rewardsEarned   Int       @default(0)  // Total rewards earned (every 10 stamps)
+  rewardsRedeemed Int       @default(0)  // Rewards already used
+  // Timestamps
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime
+  
+  // Relationships
+  transactions    loyalty_transactions[]
+
+  @@index([customerPhone])
+  @@index([customerEmail])
+  @@index([deviceId])
+}
+
+// Tracks all loyalty events (stamps earned, rewards redeemed, reversals)
+model loyalty_transactions {
+  id                String                     @id
+  customerLoyaltyId String
+  type              loyalty_transaction_type
+  // For stamp events
+  orderId           String?                    // Reference to order that triggered this
+  orderNumber       String?                    // Denormalized for easy display
+  stampsBefore      Int                        // Stamps before this transaction
+  stampsAfter       Int                        // Stamps after this transaction
+  stampsChange      Int                        // +1 for earn, -1 for reversal, 0 for reward
+  // For reward events
+  rewardItemId      String?                    // Menu item redeemed as free drink
+  rewardItemName    String?                    // Denormalized for easy display
+  // Metadata
+  notes             String?
+  processedBy       String?                    // Staff who processed (for redemptions)
+  createdAt         DateTime                   @default(now())
+
+  // Relationships
+  customerLoyalty   customer_loyalty           @relation(fields: [customerLoyaltyId], references: [id], onDelete: Cascade)
+
+  @@index([customerLoyaltyId])
+  @@index([orderId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+enum loyalty_transaction_type {
+  STAMP_EARNED      // +1 stamp from completed paid order
+  STAMP_REVERSED    // -1 stamp from cancelled/refunded order
+  REWARD_UNLOCKED   // Reached 10 stamps, reward available
+  REWARD_REDEEMED   // Used free drink reward
 }
 
 // ============================================================================

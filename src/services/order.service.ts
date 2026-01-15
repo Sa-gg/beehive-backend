@@ -4,11 +4,17 @@ import { stockTransactionService } from './stockTransaction.service.js';
 import { PrismaClient } from '../../generated/prisma/client.js';
 import { PrismaPg } from '@prisma/adapter-pg';
 import pg from 'pg';
+import { LoyaltyRepository } from '../repositories/loyalty.repository.js';
+import { LoyaltyService } from './loyalty.service.js';
 
 const { Pool } = pg;
 const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
+
+// Initialize loyalty service for order integration
+const loyaltyRepository = new LoyaltyRepository(prisma);
+const loyaltyService = new LoyaltyService(loyaltyRepository);
 
 export class OrderService {
   constructor(private orderRepository: OrderRepository) {}
@@ -100,10 +106,39 @@ export class OrderService {
   }
 
   async markOrderAsPaid(id: string, paymentMethod: string) {
-    return this.orderRepository.update(id, {
+    // Get the order first to get customer info for loyalty
+    const order = await this.getOrderById(id);
+    
+    const updatedOrder = await this.orderRepository.update(id, {
       paymentStatus: 'PAID',
       paymentMethod
     });
+
+    // Award loyalty stamp if order has deviceId (customer identifier for loyalty)
+    // Note: orders table only has deviceId for customer identification
+    if (order.deviceId) {
+      try {
+        const result = await loyaltyService.awardStamp({
+          orderId: id,
+          orderNumber: order.orderNumber,
+          deviceId: order.deviceId,
+          customerName: order.customerName || undefined
+        });
+        console.log(`🎟️ Loyalty stamp awarded for order ${order.orderNumber}:`, result.message);
+        
+        // Attach loyalty info to the response
+        (updatedOrder as any).loyaltyStampAwarded = true;
+        (updatedOrder as any).loyaltyMessage = result.message;
+        (updatedOrder as any).loyaltyRewardUnlocked = result.rewardUnlocked;
+        (updatedOrder as any).currentStamps = result.loyalty.currentStamps;
+        (updatedOrder as any).availableRewards = result.loyalty.availableRewards;
+      } catch (error: any) {
+        console.log(`⚠️ Failed to award loyalty stamp for order ${order.orderNumber}:`, error.message);
+        // Don't fail the payment if loyalty fails - just log it
+      }
+    }
+
+    return updatedOrder;
   }
 
   async getLinkedOrders(orderId: string) {
@@ -135,6 +170,26 @@ export class OrderService {
     // If the order was completed, we need to replenish the stock
     if (wasCompleted) {
       await this.replenishInventoryForVoidedOrder(orderId, params.reason);
+    }
+
+    // Reverse loyalty stamp if order had deviceId
+    if (order.deviceId) {
+      try {
+        const result = await loyaltyService.reverseStamp(
+          orderId,
+          order.orderNumber,
+          {
+            deviceId: order.deviceId
+          },
+          params.reason
+        );
+        if (result.success) {
+          console.log(`🔄 Loyalty stamp reversed for voided order ${order.orderNumber}`);
+        }
+      } catch (error: any) {
+        console.log(`⚠️ Failed to reverse loyalty stamp for order ${order.orderNumber}:`, error.message);
+        // Don't fail the void if loyalty reversal fails
+      }
     }
     
     return updatedOrder;
@@ -464,13 +519,12 @@ export class OrderService {
 
   /**
    * Mark multiple orders as paid at once (for merged orders)
+   * Each paid order awards a loyalty stamp
    */
   async markMergedOrdersAsPaid(orderIds: string[], paymentMethod: string) {
+    // Use markOrderAsPaid for each order to include loyalty stamp logic
     const results = await Promise.all(
-      orderIds.map(id => this.orderRepository.update(id, {
-        paymentStatus: 'PAID',
-        paymentMethod
-      }))
+      orderIds.map(id => this.markOrderAsPaid(id, paymentMethod))
     );
     return results;
   }

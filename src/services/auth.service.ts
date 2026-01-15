@@ -26,16 +26,33 @@ export class AuthService {
   }
 
   async register(data: RegisterDTO): Promise<AuthResponse> {
-    // Check if email already exists
-    const existingUser = await this.authRepository.findByEmail(data.email);
-    if (existingUser) {
-      throw new Error('Email already registered');
+    // Validate phone number (required)
+    if (!data.phone) {
+      throw new Error('Phone number is required');
+    }
+    
+    const phoneRegex = /^[+]?[0-9\s-]{10,15}$/;
+    if (!phoneRegex.test(data.phone.replace(/\s/g, ''))) {
+      throw new Error('Invalid phone number format');
     }
 
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(data.email)) {
-      throw new Error('Invalid email format');
+    // Check if phone already exists
+    const existingByPhone = await this.authRepository.findByPhone(data.phone);
+    if (existingByPhone) {
+      throw new Error('Phone number already registered');
+    }
+
+    // If email is provided, validate and check for duplicates
+    if (data.email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(data.email)) {
+        throw new Error('Invalid email format');
+      }
+      
+      const existingByEmail = await this.authRepository.findByEmail(data.email);
+      if (existingByEmail) {
+        throw new Error('Email already registered');
+      }
     }
 
     // Validate password length
@@ -46,9 +63,10 @@ export class AuthService {
     // Hash password
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
-    // Create user
+    // Create user - use phone as email if email not provided
     const user = await this.authRepository.create({
       ...data,
+      email: data.email || `${data.phone.replace(/[^0-9]/g, '')}@phone.beehive`,
       hashedPassword
     });
 
@@ -59,7 +77,7 @@ export class AuthService {
       user.cardNumber = cardNumber;
     }
 
-    // Generate token
+    // Generate token - use phone if no real email
     const token = this.generateToken(user.id, user.email, user.role, user.name);
 
     return {
@@ -69,10 +87,16 @@ export class AuthService {
   }
 
   async login(data: LoginDTO): Promise<AuthResponse> {
-    // Find user by email
-    const user = await this.authRepository.findByEmail(data.email);
+    // Find user by email or phone number
+    let user = await this.authRepository.findByEmail(data.email);
+    
+    // If not found by email, try finding by phone number
     if (!user) {
-      throw new Error('Invalid email or password');
+      user = await this.authRepository.findByPhone(data.email);
+    }
+    
+    if (!user) {
+      throw new Error('Invalid email/phone or password');
     }
 
     // Check if user is active
@@ -83,7 +107,7 @@ export class AuthService {
     // Verify password
     const isPasswordValid = await bcrypt.compare(data.password, user.password);
     if (!isPasswordValid) {
-      throw new Error('Invalid email or password');
+      throw new Error('Invalid email/phone or password');
     }
 
     // Update last login

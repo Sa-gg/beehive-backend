@@ -15,6 +15,7 @@ export function createAuthRouter(authController: AuthController): Router {
 
   // Protected routes
   router.get('/me', authenticate, authController.getMe.bind(authController));
+  router.put('/me', authenticate, authController.updateMe.bind(authController)); // Customers can update their own profile
   
   // Manager and Admin routes
   router.get('/users', authenticate, authorize('MANAGER', 'ADMIN'), authController.getAllUsers.bind(authController));

@@ -39,6 +39,24 @@ export class AuthController {
     }
   }
 
+  // Allow customers to update their own profile (name, phone)
+  async updateMe(req: Request, res: Response) {
+    try {
+      const userId = (req as any).user.userId;
+      const { name, phone } = req.body;
+      
+      // Only allow updating name and phone for self-update
+      const data: UpdateUserDTO = {};
+      if (name !== undefined) data.name = name;
+      if (phone !== undefined) data.phone = phone;
+      
+      const user = await this.authService.updateUser(userId, data);
+      res.json(user);
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
   async getAllUsers(req: Request, res: Response) {
     try {
       const role = req.query.role as string | undefined;

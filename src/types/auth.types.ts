@@ -1,9 +1,9 @@
 export interface RegisterDTO {
-  email: string;
+  phone: string;
   password: string;
   name: string;
+  email?: string;
   role?: 'CUSTOMER' | 'CASHIER' | 'COOK' | 'MANAGER' | 'ADMIN';
-  phone?: string;
 }
 
 export interface LoginDTO {

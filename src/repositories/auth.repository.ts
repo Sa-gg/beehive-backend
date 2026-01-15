@@ -8,7 +8,7 @@ export class AuthRepository {
     this.prisma = prisma;
   }
 
-  async create(data: RegisterDTO & { hashedPassword: string }) {
+  async create(data: RegisterDTO & { hashedPassword: string; email: string }) {
     const userId = `user-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     
     return this.prisma.users.create({
@@ -27,6 +27,12 @@ export class AuthRepository {
   async findByEmail(email: string) {
     return this.prisma.users.findUnique({
       where: { email }
+    });
+  }
+
+  async findByPhone(phone: string) {
+    return this.prisma.users.findFirst({
+      where: { phone }
     });
   }
 

@@ -14,6 +14,10 @@ export const createSettingsRoutes = (settingsController: SettingsController) => 
   router.get('/auto-stock', settingsController.getAutoStockSettings);
   router.patch('/auto-stock', settingsController.updateAutoStockSettings);
   router.post('/auto-stock/trigger', settingsController.triggerStockStatusUpdate);
+  
+  // Global settings endpoints (shared across all accounts)
+  router.get('/global', settingsController.getGlobalSettings);
+  router.patch('/global', settingsController.updateGlobalSettings);
 
   return router;
 };

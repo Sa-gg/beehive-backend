@@ -1,14 +1,14 @@
 import { SettingsRepository } from '../repositories/settings.repository.js';
-import { SettingsDTO } from '../types/settings.types.js';
+import { SettingsDTO, PublicSettingsDTO } from '../types/settings.types.js';
 
 class SettingsService {
   constructor(private settingsRepository: SettingsRepository) {}
 
-  getSettings(): SettingsDTO {
+  getSettings(): PublicSettingsDTO {
     return this.settingsRepository.getAllSettings();
   }
 
-  updateSettings(settings: Partial<SettingsDTO>): SettingsDTO {
+  updateSettings(settings: Partial<SettingsDTO>): PublicSettingsDTO {
     this.settingsRepository.updateSettings(settings);
     return this.settingsRepository.getAllSettings();
   }
@@ -41,6 +41,16 @@ class SettingsService {
   
   setAutoMarkInStockWhenAvailable(value: boolean): void {
     this.settingsRepository.setAutoMarkInStockWhenAvailable(value);
+  }
+  
+  // Global settings (shared across all accounts)
+  getGlobalSettings(): PublicSettingsDTO {
+    return this.settingsRepository.getGlobalSettings();
+  }
+  
+  updateGlobalSettings(settings: Partial<Omit<SettingsDTO, 'managerPin'>>): PublicSettingsDTO {
+    this.settingsRepository.updateGlobalSettings(settings);
+    return this.settingsRepository.getGlobalSettings();
   }
 }
 

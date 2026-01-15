@@ -153,6 +153,33 @@ class SettingsController {
       res.status(500).json({ error: 'Failed to update stock status' });
     }
   };
+  
+  // Get global settings (shared across all accounts)
+  getGlobalSettings = async (req: Request, res: Response) => {
+    try {
+      const settings = this.settingsService.getGlobalSettings();
+      res.json({ success: true, settings });
+    } catch (error) {
+      console.error('Error getting global settings:', error);
+      res.status(500).json({ error: 'Failed to get global settings' });
+    }
+  };
+  
+  // Update global settings (shared across all accounts)
+  updateGlobalSettings = async (req: Request, res: Response) => {
+    try {
+      const settings = req.body;
+      
+      // Remove any sensitive fields that shouldn't be updated through this endpoint
+      delete settings.managerPin;
+      
+      const updatedSettings = this.settingsService.updateGlobalSettings(settings);
+      res.json({ success: true, settings: updatedSettings });
+    } catch (error) {
+      console.error('Error updating global settings:', error);
+      res.status(500).json({ error: 'Failed to update global settings' });
+    }
+  };
 }
 
 export { SettingsController };

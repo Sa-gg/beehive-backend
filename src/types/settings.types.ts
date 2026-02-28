@@ -17,6 +17,7 @@ export interface SettingsDTO {
   
   // Experimental features
   linkedOrdersEnabled: boolean; // Enable linked orders feature
+  loyaltySystemEnabled: boolean; // Enable loyalty system feature
   
   // Order permissions
   allowVoidOrderItem: boolean; // Allow voiding individual order items

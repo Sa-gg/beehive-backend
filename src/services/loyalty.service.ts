@@ -5,7 +5,10 @@ import type {
   AwardStampDTO,
   RedeemRewardDTO,
   AwardStampResultDTO,
-  RedeemRewardResultDTO
+  RedeemRewardResultDTO,
+  IssueCardDTO,
+  IssueCardResultDTO,
+  LinkCardDTO
 } from '../types/loyalty.types.js'
 
 const STAMPS_NEEDED = 10 // Stamps needed for 1 free drink
@@ -13,9 +16,15 @@ const STAMPS_NEEDED = 10 // Stamps needed for 1 free drink
 export class LoyaltyService {
   constructor(private loyaltyRepository: LoyaltyRepository) {}
 
-  // Look up customer loyalty by identifier
+  // Look up customer loyalty by identifier (including card code)
   async lookupCustomer(lookup: LoyaltyLookupDTO): Promise<CustomerLoyaltyDTO | null> {
     const loyalty = await this.loyaltyRepository.findByIdentifier(lookup)
+    return loyalty ? this.mapToDTO(loyalty) : null
+  }
+  
+  // Look up by card code only
+  async lookupByCardCode(cardCode: string): Promise<CustomerLoyaltyDTO | null> {
+    const loyalty = await this.loyaltyRepository.findByCardCode(cardCode)
     return loyalty ? this.mapToDTO(loyalty) : null
   }
 
@@ -41,13 +50,14 @@ export class LoyaltyService {
   async awardStamp(data: AwardStampDTO): Promise<AwardStampResultDTO> {
     // First, find or create the customer loyalty record
     const lookup: LoyaltyLookupDTO = {}
+    if (data.cardCode) lookup.cardCode = data.cardCode
     if (data.customerPhone) lookup.customerPhone = data.customerPhone
     if (data.customerEmail) lookup.customerEmail = data.customerEmail
     if (data.deviceId) lookup.deviceId = data.deviceId
     
     // At least one identifier is required
-    if (!lookup.customerPhone && !lookup.customerEmail && !lookup.deviceId) {
-      throw new Error('At least one customer identifier (phone, email, or deviceId) is required')
+    if (!lookup.cardCode && !lookup.customerPhone && !lookup.customerEmail && !lookup.deviceId) {
+      throw new Error('At least one customer identifier (cardCode, phone, email, or deviceId) is required')
     }
     
     // Check if stamp already awarded for this order
@@ -169,6 +179,67 @@ export class LoyaltyService {
     }
   }
 
+  // Issue a new physical loyalty card
+  async issueCard(data: IssueCardDTO): Promise<IssueCardResultDTO> {
+    // Check if card code already exists
+    const existingCard = await this.loyaltyRepository.findByCardCode(data.cardCode)
+    if (existingCard) {
+      throw new Error(`Card code ${data.cardCode} is already in use`)
+    }
+    
+    // Issue the card (may link to existing phone account)
+    const result = await this.loyaltyRepository.issueCard(
+      data.cardCode,
+      data.customerName,
+      data.customerPhone
+    )
+    
+    const isLinked = result.transaction.type === 'CARD_LINKED'
+    
+    return {
+      success: true,
+      loyalty: this.mapToDTO(result.loyalty),
+      transaction: result.transaction,
+      isNewAccount: !isLinked,
+      linkedToExisting: isLinked,
+      message: isLinked
+        ? `Card ${data.cardCode} linked to existing account with ${result.loyalty.currentStamps}/${STAMPS_NEEDED} stamps`
+        : `New loyalty card ${data.cardCode} issued successfully`
+    }
+  }
+
+  // Link a physical card to an existing loyalty account
+  async linkCard(data: LinkCardDTO): Promise<IssueCardResultDTO> {
+    // Check if card code already exists
+    const existingCard = await this.loyaltyRepository.findByCardCode(data.cardCode)
+    if (existingCard) {
+      throw new Error(`Card code ${data.cardCode} is already in use`)
+    }
+    
+    // Check if the target loyalty account exists
+    const targetAccount = await this.loyaltyRepository.findById(data.loyaltyId)
+    if (!targetAccount) {
+      throw new Error('Loyalty account not found')
+    }
+    
+    // Check if account already has a card
+    if (targetAccount.cardCode) {
+      throw new Error(`Account already has a card: ${targetAccount.cardCode}`)
+    }
+    
+    // Link the card
+    const result = await this.loyaltyRepository.linkCard(data.cardCode, data.loyaltyId)
+    
+    return {
+      success: true,
+      loyalty: this.mapToDTO(result.loyalty),
+      transaction: result.transaction,
+      isNewAccount: false,
+      linkedToExisting: true,
+      message: `Card ${data.cardCode} linked to account successfully`
+    }
+  }
+
   // Map database entity to DTO
   private mapToDTO(loyalty: any): CustomerLoyaltyDTO {
     return {
@@ -177,6 +248,7 @@ export class LoyaltyService {
       customerEmail: loyalty.customerEmail,
       deviceId: loyalty.deviceId,
       customerName: loyalty.customerName,
+      cardCode: loyalty.cardCode,
       currentStamps: loyalty.currentStamps,
       totalStamps: loyalty.totalStamps,
       rewardsEarned: loyalty.rewardsEarned,

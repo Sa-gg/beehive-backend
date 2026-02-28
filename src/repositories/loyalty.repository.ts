@@ -8,7 +8,7 @@ import type {
 export class LoyaltyRepository {
   constructor(private prisma: PrismaClient) {}
 
-  // Find customer loyalty by any identifier
+  // Find customer loyalty by any identifier (including cardCode)
   async findByIdentifier(lookup: LoyaltyLookupDTO) {
     if (lookup.customerPhone) {
       return this.prisma.customer_loyalty.findUnique({
@@ -28,7 +28,21 @@ export class LoyaltyRepository {
         include: { transactions: { orderBy: { createdAt: 'desc' }, take: 10 } }
       })
     }
+    if (lookup.cardCode) {
+      return this.prisma.customer_loyalty.findUnique({
+        where: { cardCode: lookup.cardCode },
+        include: { transactions: { orderBy: { createdAt: 'desc' }, take: 10 } }
+      })
+    }
     return null
+  }
+  
+  // Find by card code only
+  async findByCardCode(cardCode: string) {
+    return this.prisma.customer_loyalty.findUnique({
+      where: { cardCode },
+      include: { transactions: { orderBy: { createdAt: 'desc' }, take: 10 } }
+    })
   }
 
   async findById(id: string) {
@@ -52,6 +66,7 @@ export class LoyaltyRepository {
         customerPhone: data.customerPhone || null,
         customerEmail: data.customerEmail || null,
         deviceId: data.deviceId || null,
+        cardCode: data.cardCode || null,
         customerName: data.customerName || null,
         currentStamps: 0,
         totalStamps: 0,
@@ -59,6 +74,138 @@ export class LoyaltyRepository {
         rewardsRedeemed: 0,
         updatedAt: new Date()
       }
+    })
+  }
+  
+  // Issue a physical loyalty card (creates new record, no stamp awarded)
+  async issueCard(cardCode: string, customerName?: string, customerPhone?: string) {
+    return this.prisma.$transaction(async (tx) => {
+      // Check if card already exists
+      const existing = await tx.customer_loyalty.findUnique({
+        where: { cardCode }
+      })
+      
+      if (existing) {
+        throw new Error('Card code already exists')
+      }
+      
+      // If phone provided, check if we should link to existing account
+      if (customerPhone) {
+        const existingByPhone = await tx.customer_loyalty.findUnique({
+          where: { customerPhone }
+        })
+        
+        if (existingByPhone) {
+          // Link card to existing phone account
+          const updatedLoyalty = await tx.customer_loyalty.update({
+            where: { id: existingByPhone.id },
+            data: {
+              cardCode,
+              customerName: customerName || existingByPhone.customerName,
+              updatedAt: new Date()
+            }
+          })
+          
+          // Create card linked transaction
+          const transaction = await tx.loyalty_transactions.create({
+            data: {
+              id: `ltx_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+              customerLoyaltyId: existingByPhone.id,
+              type: 'CARD_LINKED',
+              stampsBefore: existingByPhone.currentStamps,
+              stampsAfter: existingByPhone.currentStamps,
+              stampsChange: 0,
+              notes: `Physical card ${cardCode} linked to existing phone account`,
+              createdAt: new Date()
+            }
+          })
+          
+          return { loyalty: updatedLoyalty, transaction, linked: true }
+        }
+      }
+      
+      // Create new loyalty record with card code
+      const newLoyalty = await tx.customer_loyalty.create({
+        data: {
+          id: `loyalty_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+          cardCode,
+          customerPhone: customerPhone || null,
+          customerName: customerName || null,
+          currentStamps: 0,
+          totalStamps: 0,
+          rewardsEarned: 0,
+          rewardsRedeemed: 0,
+          updatedAt: new Date()
+        }
+      })
+      
+      // Create card issued transaction (no stamp awarded)
+      const transaction = await tx.loyalty_transactions.create({
+        data: {
+          id: `ltx_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+          customerLoyaltyId: newLoyalty.id,
+          type: 'CARD_ISSUED',
+          stampsBefore: 0,
+          stampsAfter: 0,
+          stampsChange: 0,
+          notes: `Physical loyalty card issued: ${cardCode}`,
+          createdAt: new Date()
+        }
+      })
+      
+      return { loyalty: newLoyalty, transaction, linked: false }
+    })
+  }
+  
+  // Link physical card to existing loyalty account
+  async linkCard(cardCode: string, loyaltyId: string) {
+    return this.prisma.$transaction(async (tx) => {
+      // Check if card code is already in use
+      const cardExists = await tx.customer_loyalty.findUnique({
+        where: { cardCode }
+      })
+      
+      if (cardExists) {
+        throw new Error('Card code already linked to another account')
+      }
+      
+      // Get the target loyalty record
+      const loyalty = await tx.customer_loyalty.findUnique({
+        where: { id: loyaltyId }
+      })
+      
+      if (!loyalty) {
+        throw new Error('Loyalty account not found')
+      }
+      
+      if (loyalty.cardCode) {
+        throw new Error('This account already has a card linked')
+      }
+      
+      // Update loyalty record with card code
+      const updatedLoyalty = await tx.customer_loyalty.update({
+        where: { id: loyaltyId },
+        data: {
+          cardCode,
+          updatedAt: new Date()
+        }
+      })
+      
+      // Create card linked transaction
+      const transaction = await tx.loyalty_transactions.create({
+        data: {
+          id: `ltx_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+          customerLoyaltyId: loyaltyId,
+          type: 'CARD_LINKED',
+          stampsBefore: loyalty.currentStamps,
+          stampsAfter: loyalty.currentStamps,
+          stampsChange: 0,
+          notes: `Physical card ${cardCode} linked to account`,
+          createdAt: new Date()
+        }
+      })
+      
+      return { loyalty: updatedLoyalty, transaction }
     })
   }
 
@@ -71,6 +218,7 @@ export class LoyaltyRepository {
         customerPhone: lookup.customerPhone,
         customerEmail: lookup.customerEmail,
         deviceId: lookup.deviceId,
+        cardCode: lookup.cardCode,
         customerName
       })
       // Re-fetch with transactions

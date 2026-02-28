@@ -399,3 +399,61 @@ export const resetAllMoodStatistics = async (_req: Request, res: Response) => {
     res.status(500).json({ error: 'Failed to reset all mood statistics' });
   }
 };
+
+// ==================== BULK UPDATE ====================
+
+/**
+ * Bulk update multiple mood settings at once
+ * Expects array of { mood, ...updateFields }
+ */
+export const bulkUpdateMoodSettings = async (req: Request, res: Response) => {
+  try {
+    const { updates } = req.body;
+    
+    if (!Array.isArray(updates) || updates.length === 0) {
+      return res.status(400).json({ error: 'updates must be a non-empty array' });
+    }
+
+    const results: any[] = [];
+    const errors: any[] = [];
+
+    for (const update of updates) {
+      const { mood, ...data } = update;
+      
+      if (!mood || !isValidMoodType(mood)) {
+        errors.push({ mood, error: 'Invalid or missing mood type' });
+        continue;
+      }
+
+      try {
+        const updated = await moodSettingsRepository.updateMoodSetting(
+          mood.toUpperCase() as mood_type,
+          data
+        );
+        results.push({
+          mood,
+          success: true,
+          data: {
+            ...updated,
+            beneficialNutrients: updated.beneficialNutrients ? JSON.parse(updated.beneficialNutrients) : [],
+            preferredCategories: updated.preferredCategories ? JSON.parse(updated.preferredCategories) : [],
+            excludeCategories: updated.excludeCategories ? JSON.parse(updated.excludeCategories) : []
+          }
+        });
+      } catch (err: any) {
+        errors.push({ mood, error: err.message });
+      }
+    }
+
+    res.json({
+      success: true,
+      updated: results.length,
+      failed: errors.length,
+      results,
+      errors
+    });
+  } catch (error) {
+    console.error('Error bulk updating mood settings:', error);
+    res.status(500).json({ error: 'Failed to bulk update mood settings' });
+  }
+};

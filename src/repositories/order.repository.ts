@@ -166,6 +166,8 @@ export class OrderRepository {
         id: `order_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
         orderNumber,
         customerName: data.customerName || null,
+        customerPhone: data.customerPhone || null,      // For loyalty tracking
+        loyaltyCardCode: data.loyaltyCardCode || null,  // Physical loyalty card
         tableNumber: data.tableNumber || null,
         orderType: data.orderType || 'DINE_IN',
         moodContext: data.moodContext || null,
@@ -211,10 +213,13 @@ export class OrderRepository {
     });
 
     // Create order item add-ons separately (Prisma nested create limitation)
-    for (const item of data.items) {
+    // IMPORTANT: Use index-based matching because multiple items can have the same menuItemId
+    // but different variants (e.g., Fries Small and Fries Large with same addon)
+    for (let i = 0; i < data.items.length; i++) {
+      const item = data.items[i];
       if (item.addons && item.addons.length > 0) {
-        // Find the corresponding order item
-        const orderItem = order.order_items.find(oi => oi.menuItemId === item.menuItemId);
+        // Order items are created in the same order as data.items, so use index
+        const orderItem = order.order_items[i];
         if (orderItem) {
           await this.prisma.order_item_addons.createMany({
             data: item.addons.map(addon => ({

@@ -13,6 +13,11 @@ export function createLoyaltyRoutes(loyaltyController: LoyaltyController): Route
   // Loyalty status
   router.get('/status', loyaltyController.getLoyaltyStatus)
   
+  // Physical card operations
+  router.get('/card/:cardCode', loyaltyController.lookupByCard)
+  router.post('/card/issue', loyaltyController.issueCard)
+  router.post('/card/link', loyaltyController.linkCard)
+  
   // Stamp operations
   router.post('/stamp/award', loyaltyController.awardStamp)
   router.post('/stamp/reverse', loyaltyController.reverseStamp)

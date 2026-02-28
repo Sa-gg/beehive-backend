@@ -34,6 +34,7 @@ export function createMenuItemRoutes(controller: MenuItemController): Router {
   // Bulk operations
   router.post('/bulk/availability', controller.bulkUpdateAvailability);
   router.post('/bulk/out-of-stock', controller.bulkUpdateOutOfStock);
+  router.post('/bulk/mood-benefits', controller.bulkUpdateMoodBenefits);
 
   return router;
 }

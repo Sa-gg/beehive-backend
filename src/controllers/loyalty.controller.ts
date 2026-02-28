@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import { LoyaltyService } from '../services/loyalty.service.js'
-import type { LoyaltyLookupDTO, AwardStampDTO, RedeemRewardDTO } from '../types/loyalty.types.js'
+import type { LoyaltyLookupDTO, AwardStampDTO, RedeemRewardDTO, IssueCardDTO, LinkCardDTO } from '../types/loyalty.types.js'
 
 export class LoyaltyController {
   constructor(private loyaltyService: LoyaltyService) {}
@@ -221,6 +221,96 @@ export class LoyaltyController {
       const canAward = await this.loyaltyService.canAwardStamp(orderId)
       res.json({ success: true, canAward })
     } catch (error) {
+      next(error)
+    }
+  }
+
+  // Look up customer by card code
+  lookupByCard = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { cardCode } = req.params
+      
+      if (!cardCode) {
+        return res.status(400).json({
+          success: false,
+          error: 'Card code is required'
+        })
+      }
+      
+      const customer = await this.loyaltyService.lookupByCardCode(cardCode)
+      
+      if (!customer) {
+        return res.json({ success: true, found: false, customer: null })
+      }
+      
+      res.json({ success: true, found: true, customer })
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  // Issue a new physical loyalty card
+  issueCard = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const data: IssueCardDTO = req.body
+      
+      if (!data.cardCode) {
+        return res.status(400).json({
+          success: false,
+          error: 'cardCode is required'
+        })
+      }
+      
+      // Validate card code format (alphanumeric, 4-20 characters)
+      if (!/^[A-Za-z0-9-]{4,20}$/.test(data.cardCode)) {
+        return res.status(400).json({
+          success: false,
+          error: 'Card code must be 4-20 alphanumeric characters (dashes allowed)'
+        })
+      }
+      
+      const result = await this.loyaltyService.issueCard(data)
+      res.status(201).json(result)
+    } catch (error: any) {
+      if (error.message?.includes('already in use')) {
+        return res.status(409).json({ success: false, error: error.message })
+      }
+      next(error)
+    }
+  }
+
+  // Link a physical card to an existing loyalty account
+  linkCard = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const data: LinkCardDTO = req.body
+      
+      if (!data.cardCode || !data.loyaltyId) {
+        return res.status(400).json({
+          success: false,
+          error: 'cardCode and loyaltyId are required'
+        })
+      }
+      
+      // Validate card code format
+      if (!/^[A-Za-z0-9-]{4,20}$/.test(data.cardCode)) {
+        return res.status(400).json({
+          success: false,
+          error: 'Card code must be 4-20 alphanumeric characters (dashes allowed)'
+        })
+      }
+      
+      const result = await this.loyaltyService.linkCard(data)
+      res.json(result)
+    } catch (error: any) {
+      if (error.message?.includes('already in use')) {
+        return res.status(409).json({ success: false, error: error.message })
+      }
+      if (error.message?.includes('not found')) {
+        return res.status(404).json({ success: false, error: error.message })
+      }
+      if (error.message?.includes('already has a card')) {
+        return res.status(409).json({ success: false, error: error.message })
+      }
       next(error)
     }
   }

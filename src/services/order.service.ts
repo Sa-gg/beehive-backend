@@ -114,14 +114,18 @@ export class OrderService {
       paymentMethod
     });
 
-    // Award loyalty stamp if order has deviceId (customer identifier for loyalty)
-    // Note: orders table only has deviceId for customer identification
-    if (order.deviceId) {
+    // Award loyalty stamp if order has any customer identifier
+    // Priority: cardCode > customerPhone > deviceId
+    const hasLoyaltyIdentifier = order.loyaltyCardCode || order.customerPhone || order.deviceId;
+    
+    if (hasLoyaltyIdentifier) {
       try {
         const result = await loyaltyService.awardStamp({
           orderId: id,
           orderNumber: order.orderNumber,
-          deviceId: order.deviceId,
+          cardCode: order.loyaltyCardCode || undefined,
+          customerPhone: order.customerPhone || undefined,
+          deviceId: order.deviceId || undefined,
           customerName: order.customerName || undefined
         });
         console.log(`🎟️ Loyalty stamp awarded for order ${order.orderNumber}:`, result.message);
@@ -172,14 +176,17 @@ export class OrderService {
       await this.replenishInventoryForVoidedOrder(orderId, params.reason);
     }
 
-    // Reverse loyalty stamp if order had deviceId
-    if (order.deviceId) {
+    // Reverse loyalty stamp if order had any loyalty identifier
+    const hasLoyaltyIdentifier = order.loyaltyCardCode || order.customerPhone || order.deviceId;
+    if (hasLoyaltyIdentifier) {
       try {
         const result = await loyaltyService.reverseStamp(
           orderId,
           order.orderNumber,
           {
-            deviceId: order.deviceId
+            cardCode: order.loyaltyCardCode || undefined,
+            customerPhone: order.customerPhone || undefined,
+            deviceId: order.deviceId || undefined
           },
           params.reason
         );

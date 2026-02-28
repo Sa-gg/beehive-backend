@@ -445,4 +445,43 @@ export class MenuItemController {
       });
     }
   };
+
+  // POST /api/menu-items/bulk/mood-benefits
+  bulkUpdateMoodBenefits = async (req: Request, res: Response) => {
+    try {
+      const { updates } = req.body;
+
+      if (!Array.isArray(updates) || updates.length === 0) {
+        return res.status(400).json({
+          success: false,
+          error: 'updates must be a non-empty array of { id, moodBenefits } objects'
+        });
+      }
+
+      // Validate each update has id and moodBenefits
+      for (const update of updates) {
+        if (!update.id) {
+          return res.status(400).json({
+            success: false,
+            error: 'Each update must have an id field'
+          });
+        }
+      }
+
+      const result = await this.service.bulkUpdateMoodBenefits(updates);
+
+      res.status(200).json({
+        success: true,
+        data: result,
+        message: `Updated mood benefits for ${result.count} products`
+      });
+    } catch (error: any) {
+      console.error('Error bulk updating mood benefits:', error);
+      res.status(400).json({
+        success: false,
+        error: 'Failed to bulk update mood benefits',
+        message: error.message
+      });
+    }
+  };
 }

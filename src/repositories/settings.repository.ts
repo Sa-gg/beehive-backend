@@ -20,6 +20,7 @@ class SettingsRepository {
     
     // Experimental features
     linkedOrdersEnabled: false, // Default OFF
+    loyaltySystemEnabled: false, // Default OFF - experimental loyalty system
     
     // Order permissions
     allowVoidOrderItem: true, // Default ON

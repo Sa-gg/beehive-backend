@@ -2,6 +2,17 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { AuthRepository } from '../repositories/auth.repository';
 import { RegisterDTO, LoginDTO, UpdateUserDTO, UserDTO, AuthResponse } from '../types/auth.types';
+import { LoyaltyRepository } from '../repositories/loyalty.repository.js';
+import { PrismaClient } from '../../generated/prisma/client.js';
+import { PrismaPg } from '@prisma/adapter-pg';
+import pg from 'pg';
+
+// Initialize Prisma for loyalty
+const { Pool } = pg;
+const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
+const loyaltyRepository = new LoyaltyRepository(prisma);
 
 export class AuthService {
   private authRepository: AuthRepository;
@@ -75,6 +86,36 @@ export class AuthService {
       const cardNumber = `BH${Date.now().toString().slice(-8)}`;
       await this.authRepository.update(user.id, { cardNumber });
       user.cardNumber = cardNumber;
+      
+      // Auto-create loyalty account for customers with phone number
+      if (data.phone) {
+        try {
+          // Check if loyalty account already exists for this phone
+          const existingLoyalty = await loyaltyRepository.findByIdentifier({ customerPhone: data.phone });
+          
+          if (!existingLoyalty) {
+            // Create new loyalty account
+            await loyaltyRepository.create({
+              customerPhone: data.phone,
+              customerEmail: data.email || undefined,
+              customerName: data.name
+            });
+            console.log(`🎟️ Auto-created loyalty account for new customer: ${data.name} (${data.phone})`);
+          } else {
+            // Update existing loyalty account with customer name if not set
+            if (!existingLoyalty.customerName && data.name) {
+              await prisma.customer_loyalty.update({
+                where: { id: existingLoyalty.id },
+                data: { customerName: data.name }
+              });
+              console.log(`🎟️ Linked existing loyalty account to registered customer: ${data.name} (${data.phone})`);
+            }
+          }
+        } catch (loyaltyError) {
+          console.error('Failed to create/link loyalty account:', loyaltyError);
+          // Don't fail registration if loyalty creation fails
+        }
+      }
     }
 
     // Generate token - use phone if no real email

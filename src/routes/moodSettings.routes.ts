@@ -24,7 +24,8 @@ import {
   resetMoodOrderStatsByMood,
   resetAllMenuItemMoodStats,
   resetMenuItemMoodStatsByMood,
-  resetAllMoodStatistics
+  resetAllMoodStatistics,
+  bulkUpdateMoodSettings
 } from '../controllers/moodSettings.controller.js';
 
 const router = Router();
@@ -76,6 +77,9 @@ router.post('/reset/all', authenticate, authorize('ADMIN', 'MANAGER'), resetAllM
 router.post('/initialize/settings', authenticate, authorize('ADMIN'), initializeMoodSettings);
 router.post('/initialize/stats', authenticate, authorize('ADMIN'), initializeMoodOrderStats);
 router.post('/initialize/all', authenticate, authorize('ADMIN'), initializeAllMoodData);
+
+// Bulk update mood settings
+router.post('/bulk/update', authenticate, authorize('ADMIN', 'MANAGER'), bulkUpdateMoodSettings);
 
 // Mood Settings CRUD (parameterized routes LAST)
 router.get('/', authenticate, authorize('ADMIN', 'MANAGER'), getAllMoodSettings);

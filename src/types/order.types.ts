@@ -26,6 +26,8 @@ export interface OrderDTO {
   id: string;
   orderNumber: string;
   customerName: string | null;
+  customerPhone: string | null;    // For loyalty tracking from POS
+  loyaltyCardCode: string | null;  // Physical loyalty card code
   tableNumber: string | null;
   orderType: 'DINE_IN' | 'TAKEOUT' | 'DELIVERY';
   status: OrderStatus;
@@ -69,6 +71,8 @@ export interface CreateOrderItemWithAddons {
 
 export interface CreateOrderDTO {
   customerName?: string;
+  customerPhone?: string;         // For loyalty tracking from POS
+  loyaltyCardCode?: string;       // Physical loyalty card code
   tableNumber?: string;
   orderType?: 'DINE_IN' | 'TAKEOUT' | 'DELIVERY';
   moodContext?: string; // The mood when order was placed

@@ -140,6 +140,8 @@ model orders {
   id                String         @id
   orderNumber       String         @unique
   customerName      String?
+  customerPhone     String?        // For loyalty tracking from POS
+  loyaltyCardCode   String?        // Physical loyalty card code
   tableNumber       String?
   status            order_status   @default(PENDING)
   subtotal          Float
@@ -177,6 +179,8 @@ model orders {
   @@index([deviceId])
   @@index([processedBy])
   @@index([paymentStatus])
+  @@index([customerPhone])
+  @@index([loyaltyCardCode])
 }
 
 // ============================================================================
@@ -535,10 +539,11 @@ enum stock_transaction_type {
 // Tracks customer loyalty stamps - one record per customer identifier
 model customer_loyalty {
   id              String    @id
-  // Customer identifier - can be phone, email, or deviceId for guests
+  // Customer identifier - can be phone, email, deviceId, or cardCode for physical cards
   customerPhone   String?   @unique
   customerEmail   String?   @unique
   deviceId        String?   @unique
+  cardCode        String?   @unique  // Physical loyalty card code/QR
   customerName    String?
   // Stamp tracking
   currentStamps   Int       @default(0)  // 0-9 stamps (resets after reward)
@@ -555,6 +560,7 @@ model customer_loyalty {
   @@index([customerPhone])
   @@index([customerEmail])
   @@index([deviceId])
+  @@index([cardCode])
 }
 
 // Tracks all loyalty events (stamps earned, rewards redeemed, reversals)
@@ -586,6 +592,8 @@ model loyalty_transactions {
 }
 
 enum loyalty_transaction_type {
+  CARD_ISSUED       // New physical card issued (no stamp awarded)
+  CARD_LINKED       // Physical card linked to existing phone account
   STAMP_EARNED      // +1 stamp from completed paid order
   STAMP_REVERSED    // -1 stamp from cancelled/refunded order
   REWARD_UNLOCKED   // Reached 10 stamps, reward available

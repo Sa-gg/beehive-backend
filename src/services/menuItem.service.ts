@@ -173,6 +173,25 @@ export class MenuItemService {
     console.log('trackMoodViews: moved to moodSettings.repository.ts');
   }
 
+  /**
+   * Bulk update mood benefits for multiple menu items
+   * @param updates Array of { id, moodBenefits } objects
+   */
+  async bulkUpdateMoodBenefits(updates: Array<{ id: string; moodBenefits: string | null }>): Promise<{ count: number; updated: string[] }> {
+    const updated: string[] = [];
+    
+    for (const update of updates) {
+      try {
+        await this.repository.update(update.id, { moodBenefits: update.moodBenefits });
+        updated.push(update.id);
+      } catch (error) {
+        console.error(`Failed to update moodBenefits for item ${update.id}:`, error);
+      }
+    }
+    
+    return { count: updated.length, updated };
+  }
+
   private mapToResponse(item: any): MenuItemResponse {
     return {
       id: item.id,
